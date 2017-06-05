@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chuanhe Liu" />
+
+
+
+<meta name="description" content="总述：Java 不仅是一门编程语言，还是一个由一系列 计算机软件 和 规范 形成的技术体系，这个技术体系提供了完整的用于软件开发和跨平台部署的支持环境，并广泛应用于
+
+嵌入式系统。
+移动终端 。
+企业服务器 。
+大型机等各种场合。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解 Java 虚拟机（一）走近 Java(转)">
+<meta property="og:url" content="http://yoursite.com/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/index.html">
+<meta property="og:site_name" content="chuanhe的博客">
+<meta property="og:description" content="总述：Java 不仅是一门编程语言，还是一个由一系列 计算机软件 和 规范 形成的技术体系，这个技术体系提供了完整的用于软件开发和跨平台部署的支持环境，并广泛应用于
+
+嵌入式系统。
+移动终端 。
+企业服务器 。
+大型机等各种场合。">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1034114-b7a630ad5b512192.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1034114-6b279de22a0c3648.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1034114-0e65c5908fce8c28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1034114-bf2df384d415a182.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1034114-2bad04829a2300c0.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-03-08T08:35:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解 Java 虚拟机（一）走近 Java(转)">
+<meta name="twitter:description" content="总述：Java 不仅是一门编程语言，还是一个由一系列 计算机软件 和 规范 形成的技术体系，这个技术体系提供了完整的用于软件开发和跨平台部署的支持环境，并广泛应用于
+
+嵌入式系统。
+移动终端 。
+企业服务器 。
+大型机等各种场合。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1034114-b7a630ad5b512192.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="chuanhe的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/chuanheliu/chuanheliu.github.io/master/img/JavaLogo.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>深入理解 Java 虚拟机（一）走近 Java(转) | chuanhe的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Chuanhe Liu</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Java影响睡眠</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.yfgeek.com/">Ivan&#39;s Blog</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">英格兰友人的最爱</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Java影响睡眠</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-深入理解-Java-虚拟机（一）走近-Java(转)" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/" class="article-date">
+      <time datetime="2016-04-05T19:48:04.000Z" itemprop="datePublished">2016-04-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深入理解 Java 虚拟机（一）走近 Java(转)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>总述：Java 不仅是一门编程语言，还是一个由一系列 <strong>计算机软件</strong> 和 <strong>规范</strong> 形成的技术体系，这个技术体系提供了完整的用于软件开发和跨平台部署的支持环境，并广泛应用于</p>
+<p><ul></ul></p>
+<p><li>嵌入式系统。</li></p>
+<p><li>移动终端 。</li></p>
+<p><li>企业服务器 。</li></p>
+<p><li>大型机等各种场合。</li>  <a id="more"></a><br><br>特点：Java 能获得如此广泛的认可，除了它拥有一门 <strong>结构严谨</strong>、<strong>面向对象</strong> 的编程语言之外，还有须有不可忽视的有点，主要有如下几点👇。</p><p></p>
+<p><ul></ul></p>
+<p><li>它摆脱了硬件平台的束缚，实现了 <strong>一次编写，到处运行</strong> 的越界问题。</li></p>
+<p><li>它实现了 <strong>热点代码检测</strong> 和 <strong>运行时编译及优化</strong> ，这使得 Java 应用能随着运行时间的增加而获得更好的性能。</li></p>
+<p><li>它有一套完善的应用程序接口，还有无数来自商业机构合开源社区的第三方类库来帮助它实现各种各样的功能。</li><br></p>
+<blockquote><p>后面我们会一起学习 Java 技术中最重要的那些特性和实现原理，在本篇文章中，将会重点介绍 Java 技术体系内容以及 Java 的历史、现在和未来的发展趋势。</p></blockquote><br><h1>1.2 - Java 技术体系</h1><br><ul><br><li>从广义上讲，Clojure、JRuby、Groovy 等运行于 Java 虚拟机上的语言及其相关的程序都属于 Java 技术体系中的一员。如果仅从传统意义上来看，Sun官方所定义的 Java 技术体系包括以下几个组成部分👇<ul><br><li>Java 程序设计语言。</li><br><li>各种硬件平台上的 Java 虚拟机。</li><br><li>Class 文件格式。</li><br><li>Java API 类库。</li><br><li>来自商业机构和开源社区的第三方 Java 类库。    </li><br></ul></li><br><li>我们可以将 <strong>Java 程序设计语言</strong>、<strong>Java 虚拟机</strong>、<strong>Java API</strong> 类库这三部分统称为 <strong>JDK</strong>（Java Development Kit），JDK 是用于支持 Java 程序开发的最小环境。另外，可以把 Java API 类库中的 Java SE API 子集和 Java 虚拟机这两部分统称为 <strong>JRE</strong>（Java Runtime Environment），JRE 是支持 Java 程序运行的标准环境。</li><br><li>JVM 结构图如下所示 👇<br><div class="image-package"><br><img src="http://upload-images.jianshu.io/upload_images/1034114-b7a630ad5b512192.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/1034114-b7a630ad5b512192.png?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption">JVM 结构图</div><br></div><br></li><br><li>Java Language 体系图如下所示 👇<br><div class="image-package"><br><img src="http://upload-images.jianshu.io/upload_images/1034114-6b279de22a0c3648.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/1034114-6b279de22a0c3648.png?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption">Java Language</div><br></div><br></li><br><li>Java 技术体系可以分为4个平台，分别是<ol><br><li>Java Card：支持一些 Java 小程序（Applets）运行在小内存设备（如智能卡）上的平台。</li><br><li>JavaME（Micro Edition）：支持 Java 程序运行在移动终端（手机、PDA）上的平台。</li><br><li>JavaSE（Standard Edition）：支持面向桌面级应用（如 Windows 下的应用程序）的 Java 平台，提供了完整版的 Java 核心 API，这个版本以前也称为 J2SE。</li><br><li>JavaEE（Enterprise Edition）：支持使用多层架构的企业应用（如 ERP、CRM 应用）的 Java 平台，除了提供 JavaSE API 外，还对其做了大量的扩充并提供了相关的部署支持，这个版本以前称为 J2EE。</li><br></ol><br></li><br></ul><br><hr><br><h1>1.3 - Java 发展史</h1><br><ul><br><li>从1996年 第一个 Java 版本诞生到现在已经有了20几年时间，其中诞生了无数和 Java 相关的产品、技术和标准，让我们一同回顾下 Java 的发展轨迹和历史变迁。</li><br></ul><br><div class="image-package"><br><img src="http://upload-images.jianshu.io/upload_images/1034114-0e65c5908fce8c28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/1034114-0e65c5908fce8c28.png?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption">Java-version-history</div><br></div><br><ul><br><li><br><p>1994-04：由 <em>James Gosling</em> 博士领导的绿色计划（Green Project） 开始启动，此计划的目的是开发一种能够在各种消费性电子产品（如机顶盒、冰箱、收音机等）上运行的程序架构。这个计划的产品就是 Java 语言的前身：Oak（橡树）。Oak 当时在消费品市场上并不算成功，但随着 1995 年互联网潮流的兴起，Oak 迅速找到了最适合自己发展的市场定位并蜕变成为 Java 语言。</p><br></li><br><li><br><p>1994-05-23：Oak 语言改名为 Java，并且在 SunWorld 大会上正式发布 <strong>Java1.0</strong> 版本。Java 语言第一次提出了 <strong>Write Once, Run Anywhere</strong> 的口号。</p><br></li><br><li><br><p>1996-01-23：JDK 1.0 发布，Java 语言有了第一个正式版本的运行环境。JDK 1.0 提供了一个纯解释执行的 Java 虚拟机实现（<strong>Sun Classic VM</strong>）。JDK 1.0 版本的代表技术包括：（Java 虚拟机、Applet、AWT 等）。</p><br></li><br><li><br><p>1996-04：10个最主要的操作系统供应商申明将在其产品中嵌入 Java 技术。同年 9月，已有大约 8.3 万个网页应用了 Java 技术来制作。在 1996年5月底，Sun 公司于美国旧金山举行了 <strong>首届 JavaOne 大会</strong>，从此 JavaOne 成为全世界数百万 Java 语言开发者每年一度的技术盛会。</p><br></li><br><li><br><p>1997-02-19：Sun 公司发布了 JDK 1.1，Java 技术的一些最基础的支撑点（<strong>JDBC</strong> 等）都是在 JDK 1.1 版本中发布的，JDK 1.1版本的代表技术有（<strong>1.JAR 文件格式</strong>、<strong>2.JDBC</strong>、<strong>3.JavaBeans</strong>、<strong>4.RMI</strong>）。Java 语法也有了一定的发展，如内部类（<strong>Inner Class</strong>）和反射（<strong>Reflection</strong>） 都是在这个时候出现的。</p><br></li><br><li><br><p>1998-12-04：JDK 迎来了一个里程碑式的版本 JDK 1.2，工程代号为 Playground（竞技场），Sun 在这个版本中把 Java 技术体系拆分为 3 个方向，分别是：</p><br><ul><br><li>面向桌面应用开发的 <strong>J2SE</strong>（Java 2 Platform，Standard Edition）</li><br><li>面向企业级开发的 <strong>J2EE</strong>（Java 2 Platform，Enterprise Edition）</li><br><li>面向手机等移动端开发的 <strong>J2ME</strong>（Java 2 Platform，Micro Edition）。<br>在这个版本中出现的代表性技术非常多（<strong>EJB</strong>、<strong>Java Plug-in</strong>、<strong>Java IDL</strong>、<strong>Swing</strong> 等），并且这个版本中 Java 虚拟机第一次内置了 <strong>JIT</strong>（Just In Time） 编译器（JKD 1.2中曾并存过3个虚拟机，<strong>Classic VM</strong>、<strong>HotSpot VM</strong> 和 <strong>Exact VM</strong>，其中 Exact VM 只能以外挂的形式使用 JIT 编译器）。在语言和 API 级别上，Java 添加了 <code>strictfp</code> 关键字与现在 Java 编码中极为常用的一系列 <code>Collection</code> 集合类。</li><br></ul><br></li><br><li><br><p>1999-04-27：<strong>HotSpot</strong> 虚拟机发布，HotSpot 最初由一家名为 <em>Longview Technologies</em> 的小公司开发，因为其优异的表现，这家公司在 1997 年被 Sun 公司收购了。HotSpot 虚拟机发布时是作为 JDK 1.2的附加程序提供的，后来它成为了 JDK 1.3 及之后所有版本的 Sun JDK 的默认虚拟机。</p><br></li><br><li><br><p>2002-02-13：JDK 1.4发布，工程代号为 Merlin（灰背隼）。JDK 1.4 是 Java 真正走向成熟的一个版本，Compaq、Fujitsu、SAS、Symbian、IBM 等著名公司都有参与甚至实现自己独立的 JDK 1.4。仍然有许多主流应用（Spring、Hibernate、Struts 等）能直接运行在 JDK 1.4 之上，或者继续发布能运行在 JDK 1.4 上的版本。JDK 1.4 同样发布了很多新的技术特性（<strong>正则表达式</strong>、<strong>异常链</strong>、<strong>NIO</strong>、<strong>日志类</strong>、<strong>XML解析器</strong> 和 <strong>XSLT转换器</strong> 等）。</p><br></li><br><li><br><p>2004-09-30：JDK 1.5 发布（从这个版本开始官方正式文档宣传上已经不再使用类似 JDK1.5的命名，只有在程序员内部使用的开发版本号，例如 <code>java -version</code> 的输出，而公开版本号则改为 JDK 5），工程代号 Tiger（老虎）。从 JDK 1.2 以来，Java 在语法层面上的变换一直很小，而 JDK 1.5 在 Java 语法易用性上做出了非常大的改进。例如（<strong>自动装箱</strong>、<strong>泛型</strong>、<strong>动态注释</strong>、<strong>枚举</strong>、<strong>可变长参数</strong>、<strong>foreach循环</strong> 等）语法特性都是在 JDK 1.5 中加入的。在虚拟机和 API 层面上，这个版本改进了 Java 的内存模型（Java Memory Model, JVM）、提供了 <code>java.util.concurrent</code> 并发包等。</p><br></li><br><li><br><p>2006-12-11：JDK 1.6 发布，工程代号 Mustang（野马）。在这个版本中 Sun 终结了 JDK 1.2 开始已经有8年历史的 J2EE、J2SE、J2ME 的命名方式，启用 <strong>Java SE 6</strong>、Java EE 6、Java ME 6的命名方式。JDK 1.6 的改进包括：提供<em>动态语言支持</em>（通过内置 Mozilla JavaScript Rhino 引擎实现）、提供编译 API 和微型 HTTP 服务器 API 等。同时，这个版本对 Java 虚拟机内部做了大量改进，包括 <strong>锁与同步</strong>、<strong>垃圾回收</strong>、<strong>类加载</strong> 等方面的算法都有相当多的改动。</p><br></li><br><li><br><p>2006-11-13：JavaOne 大会上，Sun 公司宣布最终会将 Java 开源，并在随后的一年多时间内，陆续将 JDK 的各个部分在 GPL v2（GNU General Public License v2）协议下 <strong>公开了源码</strong>，并建立了 OpenJDK 组织对这些源码进行独立管理。除了极少量的产权代码（Encumbered Code，这部分代码大多是 Sun 本身也无权限进行开源处理的）外，OpenJDK 几乎包括了 Sun JDK 的全部代码，OpenJDK 的质量主管曾经表示，在 JDK 1.7 中，Sun JDK 和 OpenJDK 除了代码文件头的版权注释之外，代码基本上完全一样，所以 OpenJDK 7 与 Sun JDK 1.7 本质上就是同一套代码库开发的产品。</p><br></li><br><li><br><p>JDK 1.6 发布以后，由于代码复杂性的增加、JDK 开源、开发 JavaFX、经济危机及 Sun 收购案等原因，Sun 在 JDK 发展以外的事情上耗费了很多资源，JDK 的更新并没有再维持两年发布一个版本的发展速度☹️。</p><br></li><br><li><br><p>2009-02-19：工程代号为 Dolphin（海豚）的 JDK 1.7 完成了其第一个里程碑版本。根据 JDK 1.7 的功能规划，一共设置了10个里程碑。最后一个里程碑版本原计划与 2010 年 9 月 9 日技术，但由于各种原因，JDK 1.7 最终无法按计划完成。</p><br></li><br><li><br><p>从 JDK 1.7 最开始的功能规划来看，它本应是一个包含许多重要改进的 JDK 版本，其中 Lambda 项目（<strong>Lambda表达式</strong>、<strong>函数式编程</strong>）、<strong>Jigsaw项目</strong>（虚拟机模块化支持）、<strong>动态语言支持</strong>、<strong>GarbageFirst收集器</strong> 和 <strong>Coin项目</strong>（语言细节进化）等子项目对于 Java 业界都会产生深远的影响。在 JDK 1.7 开发期间，Sun 公司由于相继在技术竞争和商业竞争中都陷入泥潭，公司的股票市值跌至仅有高峰时期的 3%🤕（心疼），已无力推动 JDK 1.7 的研发工作按正常计划进行。为了尽快结束 JDK 1.7 长期 ”跳票” 的问题，Oracle 公司收购 Sun 公司后不久便宣布将实行 “B计划”，大幅裁剪了 JDK 1.7 预订目标，以便保证 JDK 1.7 的正式版能够与 2011年7月28日准时发布。”B计划” 把不能按时完成的 Lambda 项目、Jigsaw 项目和 Coin 项目的部分改进延迟到 JDK 1.8之中。最终，JDK 1.7 的主要改进包括：提供新的 <strong>G1收集器</strong>、<strong>加强对非 Java 语言的调用支持</strong>、<strong>升级类加载架构</strong> 等。</p><br></li><br><li><br><p>2009-04-20：Oracle 公司宣布正式以74亿美元的价格收购 Sun 公司，Java 商标从此正式归 Oracle 所有（ <em>Java 语言本身并不属于哪家公司所有，它由 JCP 组织进行管理，尽管 JCP 主要是由 Sun 公司或者说 Oracle 公司所领导的</em> ）。由于此前 Oracle 公司已经收购了另外一家大型的中间件企业 BEA 公司，在完成对 Sun 公司的收购之后，Oracle 公司分别从 <strong>BEA</strong> 和 <strong>Sun</strong> 中取得了目前三大商业虚拟机其中两个：<strong>JRockit</strong> 和 <strong>HotSpot</strong>，Oracle 公司宣布在未来的 1-2年的时间内，将把这两个优秀的虚拟机相互取长补短，最终合二为一。</p><br></li><br><li><br><p>在 2011年的 JavaOne 大会上，Oracle 公司还提到了 JDK 1.9 的长远规划，希望未来的 Java 虚拟机能够管理数以 GB 计的 Java 堆🙀，能够更高效地与本地代码继承，并且令 Java 虚拟机运行时尽可能少人工干预，能够自动调节。</p><br></li><br></ul><br><hr><br><h1>1.4 - Java 虚拟机发展史</h1><br><blockquote><p>上一节从整个 Java 技术的角度观察了 Java 技术的发展，许多 Java 程序员都会潜意识地把它与 Sun 公司的 HotSpot 虚拟机等同看待，也许还有一些人会注意到 <em>BEA JRockit</em> 和 <em>IBM J9</em>，但对 JVM 的认识不仅仅只有这些。</p></blockquote><br><ul><br><li>从 1996 年初 Sun 公司发布的 JDK 1.0 中所包含的 <em>Sun Classic VM</em> 到今天，曾经涌现、湮灭过许多经典或优秀或有特色的虚拟机实现，在这一节中我们一起来回顾一下 Java 虚拟机家族的发展轨迹和历史变迁。</li><br></ul><br><h3>1.4.1 - Sun Classic / Exact VM</h3><br><ul><br><li><br><p>从今天的视角来看，<strong>Sun Classic VM</strong> 的技术可能很原始，这款虚拟机的使命也早已终结。但仅凭它 <strong>世界上第一款商用 Java 虚拟机</strong> 的头衔，就足够有让历史记住它的理由🤔。</p><br></li><br><li><br><p>1996-01-23：Sun 公司发布 JDK 1.0，Java 语言首次拥有了商用的正式运行环境，这个 JDK 中所带的虚拟机就是 Classic VM。这款虚拟机只能使用纯解释器方式来执行 Java 代码，如果要使用 JIT 编译器，就必须进行外挂。但是加入外挂了 JIT 编译器，JIT 编译器就完全接管了虚拟机的执行系统，解释器便不再工作了。用户在这款虚拟机上执行 <code>java -version</code> 命令，将会看到类似下面这行输出</p><br><pre><code>java version “1.2.2”<br>Classic VM (build JDK-1.2.2-001, green threads, sunwjit)</code></pre><br></li><br><li><br><p>其中的 <code>sunwjit</code> 就是 Sun 提供的外挂编译器，其他类似的外挂编译器还有 <strong>Symantec JIT</strong> 和  <strong>shuJIT</strong> 等。由于 <strong>解释器</strong> 和 <strong>编译器</strong> 不能配合工作，这就意味着如果要使用编译器执行，编译器就不得不对每一个方法、每一行代码都进行编译，而无论他们执行的频率是否具有编译的价值。基于程序响应时间的压力，这些编译器根本不敢应用编译耗时稍高的优化技术，因此这个阶段的虚拟机即使使用了 JIT 编译器输出本地代码，执行效率也和传统的 C/C++ 程序有很大差距，<strong>Java 语言很慢</strong> 的形象就是在这时候开始在用户心中树立起来的。</p><br></li><br><li><br><p>Sun 的虚拟机团队努力去解决 Classic VM 所面临的各种问题，提升运行效率。在 JDK 1.2 时，曾在 Solaris 平台上发布过一款名为 <strong>Exact VM</strong> 的虚拟机，它的执行系统已经具备现代高性能虚拟机的雏形：如 <strong>两级即时编译器</strong>、<strong>编译器与解释器混合工作模式</strong> 等。Exact VM 因它使用 <strong>准确式内存管理</strong>（Exact Memory Management）而得名，即虚拟机可以知道内存中某个位置的数据具体是什么类型。例如内存中有一个 32 位的整数 123456，它到底是 reference 类型指向 123456 的内存地址还是一个数值为 123456 的整数，虚拟机将有能力分辨出来，这样才能在 GC（垃圾收集）的时候准确判断堆上的数据是否还可以被使用。由于使用了准确式内存管理，Exact VM 可以抛弃以前 Classic VM 基于 handler 的对象查找方式（原因是进行 GC 后对象将可能会被移动位置，如果将地址为 123456 的对象移动到 654321，在没有明确信息表明内存中哪些数据是 reference 的前提下，虚拟机是不敢把内存中所有 123456 的值改为 654321 的，所以要使用句柄来保持 refrence 值的稳定），这样每次定位对象都少了一次间接查找的开销，提升执行性能。</p><br></li><br><li><br><p>虽然 <strong>Exact VM</strong> 的技术相对 <strong>Classic VM</strong> 来说先进了许多，但是在商业应用上只存在了很短暂的时间就被更为优秀的 <strong>HotSpot VM</strong> 所取代，甚至还没有来得及发布 Windows 和 Linux 平台下的商用版本。而 Classic VM 的生命周期则相对长了许多，它在 JDK 1.2 之前是 Sun JDK 中唯一的虚拟机，在 JDK 1.2时，它与 HotSpot VM 并存，但默认使用的是 Classic VM，而在 JDK 1.3 时，HotSopt VM 成为默认虚拟机，但 Classic VM 仍作为虚拟机的 “备用选择” 发布，直到 JDK 1.4 的时候，Classic VM 才完全退出商用虚拟机的历史舞台，与 Exact VM 一起进入了 <strong>Sun Labs Research VM</strong> 中 😴。</p><br></li><br></ul><br><h3>1.4.2 - Sun HotSpot VM</h3><br><ul><br><li><br><p>提起 <strong>HotSpot VM</strong>，相信所有 Java 程序员都知道，它是 Sun JDK 和 OpenJDK 中所带的虚拟机，也是目前 <strong>使用范围最广的 Java 虚拟机</strong>。但不一定所有人都知道的是，这个目前看来 ”血统纯正” 的虚拟机在最初并非由 Sun 公司开发，而是一家名为 <strong>Longview Technologies</strong> 的小公司设计的；设置这个虚拟机最初并非是为 Java 语言而开发的，它来源于 <strong>Strongtalk VM</strong>，而这款虚拟机中相当多的技术又是来源于一款 Self 语言实现 “可能达到 C 语言 50% 以上的执行效率” 的目标而设计的虚拟机，Sun 公司注意到了这款虚拟机在 JIT 编译上有许多优秀的理念和实际效果，在 1997 年收购了 <strong>Longview Technologies</strong> 公司，从而获得了 HotSpot VM。</p><br></li><br><li><br><p>HotSpot VM 继承了 Sun 之前两款商用虚拟机的优点 =&gt; <strong>准确式内存管理</strong>，也有许多自己新的技术优势，如它名称中的 HotSpot 指的就是它的 <strong>热点代码探测技术</strong>（其实两个 VM 基本上是同时期的独立产品，HotSpot 还稍早一些，HotSpot 一开始就是准确式 GC，而 <strong>Exact VM</strong> 中也有与之几乎一样的热点探测。为了 Exact VM 和 HotSpot VM 哪个成为 Sun 主要支持的 VM 产品，在 Sun 公司内部还有过争论，HotSpot 打败 Exact 并不能算技术上的胜利），HotSpot VM 的热点代码探测能力可以通过执行计数器找出最具有编译价值的代码，然后通知 JIT 编译器以方法为单位进行编译。如果一个方法被频繁调用，或方法中有效循环次数很多，将会被分别触发 <strong>标准编译</strong> 和 <strong>OSR（栈上替换）</strong> 编译动作。通过编译器与解释器恰当地协同工作，可以在最优化的程序相应时间与最佳执行性能中取得平衡，而且无须等待本地代码输出才能执行程序，即时编译的时间压力也相对减小，这样有助于引入更多的代码优化技术，输出质量更高的本地代码。</p><br></li><br><li><br><p>在 2006 年的 JavaOne 大会上，Sun 公司宣布最终会把 Java 开源，并在随后的一年，陆续将 JDK 的各个部分（其中当然也包括了 HotSpot VM）在 GPL 协议下公开了源码，并在此基础上建立了 OpenJDK。这样，HotSpot VM 便成为了 Sun JDK 和 OpenJDK 两个实现极度接近的 JDK 项目的共同虚拟机。</p><br></li><br></ul><br><h3>1.4.3 - Sun Mobile-Embedded VM / Meta-Circular VM</h3><br><ul><br><li>Sun 公司所研发的虚拟机可不仅有前面介绍的服务器、桌面领域的商用虚拟机，除此之外，Sun 公司面对 <strong>移动</strong> 和 <strong>嵌入式市场</strong>，也发布过虚拟机产品，另外还有一类虚拟机，在设计之初就没报有商用目的，仅仅是用于研究、验证某种技术和观点，又或者是作为一些规范的标准实现。这些虚拟机对于大部分不从事相关领域开发的 Java 程序员来说可能比较陌生，Sun 公司发布的其他 Java 虚拟机有<ol><br><li>KVM：K 是 Kilobyte 的意思，它强调简单、轻量、高度可移植，但是运行速度比较慢。在 Android、iOS 等智能手机操作系统出现前曾经在手机平台上得到非常广泛的应用。</li><br><li>CDC/CLDC HotSpot Implementation：CDC/CLDC全称是 Connected（Limited）Device Configuration，在 JSR-136、JSR-218 规范中进行定义，它希望在手机、电子书、PDA 等设备上建立统一的 Java 编程接口，而 <strong>CDC-HI VM</strong> 和 <strong>CLDC-HI VM</strong> 则是它们的一组参考实现。CDC/CLDC 是整个 <strong>JavaME</strong> 的重要支柱，但从目前 Android 和 iOS 二分天下的移动数字设备市场看来，在这个领域中，Sun 的虚拟机所面临的局面远不如服务器和桌面领域乐观。</li><br><li>Squawk VM：Squawk VM 由 Sun 公司开发，运行于 Sun SPOT（Sun Small Programmable Object Technology，一种手持的 WiFi 设备），也曾经运用于 Java Card。这是一个 Java 代码比重很高的嵌入式虚拟机实现，其中诸如类加载器、字节码验证器、垃圾回收器、解释器、编译器和线程调度都是 Java 语言本身完成的，仅仅靠 C 语言来编写设备 I/O 和必要的本地代码。</li><br><li>JavaInJava：JavaInJava 是 Sun 公司于 1997-1998 年间研发的一个实验室性质的虚拟机，从名字就可以看出，它试图以 Java 语言来实现 Java 语言本身的运行环境，即所谓的 <strong>“元循环”</strong>（Meta-Circular，是指使用语言自身来实现其运行环境）。它必须运行在另外一个宿主虚拟机之上，内部没有 JIT 编译器，代码只能以解释模式执行。在 20世纪末主流 Java 虚拟机都未能很好解决性能问题的时代，开发这种项目，其执行速度可想而知。</li><br><li>Maxine VM：Maxine VM 和上面的 JavaInJava 非常相似，它也是一个几乎全部以 Java 代码实现（只有用于启动 JVM 的加载器使用 C 语言编写）的元循环 Java 虚拟机。这个项目于 2005 年开始，到现在仍然在发展之中，比起 JavaInJava，Maxine VM 就显得 “靠谱” 很多，它有先进的 JIT 编译器和垃圾回收器（但没有解释器），可以在宿主模式或独立模式下执行，其执行效率已经接近了 HotSpot Client VM 的水平。</li><br></ol><br></li><br></ul><br><h3>1.4.4 BEA JRockit / IBM J9 VM</h3><br><blockquote><p>前面介绍了 Sun 公司的各种虚拟机，除了 Sun 公司以外，其他组织、公司也研发过不少虚拟机实现，其中规模最大、最著名的就是 <strong>BEA</strong> 和 <strong>IBM</strong> 公司了。</p></blockquote><br><ul><br><li><br><p>JRockit VM 曾经号称 <strong>世界上速度最快的 Java 虚拟机</strong>（广告词，貌似 J9 VM 也这样说过🙄），它是 BEA 公司在 2002 年从 <strong>Appeal Virtual Machines</strong> 公司收购的虚拟机。BEA 公司将其发展为一款 <strong>专门为服务器硬件和服务器端应用场景高度优化的虚拟机</strong>，由于专注于服务器端应用，它可以不太关注程序启动速度，因此 JRockit 内部不包含解析器实现，全部代码都靠即时编译器编译后执行。除此之外，JRockit 的垃圾收集器和 <strong>MissionControl</strong> 服务套件等部分的实现，在众多 Java 虚拟机中也一直处于领先水平。</p><br></li><br><li><br><p>IBM J9 VM 并不是 IBM 公司唯一个 Java 虚拟机，不过是目前其主力发展的 Java 虚拟机。IBM J9 VM 原本是内部开发代号，正式名称是 “IBM Technology for Java Virtual Machine”，简称 IT4J，只是这个名字太拗口了一点，普及程度不如 J9。J9 VM 最初是由 <em>IBM Ottawa</em> 实验室一个名为 SmallTalk 的虚拟机扩展而来，当时这个虚拟机有一个 bug 是由 8k 值定义错误引起的，工程师花了很长时间终于发现并解决了这个错误，此后这个版本的虚拟机就称为 K8 了，后来扩展出支持 Java 的虚拟机就被称为 J9 了。与 BEA JRockit 专注于服务器端应用不同，IBM J9 的市场定位与 Sun HotSpot 比较接近，它是一款设计上 <em>从服务器端到桌面应用再到嵌入式都全面考虑的多用途虚拟机</em>，J9 的开发目的是做为 IBM 公司各种 Java 产品的执行平台，它的主要市场是和 IBM 产品（如 IBM WebSphere 等）搭配以及在 IBM AIX 和 z/OS 这些平台上部署 Java 应用。</p><br></li><br></ul><br><h3>1.4.5 - Azul VM / BEA Liquid VM</h3><br><blockquote><p>我们平时所提及的 “高性能 Java 虚拟机”，一般是指 HotSpot、JRockit、J9这类在通用平台上运行的商用虚拟机，但其实 <em>Azul VM</em> 和 <em>BEA Liquid VM</em> 这类特定硬件平台专有的虚拟机才是 <em>高性能</em> 的武器。</p></blockquote><br><ul><br><li><br><p>Azul VM 是 Azul Systems 公司在 HotSpot 基础上进行大量改进，运行于 Azul Systems 公司的专有硬件 Vega 系统上的 Java 虚拟机，每个 Azul VM 实例都可以管理至少数十个 CPU 和数百 GB 内存的硬件资源🙀，并提供<br><strong>在巨大内存范围内实现可控的 GC 时间的垃圾收集器</strong>、<strong>为专有硬件优化的线程调度</strong> 等优秀特征。在 2010 年，Azul System 公司开始从硬件转向软件，发布了自己的 Zing JVM，可以在通用的 x86 平台上提供接近于 Vega 系统的特性。</p><br></li><br><li><br><p>Liquid VM 即是现在的 JRockit VM 虚拟化版本，Liquid VM 不需要操作系统的支持，或者说它自己 <strong>本身实现了一个专有操作系统的必要功能</strong>，如文件系统、网络操作等。<strong>由虚拟机越过通用操作系统直接控制硬件</strong> 可以获得很多好处，如在线程调度时，不需要再进行内核态 / 用户态的切换等，这样可以最大限度地发挥硬件的功能，提升 Java 程序的执行性能。</p><br></li><br></ul><br><h3>1.4.6 - Apache Harmony / Google Android Dalvik VM</h3><br><blockquote><p>这节介绍的两个虚拟机只能称作 “虚拟机”，而不能称做 “Java 虚拟机”，但是这两款虚拟机（以及所代表的技术体系）对最近几年的 Java 世界产生了非常大的影响和挑战，甚至有些悲观的评论家认为成熟的 Java 生态系统有崩溃的可能。</p></blockquote><br><ul><br><li><br><p>Apache Harmony 是一个 Apache 软件基金会下以 Apache License 协议开源的实际兼容于 JDK 1.5 和 JDK 1.6 的 Java 程序运行平台，这个介绍相当拗口。它包含自己的虚拟机和 Java 库，用户可以在上面运行 Eclipse、Tomcat、Maven 等常见的 Java 程序，但是它没有通过 <em>TCK 认证</em>，所以我们不得不用那么长一串拗口的语言来介绍它，而不能用一句 “Apache 的 JDK” 来说明。如果一个公司要宣布自己的运行平台 “兼容于 Java 语言”，那就必须要通过 TCK（Technology Compatibility Kit）的兼容性测试。Apache 基金会曾经要求 Sun 公司提供 TCK 的使用授权，但是一直遭到拒绝，直到 Oracle 公司收购了 Sun 公司之后，双方关系越闹越僵，最终导致 Apache 愤然退出 JCP（Java Community Process） 组织，这是目前为止 Java 社区最严重的一次 “分裂”。</p><br></li><br><li><br><p>在 Sun 将 JDK 开源形成 OpenJDK 之后，Apache Harmony 开源的优势被极大地削弱，甚至连 Harmony 项目的最大参与者 IBM 公司也宣布辞去 Harmony 项目管理主席的职位，并参与 OpenJDK 项目的开发。虽然 Harmony 没有经历过真正大规模的商业运作，但是它的许多代码（基本上是 Java 库部分的代码）被吸纳进 IBM 的 JDK7 实现及 Google Android SDK 之中，尤其是对 Android 的发展起到了很大的推动作用。</p><br></li><br><li><br><p>说到 Android，这个时下最热门的移动数码设备平台在最近几年间的发展过程中所取得的成果已经远远超越了 Java ME 在过去十多年所取得的成果，Android 让 Java 语言真正走进了移动数码设备领域，只是走的并非 Sun 公司原本想象的那一条路。</p><br></li><br><li><br><p>Dalvik VM 是 Android 平台的核心组成部分之一，它的名字来源于冰岛一个名为 Dalvik 的小渔村。<em>Dalvik VM 并不是一个 Java 虚拟机</em>，它没有遵循 Java 虚拟机规范，不能直接执行 Java 的 Class 文件，使用的是 <em>寄存器架构</em> 而不是 JVM 中常见的 <em>栈架构</em>。但是它与 Java 又有着千丝万缕的联系，它执行的 dex（Dalvik Executable）文件可以通过 Class 文件转化而来，使用 Java 语法编写应用程序，可以直接使用大部分的 Java API 等。目前 Dalvik VM 随着 Android 一起处于一个迅猛发展阶段，在 Android 2.2 中已提供即时编译器实现，在执行性能上有了很大的提高。</p><br></li><br></ul><br><h3>1.4.7 - Microsoft JVM 及其他</h3><br><blockquote><p>在十几年的 Java 虚拟机发展过程中，除去上面介绍而那些被大规模商业应用过的 Java 虚拟机外，还有许多虚拟机是不为人知的或者曾经 “绚丽” 过但最终湮灭的。我们以其中微软公司的 JVM 为例来介绍一下。</p></blockquote><br><ul><br><li><br><p>也许 Java 程序员听起来可能会觉得惊讶，微软公司曾经是 Java 技术的铁杆支持者（也必须承认，与 Sun 公司争夺 Java 控制权，令 Java 从跨平台技术变为绑定在 Windows 上的技术是微软公司的主要目的）。在 Java 语言诞生初期（1996年-1998年，以 JDK1.2 发布为界），它的主要应用之一是在浏览器中运行 Java Applets 程序，微软公司为了在 IE3 中支持 <em>Java Applets</em> 应用而开发了自己的 Java 虚拟机，虽然这款虚拟机只有 Windows 平台的版本，却是当时 Windows 下性能最好的 Java 虚拟机，它在 1997年和1998年连续两年获得了《PC Magazine》杂志的 “编辑选择奖”。但好景不长，在 1997年10月，Sun 公司正式以侵犯商标、不正当竞争等罪名控告微软公司，在随后对微软公司的垄断调查之中，这款虚拟机也曾经作为证据之一被呈送法庭。这场官司的结果是微软公司赔偿 2000 万美金给 Sun 公司（最终微软公司因垄断赔偿给 Sun 公司的总金额高达 10 亿美元），承诺终止其 Java 虚拟机的发展，并逐步在产品中移除 Java 虚拟机相关功能。具有讽刺意味的是，在最后 Windows XP SP3 中 Java 虚拟机被完全抹去的时候，Sun 公司却又到处登报希望微软公司不要这样做。Windows XP 高级产品经理 Jim Cullinan 称：”我们花了 3 年时间和 Sun 打官司，当时他们试图阻止我们在 Windows 中支持 Java，现在我们这样做了，可他们又在抱怨，这太具有讽刺意味了。”</p><br></li><br><li><br><p>如果当前 Sun 公司没有起诉微软公司，微软公司继续保持对 Java 技术的热情，那 Java 的世界会变得怎么样呢？.NET 技术是否会发展起来？但历史是没有假设的。还有一些 Java 虚拟机是没有介绍到的。</p><br></li><br></ul><br><hr><br><h1>1.5 - 展望 Java 技术的未来</h1><br><blockquote><p>在 2005 年，Java 技术诞生 10 周年的 SunOne 技术大会上，Java 语言之父 James Gosling 做了一场题为 “Java 技术下一个十年” 的演讲。笔者不具备 James Gosling 博士那样高屋建瓴的视角，这里仅从 Java 平台中几个新生的但已经开始展现出蓬勃之势的技术发展点来看一下后续 JDK 版本的一些很有希望的技术重点。</p></blockquote><br><h3>1.5.1 - 模块化</h3><br><ul><br><li><br><p>模块化是解决应用系统与技术平台越来越服复杂、越来越庞大问题的一个重要途径。无论是开发人员还是产品最终用户，都不希望为了系统中一小块的功能而不得不下载、安装、部署及维护整套庞大的系统。站在整个软件工业化的高度来看，模块化是建立各种功能的标准件的前提。最近几年 OSGi 技术的迅速发展、各个厂商在 JCP 中对模块化规范的激烈斗争，都能充分说明模块化技术的迫切和重要。</p><br></li><br><li><br><p>在未来的 Java 平台中，很可能会对模块化提出语法层面的支持。早在 2007 年，Sun 公司就提出过 JSR-277：<em>Java 模块系统</em>（Java Module System），试图建立 Java 平台的模块化标准，但受挫于以 IBM 公司为主导提交的 JSR-291：Java SE 动态组件支持（Dynamic Component Support for Java SE，这实际就是 OSGi R4.1）。由于模块化规范主导权的重要性，Sun 公司不能接受一个无法由它控制的规范，Sun 公司再次提交了一个新的规范请求文档 JSR-294：Java 编程语言中的改进模块性支持（Improved Modularity Support in the Java Programming Language），尽管这个 JSR 仍然没有通过，但是 Sun 公司已经独立于 JCP 专家组在 OpenJDK 里建立了一个名为 Jigsaw（拼图）的子项目来推动这个规范在 Java 平台中转变为具体的实现。Java 模块化之争目前还没有结束，OSGi 已经发布到 R5.0 版本，而 Jigsaw 从 Java 7 延迟至 Java 8，在 2012 年 7 月又不得不宣布推迟到 Java9 中发布，从这点看来，Sun 在这场战争中处于劣势，但无论胜利者是哪一方，Java 模块化已经成为一项无法阻挡的变革潮流。</p><br></li><br></ul><br><h3>1.5.2 - 混合语言</h3><br><ul><br><li><br><p>当单一的 Java 开发已经无法满足当前软件的复杂需求时，越来越多基于 Java 虚拟机的语言开发被应用到软件项目中，Java 平台上的多语言混合编程正成为为主流，每种语言都可以针对自己擅长的方面更好地解决问题。试想一下，在一个项目之中，并行处理用 Clojure 语言编写，展示层使用 JRuby / Rails，中间层则是 Java，每个应用层都将使用不同的编程语言来完成，而且，接口对每一层的开发者都是透明的，各种语言之间的交互不存在任何困难，就像使用自己语言的原生 API 一样方便，因为它们最终都运行在一个虚拟机之上。</p><br></li><br><li><br><p>在最近的几年里，Clojure、JRuby、Groovy 等新生语言的使用人数不断增长，而运行在 Java 虚拟机（JVM）之上的语言数量也在迅速膨胀。<strong>通过特定领域的语言去解决特定领域的问题</strong> 是当前软件开发应对日趋复杂的项目需求的一个方向。<br></p><br><div class="image-package"><br><img src="http://upload-images.jianshu.io/upload_images/1034114-bf2df384d415a182.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/1034114-bf2df384d415a182.jpg?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption">Languages In The Java</div><br></div><br></li><br><li><br><p>除了催生出大量的新语言外，许多已经有很长历史的程序语言也出现了基于 Java 虚拟机实现的版本，这样使得混合编程对许多以前使用其他语言的 “老” 程序员也具备相当大的吸引力，软件企业投入了大量资本的现有代码资产也能很好地保护起来。</p><br></li><br></ul><br><h3>1.5.3 - 多核并行</h3><br><ul><br><li>如今，CPU 硬件的发展方向已经从高频率转变为 <strong>多核心</strong>，随着多核时代的来临，软件开发越来越关注并行编程的领域。早在 JDK1.5 就已经引入 <code>java.util.concurrent</code> 包实现了一个粗粒度的并发框架。而 JDK1.7 中加入的 <code>java.util.cuncurrent.forkjoin</code> 包则是对这个框架的一次重要扩充。<strong>Fork / Join模式</strong> 是处理并行编程的一个经典方法。虽然不能解决所有的问题，但是在此模式的适用范围之内，能够轻松地利用多个 CPU 核心提供的计算资源来协作完成一个复杂的计算任务。通过利用 Fork / Join 模式，我们能够更加顺场地过渡到多核心时代。<br><div class="image-package"><br><img src="http://upload-images.jianshu.io/upload_images/1034114-2bad04829a2300c0.gif?imageMogr2/auto-orient/strip" data-original-src="http://upload-images.jianshu.io/upload_images/1034114-2bad04829a2300c0.gif?imageMogr2/auto-orient/strip"><br><div class="image-caption">Fork / Join 模式</div><br></div><br></li><br></ul><br><ul><br><li><br><p>在 Java 8 中，将会提供 <strong>Lambda</strong> 支持，这将会极大改善目前 Java 语言不适合 <strong>函数式编程</strong> 的现状（目前 Java 语言使用函数式编程并不是不可以，只是会显得很臃肿），函数式编程的一个重要优点就是这样的程序天然地适合 <strong>并行运行</strong>，这对 Java 语言在多核时代继续保持主流语言的地位有很大帮助。</p><br></li><br><li><br><p>另外，在并行计算中必须提及的还有 OpenJDK 的子项目 <strong>Sumatra</strong>，目前显卡的算术运算能力、并行能力已经远远超过了 CPU，在图形领域以发掘显卡的潜力是近几年计算机发展的方向之一，例如 C 语言的 CUDA。Sumatra 项目就是为 Java 提供使用 <strong>GPU</strong>（Graphics Processing Units）和 <strong>APU</strong>（Accelerated Processing Units） 运算能力的工具，以后它将会直接提供 Java 语言层面的 API，或者为 Lambda 和其他 JVM 语言提供底层的并行运算支持。</p><br></li><br><li><br><p>在 JDK 外围，也出现了专为满足并行计算需求的计算框架，如 Apache 的 Hadoop Map / Reduce，这是一个简单易懂的并行框架，能够运行在由上千个商用机器组成的大型集群上，并且能以一种可靠的容错方式并行处理 TB 级别的数据集。另外，还出现了诸如 Scala、Clojure 及 Erlang 等天生就具备并行计算能力的语言。</p><br></li><br></ul><br><h3>1.5.4 - 进一步丰富语法</h3><br><ul><br><li><br><p>Java 5 曾经对 Java 语法进行了一次扩充，这次扩充加入了<strong>自动装箱</strong>、<strong>泛型</strong>、<strong>动态注解</strong>、<strong>枚举</strong>、<strong>可边长参数</strong>、<strong>遍历循环</strong> 等语法，使得 Java 语言的精确性和易用性有了很大的进步。在 Java 7（由于进度压力，许多改进已推迟至 Java 8）中，对 Java 语言进行了另一次大规模的扩充。Sun（以被 Oracle 收购）专门为改进 Java 语法在 OpenJDK 中建立了 Coin 子项目来统一处理对 Java 语法的细节修改，如二进制数的原生支持、在 switch 语句中支持字符串、<code>&lt;&gt;</code>等操作符、异常处理的改进、简化变长参数方法调用、面向资源的 <code>try-catch-finally</code> 语句等都是在 Coin 项目之中提交的内容。</p><br></li><br><li><br><p>除了 Coin 项目之外，在 JSR-355（Lambda Expressions for the Java TM Programming Language）中定义的 Lambda 表达式也将对 Java 的语法和语言习惯产生很大的影响，面向函数方式的编程可能会成为主流。</p><br></li><br></ul><br><h3>1.5.5 - 64位虚拟机</h3><br><ul><br><li><br><p>在几年之前，主流的 CPU 就开始支持 64 位架构了。Java 虚拟机也是在很早之前就退出了支持 64 位系统的版本。但 Java 程序运行在 64 位虚拟机上需要付出比较大的额外代价：首先是 <strong>内存问题</strong>，由于 <strong>指针膨胀</strong> 和各种 <strong>数据类型对齐补白</strong> 的原因，运行于 64 位系统上的 Java 应用需要消耗更多的内存，通常要比 32 位系统额外增加 10%-30% 的内存消耗；其次，多个机构的测试结果显示，64 位虚拟机的运行速度在各个测试项中几乎全面落后于 32 位虚拟机，两者大约有 15% 左右的性能差距。</p><br></li><br><li><br><p>但是在 Java EE 方面，企业级应用经常需要使用超过 4GB 的内存，对于 64 位虚拟机的需求是非常迫切的，但由于上述原因，许多企业应用仍然选择使用虚拟集群等方式继续在 32 位虚拟机中进行部署。Sun 也注意到了这些问题，并做出了一些改善，在 JDK 1.6 Update14 之后，提供了普通对象指针压缩同能（<code>-XX:+ UseCompressedOops</code>，这个参数不建议显示设置，建议维持默认由虚拟机的 Ergonomics 机制自动开启），在执行代码时，动态植入压缩指令以节省内存消耗，但是开启压缩指针会增加执行代码数量，因为所有在 Java 堆里的、指向 Java 堆对象的指针都会被压缩，这些指针的访问就需要更多的代码才可以实现，并且并不只是读写字段才受影响，在实例方法调用、子类型检查等操作中也受影响，因为对象实例的引用也被压缩了。随着硬件的进一步发展，计算机终究会完全过渡到 64 位的时代，这是一件毫无疑问的事情，主流的虚拟机应用也终究会从 32 位发展至 64 位，而虚拟机对 64 位的支持也将会进一步完善。</p><br></li><br></ul><br><hr><br><h1>悄悄话 🌈</h1><br><ul><br><li><em>最近刚刚结束了 JavaSE 部分课程的学习，趁着放假的时间深挖一下 Java 虚拟机，为后续的 Java 学习打下基础。计划用 2 周的时间全面学习一下 《深入理解 Java 虚拟机》一书，并且会将学习笔记分享到我的专题中。</em></li><br><li><em>万事开头难，这本书原作者在前言中也已经写到，本书的读者应该熟练掌握 Java 语言或者是有多年 Java 开发经验，但是对于我一个 Java 刚入门的小白来说读起来可能会有一些困难，所以我想要开好这个头，也为下面的学习铺平道路</em></li><br><li><em>第一章的内容我是全部精读了一遍然后写出来的，期间读到了 Sun 公司在它的晚年时对 Java 的 10 个里程碑设置，慨叹 Java 开发团队的管理者和工程师的前瞻性，也惋惜 Sun 公司对 Java 的开发因最终的资金、外部环境以及项目复杂度而最终流产。如果当初的 Sun 公司能处理好技术之外的事情，并将原计划的 JDK8 发布的话，想象不到这之后的开发语言会再次提升到什么样的一个高度。除了对 Java 语言的时代背景和技术背景的了解之外，也了解到了大量的关于虚拟机的一些基础知识和编程语言发展前景，也许这些知识在开发过程中不能明确指导我们的代码编写，但是却拓展了我个人对 Java 的了解，我觉得这也是一个作为开发者来说应有的编程之外的基础素养。</em></li><br><li><em>之前关注了我的 <a href="http://www.jianshu.com/collection/a017738f6f45" target="_blank">JavaSE 成长之路</a> 专题的小伙伴，接下来的几天我也会将我之前的笔记整理出来陆续发布到这个专题之中，希望能和大家多多交流。</em></li><br></ul><br><hr><br><h3>彩蛋 🐣</h3><br><ul><br><li><br><h5>最近在拜读同名一书 《深入理解 Java 虚拟机》并会与大家分享我的读书笔记 <a href="http://www.jianshu.com/c/4e444ac4f30d" target="_blank">深入理解 Java 虚拟机</a>，有兴趣的朋友可以一同交流进步。</h5><br></li><br></ul><br><hr><br><blockquote><p>如果你觉得我的分享对你有帮助的话，请在下面👇随手点个喜欢 💖，你的肯定才是我最大的动力，感谢。</p></blockquote>
+
+<pre><code>&lt;/div&gt;
+</code></pre><p>原文引自：<a href="http://www.jianshu.com/p/4aa86f791beb" target="_blank" rel="external">http://www.jianshu.com/p/4aa86f791beb</a>         作者：<a href="http://www.jianshu.com/u/d699c621a4ad" target="_blank" rel="external">SawyerZh</a> </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/">
+                    深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/03/23/理解Java虚拟机体系结构(转)/">
+                    理解Java虚拟机体系结构(转）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">1.2 - Java 技术体系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">1.3 - Java 发展史</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">1.4 - Java 虚拟机发展史</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.0.1.</span> <span class="toc-text">1.4.1 - Sun Classic / Exact VM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.0.2.</span> <span class="toc-text">1.4.2 - Sun HotSpot VM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.0.3.</span> <span class="toc-text">1.4.3 - Sun Mobile-Embedded VM / Meta-Circular VM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.0.4.</span> <span class="toc-text">1.4.4 BEA JRockit / IBM J9 VM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.0.5.</span> <span class="toc-text">1.4.5 - Azul VM / BEA Liquid VM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.0.6.</span> <span class="toc-text">1.4.6 - Apache Harmony / Google Android Dalvik VM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.0.7.</span> <span class="toc-text">1.4.7 - Microsoft JVM 及其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">1.5 - 展望 Java 技术的未来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.0.1.</span> <span class="toc-text">1.5.1 - 模块化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.0.2.</span> <span class="toc-text">1.5.2 - 混合语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.0.3.</span> <span class="toc-text">1.5.3 - 多核并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.0.4.</span> <span class="toc-text">1.5.4 - 进一步丰富语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.0.5.</span> <span class="toc-text">1.5.5 - 64位虚拟机</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">悄悄话 🌈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.0.1.</span> <span class="toc-text">彩蛋 🐣</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">5.0.1.0.1.</span> <span class="toc-text">最近在拜读同名一书 《深入理解 Java 虚拟机》并会与大家分享我的读书笔记 深入理解 Java 虚拟机，有兴趣的朋友可以一同交流进步。</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"深入理解 Java 虚拟机（一）走近 Java(转)　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/" title="上一篇: 深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/03/23/理解Java虚拟机体系结构(转)/" title="下一篇: 理解Java虚拟机体系结构(转）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/A＊算法剖析/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy 2/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/编程能力与编程年龄/">编程能力与编程年龄</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/13/Java IO流体系中常用的流分类/">Java IO流体系中常用的流分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/机器学习主流算法分析/">机器学习主流算法分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/深度优先与广度优先/">深度优先与广度优先</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/String.format()字符串格式化/">String.format()字符串格式化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/浅谈二叉搜索树/">浅谈二叉搜索树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/jar文件到底是什么/">jar文件到底是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/数据库三范式解析/">数据库三范式解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/">深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/">深入理解 Java 虚拟机（一）走近 Java(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/理解Java虚拟机体系结构(转)/">理解Java虚拟机体系结构(转）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Chuanhe Liu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chuanhe Liu" />
+
+
+
+<meta name="description" content="原文：http://coolshell.cn/articles/10688.html
+今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编程能力与编程年龄">
+<meta property="og:url" content="http://yoursite.com/2017/03/08/编程能力与编程年龄/index.html">
+<meta property="og:site_name" content="chuanhe的博客">
+<meta property="og:description" content="原文：http://coolshell.cn/articles/10688.html
+今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
+<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
+<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg">
+<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg">
+<meta property="og:updated_time" content="2017-03-08T21:34:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编程能力与编程年龄">
+<meta name="twitter:description" content="原文：http://coolshell.cn/articles/10688.html
+今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
+<meta name="twitter:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="chuanhe的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/chuanheliu/chuanheliu.github.io/master/img/JavaLogo.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>编程能力与编程年龄 | chuanhe的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Chuanhe Liu</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Java影响睡眠</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.yfgeek.com/">Ivan&#39;s Blog</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">英格兰友人的最爱</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Java影响睡眠</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-编程能力与编程年龄" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/08/编程能力与编程年龄/" class="article-date">
+      <time datetime="2017-03-08T21:48:04.000Z" itemprop="datePublished">2017-03-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编程能力与编程年龄
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>原文：<a href="http://coolshell.cn/articles/10688.html" target="_blank" rel="external">http://coolshell.cn/articles/10688.html</a></p>
+<p></p><p>今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。</p><a id="more"></a><p></p>
+<p></p><h4>论文</h4><p></p>
+<p></p><p>首先，我们先来看一篇论文《<a href="http://people.engr.ncsu.edu/ermurph3/papers/msr13.pdf" target="_blank">Is Programming Knowledge Related to Age?</a>》（PDF链接），这篇论文是两个北卡罗莱纳州立大学计算机科学系的两个人Patrick Morrison 和 Emerson Murphy-Hill 对StackOverflow.com上的用户做了相关的数据挖掘得出来的一些数据。（我们知道StackOverflow.com上的数据是公开的，任何人都可以用来分析和统计，所以这篇论文的真实性是有的）</p><p></p>
+<p></p><p>数据采样和清洗条件如下：（数据全量是1694981用户，平均年龄30.3岁）</p><p></p>
+<ul><br><li>15-70岁之间的用户（这年龄段的用户被称做“Working age”），当然，有很多用户没有输入年龄，这些用户都被过滤了。</li><br><li>用户在2012年内都回答过问题。因为StackOverflow在2012年对问题和答案的质量要求得比以前高了一倍，所以更能反映程序员的真实水平。</li><br><li>Reputation声望在2-100K之间。（注：StackOverflow的用户Reputation是得到社会认可的，在面试和招聘中是硬通货币。比大学的学分更有价值）</li><br></ul><br><p>上述的条件一共过滤出84,248名程序员，平均年龄：29.02岁，平均Reputaion在1073.9分。</p><br><p><span id="more-10688"></span></p><br><h5>年龄分布图</h5><br><p>下面我们来看一下他们的年龄分布图：我们可以看到程序员年纪的正态分布（高点在25岁左右，但是中点在29岁左右）</p><br><p><img class="aligncenter size-full wp-image-10689" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg" width="578" height="512" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg 578w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01-300x265.jpg 300w" sizes="(max-width: 578px) 100vw, 578px"></p><br><h5>能力和年龄分布图</h5><br><p>然后，计算每个人每个月的Reputation，这样可以找到这个用户的真正的活跃时间，这样便于计算这个程序员的真实能力。（总声望 / 活跃时间），可以得到他平均每个月得来的Reputation。</p><br><p>我们来看看程序员的能力和年龄段的分布图：（你可能会大吃一惊）</p><br><p><img class="aligncenter size-full wp-image-10690" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg" width="571" height="528" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg 571w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02-300x277.jpg 300w" sizes="(max-width: 571px) 100vw, 571px"></p><br><p>上图中我们可以看到，程序员的能力在从25岁左右开始上升，一直到50岁后才会开始下降。所以说，程序员吃的不是青春饭。只有码农，靠蛮力，用体力而不是用脑力的程序员才是吃青春饭的人。</p><br><h5>年纪大的人是否跟不上新技术</h5><br><p>论文的作者分析了Tag，用了最近5年内比较流行的技术Tag，然后用了一套比较严谨的算法来查看那些所谓的“老程序员”是否在新技术上跟上不了，所谓跟不上，也就是这些老的程序员在回答这些新技术上并不活跃。所谓老，就是37岁以上的程序员（就是我现在的年纪）。</p><br><p>得到了下表：可以看到，老程序员和年轻的程序员对于一些新技术的学习来说也是差不多的，甚至有些项还超过了年轻的程序员。</p><br><p style="text-align: center;"><img class="aligncenter  wp-image-10691" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg" width="771" height="232" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg 1101w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-300x90.jpg 300w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-1024x307.jpg 1024w" sizes="(max-width: 771px) 100vw, 771px"></p><br><h5 style="text-align: left;">结论</h5><br><p>论文的结论是：</p><br><p style="padding-left: 30px;"><strong>1）程序员技术能力上升是可以到50岁或60岁的。</strong></p><br><p style="padding-left: 30px;"><strong>2）老程序员在获取新技术上的能力并不比年轻的程序员差。</strong></p><br><h4 style="text-align: left;">我的一些感受</h4><br><p style="text-align: left;">最后，我说一说我的一些感受：</p><br><ul><br><li>这些年来的对于外企和国内感受—— <strong>国外牛B的IT公司的工程能力并不见得比国内的要强多少，但是国外那些NB的IT公司的架构和设计能力远远超过国内的公司，最可怕的是，那些有超强架构和设计能力的“老程序员们”还战斗在一线，这些战斗在一线的老鸟的能力绝对超过100个普能的新手。</strong></li><br></ul><br><ul><br><li>对年轻程序员的感受——国内新一代的程序员们太浮燥了。<strong>老实说，对于大多数人来说，如果你没有编程到30岁，你还不能成为一个“合格”的程序员</strong>。<span style="color: #cc0000;"><strong>所以，并不是编程编到30岁就玩完了，而是编程编到30岁才刚刚入门。</strong><span style="color: #000000;">这些不合格的程序，整天BS这个不好，那个不好的，而且喜欢速成，好大喜功。</span></span></li><br></ul><br><ul><br><li>我是一个奔四的人了，编程就像登山一样，越往上爬人越少，所以，在我这个年纪还有想法，对编程还有热情的人不多了，基本上都是转Manager了。<span style="color: #cc0000;"><strong>其实，什么职位，Title都是虚的，公司没了什么都没了，只有技术才是硬通货。而且，越是这个年纪还在玩编程玩技术的人，其实其经验和能力都是比较强的，都是中坚力量，如果还有其它这个年纪和我一样的人，求交往</strong></span>。</li><br></ul>
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/03/12/13 copy 2/">
+                    A＊算法剖析
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/02/13/Java IO流体系中常用的流分类/">
+                    Java IO流体系中常用的流分类
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">论文</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">能力和年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">年纪大的人是否跟不上新技术</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">我的一些感受</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"编程能力与编程年龄　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/03/12/13 copy 2/" title="上一篇: A＊算法剖析">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/02/13/Java IO流体系中常用的流分类/" title="下一篇: Java IO流体系中常用的流分类">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/A＊算法剖析/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy 2/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/编程能力与编程年龄/">编程能力与编程年龄</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/13/Java IO流体系中常用的流分类/">Java IO流体系中常用的流分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/机器学习主流算法分析/">机器学习主流算法分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/深度优先与广度优先/">深度优先与广度优先</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/String.format()字符串格式化/">String.format()字符串格式化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/浅谈二叉搜索树/">浅谈二叉搜索树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/jar文件到底是什么/">jar文件到底是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/数据库三范式解析/">数据库三范式解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/">深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/">深入理解 Java 虚拟机（一）走近 Java(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/理解Java虚拟机体系结构(转)/">理解Java虚拟机体系结构(转）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Chuanhe Liu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

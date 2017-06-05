@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chuanhe Liu" />
+
+
+
+<meta name="description" content="&amp;nbsp;
+树的特征和定义
+树(Tree)是元素的集合。我们先以比较直观的方式介绍树。下面的数据结构是一个树：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈二叉搜索树">
+<meta property="og:url" content="http://yoursite.com/2016/10/07/浅谈二叉搜索树/index.html">
+<meta property="og:site_name" content="chuanhe的博客">
+<meta property="og:description" content="&amp;nbsp;
+树的特征和定义
+树(Tree)是元素的集合。我们先以比较直观的方式介绍树。下面的数据结构是一个树：">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/16224218-92e0f06926b443a9845653b27b2187d8.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/16232143-93d719390c3e472c9768534d0a27e70f.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/16233042-9861fb0986b74612b35faa40d49804f3.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/16235249-529d7d9dafee4f7192e6c57094372004.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/16230341-b8873fc15d314641ae33399d473cf2d2.jpg">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/17000135-75060e3ee81847c6892d2167710b4317.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/17001935-1b9faa8518a14f95b3bb9eb3083f683c.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/17004331-c29bb56faa7f469fbdc52aade30beac8.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/413416/201303/17004501-b9e0747212684604afc4c5aebb109932.png">
+<meta property="og:updated_time" content="2017-03-08T08:20:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈二叉搜索树">
+<meta name="twitter:description" content="&amp;nbsp;
+树的特征和定义
+树(Tree)是元素的集合。我们先以比较直观的方式介绍树。下面的数据结构是一个树：">
+<meta name="twitter:image" content="http://images.cnitblog.com/blog/413416/201303/16224218-92e0f06926b443a9845653b27b2187d8.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="chuanhe的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/chuanheliu/chuanheliu.github.io/master/img/JavaLogo.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>浅谈二叉搜索树 | chuanhe的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Chuanhe Liu</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Java影响睡眠</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.yfgeek.com/">Ivan&#39;s Blog</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">英格兰友人的最爱</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Java影响睡眠</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-浅谈二叉搜索树" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/07/浅谈二叉搜索树/" class="article-date">
+      <time datetime="2016-10-07T20:48:04.000Z" itemprop="datePublished">2016-10-07</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈二叉搜索树
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p></p><p><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><h3><span style="font-family: courier new,courier;">树的特征和定义</span></h3><p></p>
+<p></p><p><span style="font-family: courier new,courier;"><span style="color: #ff0000;">树(Tree)</span>是元素的集合。我们先以比较直观的方式介绍树。下面的数据结构是一个树：<a id="more"></a></span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/16224218-92e0f06926b443a9845653b27b2187d8.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">树有多个<span style="color: #ff0000;">节点(node)</span>，用以储存元素。某些节点之间存在一定的关系，用连线表示，连线称为边(edge)。边的上端节点称为父节点，下端称为子节点。树像是一个不断分叉的树根。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">每个节点可以有多个<span style="color: #ff0000;">子节点(children)</span>，而该节点是相应子节点的<span style="color: #ff0000;">父节点(parent)</span>。比如说，3,5是6的子节点，6是3,5的父节点；1,8,7是3的子节点, 3是1,8,7的父节点。树有一个没有父节点的节点，称为<span style="color: #ff0000;">根节点(root)</span>，如图中的6。没有子节点的节点称为<span style="color: #ff0000;">叶节点(leaf)</span>，比如图中的1,8,9,5节点。从图中还可以看到，上面的树总共有4个层次，6位于第一层，9位于第四层。树中节点的最大层次被称为深度。也就是说，该树的<span style="color: #ff0000;">深度(depth)</span>为4。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">如果我们从节点3开始向下看，而忽略其它部分。那么我们看到的是一个以节点3为根节点的树：</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/16232143-93d719390c3e472c9768534d0a27e70f.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;"><span style="color: #ff0000;">三角形</span>代表一棵树</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">再进一步，如果我们定义孤立的<span style="color: #ff0000;">一个节点<span style="color: #000000;">也</span></span>是一棵树的话，原来的树就可以表示为根节点和<span style="color: #ff0000;">子树(subtree)</span>的关系:</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/16233042-9861fb0986b74612b35faa40d49804f3.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">上述观察实际上给了我们一种严格的定义树的方法：</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">1. 树是元素的集合。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">2. 该集合可以为空。这时树中没有元素，我们称树为<span style="color: #ff0000;">空树 (empty tree)</span>。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">3. 如果该集合不为空，那么该集合有一个根节点，以及0个或者多个子树。根节点与它的子树的根节点用一个<span style="color: #ff0000;">边(edge)</span>相连。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">上面的第三点是以递归的方式来定义树，也就是在定义树的过程中使用了树自身(子树)。由于树的递归特征，许多树相关的操作也可以方便的使用递归实现。我们将在后面看到。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">(上述定义来自”Data Structures and Algorithm Analysis in C, by Mark Allen Weiss”。 我觉得有一点不太严格的地方。如果说空树属于树，第三点应该是 &ldquo;…以及0个和多个非空子树…&rdquo; )</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><h3 style="text-align: left;"><span style="font-family: courier new,courier;">树的实现</span></h3><p></p>
+<p></p><p><span style="font-family: courier new,courier;">树的示意图已经给出了树的一种内存实现方式: 每个节点储存元素和多个指向子节点的指针。然而，子节点数目是不确定的。一个父节点可能有大量的子节点，而另一个父节点可能只有一个子节点，而树的增删节点操作会让子节点的数目发生进一步的变化。这种不确定性就可能带来大量的内存相关操作，并且容易造成内存的浪费。</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">一种经典的实现方式如下:</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/16235249-529d7d9dafee4f7192e6c57094372004.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;">树的内存实现</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">拥有同一父节点的两个节点互为<span style="color: #ff0000;">兄弟节点(sibling)</span>。上图的实现方式中，每个节点包含有一个指针指向第一个子节点，并有另一个指针指向它的下一个兄弟节点。这样，我们就可以用统一的、确定的结构来表示每个节点。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">计算机的文件系统是树的结构，比如<a title="发布于2012-09-09 00:24" href="http://www.cnblogs.com/vamei/archive/2012/09/09/2676792.html" target="_blank" rel="external">Linux文件管理背景知识</a>中所介绍的。在UNIX的文件系统中，每个文件(文件夹同样是一种文件)，都可以看做是一个节点。非文件夹的文件被储存在叶节点。文件夹中有指向父节点和子节点的指针(在UNIX中，文件夹还包含一个指向自身的指针，这与我们上面见到的树有所区别)。在git中，也有类似的树状结构，用以表达整个文件系统的版本变化 (参考<a class="titlelink" href="http://www.cnblogs.com/vamei/archive/2013/02/21/2918069.html" target="_blank" rel="external">版本管理三国志</a>)。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/16230341-b8873fc15d314641ae33399d473cf2d2.jpg" alt="" width="599" height="446"></span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;">文件树</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><h3><span style="font-family: courier new,courier;">二叉搜索树的C实现</span></h3><p></p>
+<p></p><p><span style="font-family: courier new,courier;"><span style="color: #ff0000;">二叉树(binary)</span>是一种特殊的树。<span style="color: #ff0000;">二叉树的每个节点最多只能有2个子节点</span>：</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/17000135-75060e3ee81847c6892d2167710b4317.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;">二叉树</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">由于二叉树的子节点数目确定，所以可以直接采用上图方式在内存中实现。每个节点有一个<span style="color: #ff0000;">左子节点(left children)</span>和<span style="color: #ff0000;">右子节点(right children)</span>。左子节点是左子树的根节点，右子节点是右子树的根节点。</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">如果我们给二叉树加一个额外的条件，就可以得到一种被称作<span style="color: #ff0000;">二叉搜索树(binary search tree)</span>的特殊二叉树。二叉搜索树要求：<span style="color: #ff0000;">每个节点都不比它左子树的任意元素小，而且不比它的右子树的任意元素大。</span></span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">(如果我们假设树中<span style="color: #000000;">没有重复的元素</span>，那么上述要求可以写成：每个节点比它左子树的任意节点大，而且比它右子树的任意节点小)</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/17001935-1b9faa8518a14f95b3bb9eb3083f683c.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;">二叉搜索树，注意树中元素的大小</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">二叉搜索树可以方便的实现<span style="color: #ff0000;">搜索</span>算法。在搜索元素x的时候，我们可以将x和根节点比较:</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">1. 如果x等于根节点，那么找到x，停止搜索 (终止条件)</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">2. 如果x小于根节点，那么搜索左子树</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">3. 如果x大于根节点，那么搜索右子树</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">二叉搜索树所需要进行的操作次数最多与树的深度相等。n个节点的二叉搜索树的深度最多为n，最少为log(n)。</span></p><p></p>
+<p></p><p style="text-align: left;"><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">下面是用C语言实现的二叉搜索树，并有<span style="color: #800000;">搜索</span>，<span style="color: #800000;">插入</span>，<span style="color: #800000;">删除</span>，<span style="color: #800000;">寻找最大最小节点</span>的操作。每个节点中存有三个指针，一个指向父节点，一个指向左子节点，一个指向右子节点。</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">(这样的实现是为了方便。节点可以只保存有指向左右子节点的两个指针，并实现上述操作。)</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;">&nbsp;</span></p><p></p>
+<p></p><p><span style="font-family: courier new,courier;"><span style="color: #ff0000;">删除节点</span>相对比较复杂。删除节点后，有时需要进行一定的调整，以恢复二叉搜索树的性质(<span style="color: #ff0000;">每个节点都不比它左子树的任意元素小，而且不比它的右子树的任意元素大</span>)。 </span></p><p></p>
+<p><ul></ul></p>
+<p><li><span style="font-family: courier new,courier;">叶节点可以直接删除。</span></li></p>
+<p><li><span style="font-family: courier new,courier;">删除<span style="color: #ff0000;">非叶节点</span>时，比如下图中的节点8，我们可以删除左子树中最大的元素(或者右树中最大的元素)，用删除的节点来补充元素8产生的空缺。但该元素可能也不是叶节点，所以它所产生的空缺需要其他元素补充&hellip;&hellip; 直到最后删除一个叶节点。上述过程可以递归实现。</span></li><br></p>
+<p></p><p><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201303/17004331-c29bb56faa7f469fbdc52aade30beac8.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;">删除节点</span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;"><img src="http://images.cnitblog.com/blog/413416/201303/17004501-b9e0747212684604afc4c5aebb109932.png" alt=""></span></p><p></p>
+<p></p><p style="text-align: center;"><span style="font-family: courier new,courier;">删除节点后的二叉搜索树</span></p><p></p>
+<p></p><p style="text-align: left;">&nbsp;</p><p></p>
+<div class="cnblogs_code"><br><pre><span style="font-family: courier new,courier;"><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> By Vamei </span><span style="color: #008000;">/</span><br><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> binary search tree </span><span style="color: #008000;">/</span><span style="color: #000000;"><br>#include </span>&lt;stdio.h&gt;<span style="color: #000000;"><br>#include </span>&lt;stdlib.h&gt;<span style="color: #000000;"><br><br>typedef </span><span style="color: #0000ff;">struct</span> node <em><span style="color: #000000;">position;<br>typedef </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> ElementTP;<br><br></span><span style="color: #0000ff;">struct</span><span style="color: #000000;"> node {<br>    position parent;<br>    ElementTP element;<br>    position lchild;<br>    position rchild;<br>};<br><br></span><span style="color: #008000;">/</span></em></span><span style="color: #008000;"> pointer =&gt; root node of the tree </span><span style="color: #008000;"><em>/</em></span><span style="color: #000000;"><br>typedef </span><span style="color: #0000ff;">struct</span> node <span style="color: #000000;">TREE;<br><br></span><span style="color: #0000ff;">void</span><span style="color: #000000;"> print_sorted_tree(TREE);<br>position find_min(TREE);<br>position find_max(TREE);<br>position find_value(TREE, ElementTP);<br>position insert_value(TREE, ElementTP);<br>ElementTP delete_node(position);<br><br></span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> is_root(position);<br></span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> is_leaf(position);<br></span><span style="color: #0000ff;">static</span><span style="color: #000000;"> ElementTP delete_leaf(position);<br></span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> insert_node_to_nonempty_tree(TREE, position);<br><br></span><span style="color: #0000ff;">void</span> main(<span style="color: #0000ff;">void</span><span style="color: #000000;">)<br>{<br>    TREE tr;<br>    position np;<br>    ElementTP element;<br>    tr </span>=<span style="color: #000000;"> NULL;<br>    tr </span>= insert_value(tr, <span style="color: #800080;">18</span><span style="color: #000000;">);<br>    tr </span>= insert_value(tr, <span style="color: #800080;">5</span><span style="color: #000000;">);<br>    tr </span>= insert_value(tr, <span style="color: #800080;">2</span><span style="color: #000000;">);<br>    tr </span>= insert_value(tr, <span style="color: #800080;">8</span><span style="color: #000000;">);<br>    tr </span>= insert_value(tr, <span style="color: #800080;">81</span><span style="color: #000000;">);<br>    tr </span>= insert_value(tr, <span style="color: #800080;">101</span><span style="color: #000000;">);<br>    printf(</span><span style="color: #800000;">“</span><span style="color: #800000;">Original:\n</span><span style="color: #800000;">“</span><span style="color: #000000;">);<br>    print_sorted_tree(tr);<br><br>    np </span>= find_value(tr, <span style="color: #800080;">8</span><span style="color: #000000;">);<br>    </span><span style="color: #0000ff;">if</span>(np !=<span style="color: #000000;"> NULL) {<br>        delete_node(np);<br>        printf(</span><span style="color: #800000;">“</span><span style="color: #800000;">After deletion:\n</span><span style="color: #800000;">“</span><span style="color: #000000;">);<br>        print_sorted_tree(tr);<br>    }<br>}<br><br><br></span><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> 
+ print values of the tree in sorted order<br>    </span><span style="color: #008000;"><em>/</em></span><br>   <span style="color: #0000ff;">void</span><span style="color: #000000;"> print_sorted_tree(TREE tr)<br>   {<br>    </span><span style="color: #0000ff;">if</span> (tr == NULL) <span style="color: #0000ff;">return</span><span style="color: #000000;">;<br>    print_sorted_tree(tr</span>-&gt;<span style="color: #000000;">lchild);<br>    printf(</span><span style="color: #800000;">“</span><span style="color: #800000;">%d \n</span><span style="color: #800000;">“</span>, tr-&gt;<span style="color: #000000;">element);<br>    print_sorted_tree(tr</span>-&gt;<span style="color: #000000;">rchild);<br>   }<br><br></span><span style="color: #008000;">/</span><span style="color: #008000;"><br><em>  search for minimum value
+</em>  traverse lchild<br>       </span><span style="color: #008000;"><em>/</em></span><span style="color: #000000;"><br>      position find_min(TREE tr)<br>      {<br>       position np;<br>       np </span>=<span style="color: #000000;"> tr;<br>       </span><span style="color: #0000ff;">if</span> (np == NULL) <span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;<br>       </span><span style="color: #0000ff;">while</span>(np-&gt;lchild !=<span style="color: #000000;"> NULL) {<br>           np </span>= np-&gt;<span style="color: #000000;">lchild;<br>       }<br>       </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> np;<br>      }<br><br></span><span style="color: #008000;">/</span><span style="color: #008000;"><br><em>  search for maximum value
+</em>  traverse rchild<br>       </span><span style="color: #008000;"><em>/</em></span><span style="color: #000000;"><br>      position find_max(TREE tr)<br>      {<br>       position np;<br>       np </span>=<span style="color: #000000;"> tr;<br>       </span><span style="color: #0000ff;">if</span> (np == NULL) <span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;<br>       </span><span style="color: #0000ff;">while</span>(np-&gt;rchild !=<span style="color: #000000;"> NULL) {<br>           np </span>= np-&gt;<span style="color: #000000;">rchild;<br>       }<br>       </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> np;<br>      }<br><br></span><span style="color: #008000;">/</span><span style="color: #008000;"><br><em>  search for value
+    </em><br>    </span><span style="color: #008000;"><em>/</em></span><span style="color: #000000;"><br>   position find_value(TREE tr, ElementTP value)<br>   {<br>    </span><span style="color: #0000ff;">if</span> (tr == NULL) <span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;<br><br>    </span><span style="color: #0000ff;">if</span> (tr-&gt;element ==<span style="color: #000000;"> value) {<br>        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> tr;<br>    }<br>    </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (value &lt; tr-&gt;<span style="color: #000000;">element) {<br>        </span><span style="color: #0000ff;">return</span> find_value(tr-&gt;<span style="color: #000000;">lchild, value);<br>    }<br>    </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {<br>        </span><span style="color: #0000ff;">return</span> find_value(tr-&gt;<span style="color: #000000;">rchild, value);<br>    }<br>   }<br><br></span><span style="color: #008000;">/</span><span style="color: #008000;"><br><em>  delete node np<br>    </em></span><span style="color: #008000;">/</span><span style="color: #000000;"><br>   ElementTP delete_node(position np)<br>   {<br>    position replace;<br>    ElementTP element;<br>    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (is_leaf(np)) {<br>        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> delete_leaf(np);<br>    }<br>    </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {<br>        </span><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> if a node is not a leaf, then we need to find a replacement </span><span style="color: #008000;">/</span><span style="color: #000000;"><br>        replace </span>= (np-&gt;lchild != NULL) ? find_max(np-&gt;lchild) : find_min(np-&gt;<span style="color: #000000;">rchild);<br>        element </span>= np-&gt;<span style="color: #000000;">element;<br>        np</span>-&gt;element =<span style="color: #000000;"> delete_node(replace);<br>        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> element;<br>    }<br>   }<br><br></span><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> 
+  insert a value into the tree<br><em>  return root address of the tree<br>       </em></span><span style="color: #008000;">/</span><span style="color: #000000;"><br>      position insert_value(TREE tr, ElementTP value) {<br>       position np;<br>       </span><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> prepare the node </span><span style="color: #008000;">/</span><span style="color: #000000;"><br>       np </span>= (position) malloc(<span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">struct</span><span style="color: #000000;"> node));<br>       np</span>-&gt;element =<span style="color: #000000;"> value;<br>       np</span>-&gt;parent  =<span style="color: #000000;"> NULL;<br>       np</span>-&gt;lchild  =<span style="color: #000000;"> NULL;<br>       np</span>-&gt;rchild  =<span style="color: #000000;"> NULL;<br><br>       </span><span style="color: #0000ff;">if</span> (tr == NULL) tr =<span style="color: #000000;"> np;<br>       </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {<br>           insert_node_to_nonempty_tree(tr, np);<br>       }<br>       </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> tr;<br>      }<br><br><br></span><span style="color: #008000;">//</span><span style="color: #008000;">=============================================</span><br><br><span style="color: #008000;">/<em></em></span><span style="color: #008000;">
+ np is root?<br>    </span><span style="color: #008000;"><em>/</em></span><br>   <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> is_root(position np)<br>   {<br>    </span><span style="color: #0000ff;">return</span> (np-&gt;parent ==<span style="color: #000000;"> NULL);<br>   }<br><br></span><span style="color: #008000;">/</span><span style="color: #008000;"><br><em> np is leaf?<br>    </em></span><span style="color: #008000;">/</span><br>   <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> is_leaf(position np)<br>   {<br>    </span><span style="color: #0000ff;">return</span> (np-&gt;lchild == NULL &amp;&amp; np-&gt;rchild ==<span style="color: #000000;"> NULL);<br>   }<br><br></span><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> 
+  if an element is a leaf,<br><em>  then it could be removed with no side effect.<br>       </em></span><span style="color: #008000;">/</span><br>      <span style="color: #0000ff;">static</span><span style="color: #000000;"> ElementTP delete_leaf(position np)<br>      {<br>       ElementTP element;<br>       position parent;<br>       element </span>= np-&gt;<span style="color: #000000;">element;<br>       parent  </span>= np-&gt;<span style="color: #000000;">parent;<br>       </span><span style="color: #0000ff;">if</span>(!<span style="color: #000000;">is_root(np)) {<br>           </span><span style="color: #0000ff;">if</span> (parent-&gt;lchild ==<span style="color: #000000;"> np) {<br>               parent</span>-&gt;lchild =<span style="color: #000000;"> NULL;<br>           }<br>           </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {<br>               parent</span>-&gt;rchild =<span style="color: #000000;"> NULL;<br>           }<br>       }<br>       free(np);<br>       </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> element;<br>      }<br><br></span><span style="color: #008000;">/<em></em></span><span style="color: #008000;">
+  insert a node to a non-empty tree<br><em>  called by insert_value()<br>       </em></span><span style="color: #008000;">/</span><br>      <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> insert_node_to_nonempty_tree(TREE tr, position np)<br>      {<br>       </span><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> insert the node </span><span style="color: #008000;">/</span><br>       <span style="color: #0000ff;">if</span>(np-&gt;element &lt;= tr-&gt;<span style="color: #000000;">element) {<br>           </span><span style="color: #0000ff;">if</span> (tr-&gt;lchild ==<span style="color: #000000;"> NULL) {<br>               </span><span style="color: #008000;">/<em></em></span><span style="color: #008000;"> then tr-&gt;lchild is the proper place </span><span style="color: #008000;">/</span><span style="color: #000000;"><br>               tr</span>-&gt;lchild =<span style="color: #000000;"> np;<br>               np</span>-&gt;parent =<span style="color: #000000;"> tr;<br>               </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;<br>           }<br>           </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {<br>               insert_node_to_nonempty_tree(tr</span>-&gt;<span style="color: #000000;">lchild, np);<br>           }<br>       }<br>       </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(np-&gt;element &gt; tr-&gt;<span style="color: #000000;">element) {<br>           </span><span style="color: #0000ff;">if</span> (tr-&gt;rchild ==<span style="color: #000000;"> NULL) {<br>               tr</span>-&gt;rchild =<span style="color: #000000;"> np;<br>               np</span>-&gt;parent =<span style="color: #000000;"> tr;<br>               </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;<br>           }<br>           </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {<br>               insert_node_to_nonempty_tree(tr</span>-&gt;<span style="color: #000000;">rchild, np);<br>           }<br>       }<br>      }</span></pre><br>      </div><br>      <p><span style="font-family: courier new,courier;">&nbsp;</span></p><br>      <p><span style="font-family: courier new,courier;">运行结果:</span></p><br>      <p><span style="font-family: courier new,courier; color: #800000;">Original:<br>2 <br>5 <br>8 <br>18 <br>81 <br>101 <br>After deletion:<br>2 <br>5 <br>18 <br>81 <br>101</span></p><br>      <p><span style="font-family: courier new,courier;">上述实现中的删除比较复杂。有一种简单的替代操作，称为<span style="color: #ff0000;">懒惰删除(lazy deletion)</span>。在懒惰删除时，我们并不真正从二叉搜索树中删除该节点，而是将该节点<span style="color: #ff0000;">标记</span>为&ldquo;已删除&rdquo;。这样，我们只用找到元素并标记，就可以完成删除元素了。如果有相同的元素重新插入，我们可以将该节点找到，并取消删除标记。</span></p><br>      <p><span style="font-family: courier new,courier;">懒惰删除的实现比较简单，可以尝试一下。树所占据的内存空间不会因为删除节点而减小。懒惰节点实际上是用内存空间换取操作的简便性。</span></p><br>      <h3><span style="font-family: courier new,courier;">总结</span></h3><br>      <p><span style="font-family: courier new,courier;">树, 二叉树, 二叉搜索树</span><br>      </p><p><span style="font-family: courier new,courier;">二叉搜索树的删除<br><br>      <p><span style="font-family: courier new,courier;">懒惰删除</span></p><br>    ​<br><br><br>        </span></p>
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/11/14/String.format()字符串格式化/">
+                    String.format()字符串格式化
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/05/07/jar文件到底是什么/">
+                    jar文件到底是什么
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">树的特征和定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">树的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">二叉搜索树的C实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"浅谈二叉搜索树　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/11/14/String.format()字符串格式化/" title="上一篇: String.format()字符串格式化">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/05/07/jar文件到底是什么/" title="下一篇: jar文件到底是什么">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/A＊算法剖析/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy 2/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/编程能力与编程年龄/">编程能力与编程年龄</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/13/Java IO流体系中常用的流分类/">Java IO流体系中常用的流分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/机器学习主流算法分析/">机器学习主流算法分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/深度优先与广度优先/">深度优先与广度优先</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/String.format()字符串格式化/">String.format()字符串格式化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/浅谈二叉搜索树/">浅谈二叉搜索树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/jar文件到底是什么/">jar文件到底是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/数据库三范式解析/">数据库三范式解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/">深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/">深入理解 Java 虚拟机（一）走近 Java(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/理解Java虚拟机体系结构(转)/">理解Java虚拟机体系结构(转）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Chuanhe Liu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chuanhe Liu" />
+
+
+
+<meta name="description" content="在 Java 的 String 类中，可以使用 format() 方法格式化字符串，该方法有两种重载形式： String.format(String format, Object… args) 和 String.format(Locale locale, String format, Object… args)。两者的唯一区别是前者使用本地语言环境，后者使用指定语言环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="String.format()字符串格式化">
+<meta property="og:url" content="http://yoursite.com/2016/11/14/String.format()字符串格式化/index.html">
+<meta property="og:site_name" content="chuanhe的博客">
+<meta property="og:description" content="在 Java 的 String 类中，可以使用 format() 方法格式化字符串，该方法有两种重载形式： String.format(String format, Object… args) 和 String.format(Locale locale, String format, Object… args)。两者的唯一区别是前者使用本地语言环境，后者使用指定语言环境">
+<meta property="og:updated_time" content="2017-03-10T18:10:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="String.format()字符串格式化">
+<meta name="twitter:description" content="在 Java 的 String 类中，可以使用 format() 方法格式化字符串，该方法有两种重载形式： String.format(String format, Object… args) 和 String.format(Locale locale, String format, Object… args)。两者的唯一区别是前者使用本地语言环境，后者使用指定语言环境">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="chuanhe的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/chuanheliu/chuanheliu.github.io/master/img/JavaLogo.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>String.format()字符串格式化 | chuanhe的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Chuanhe Liu</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Java影响睡眠</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.yfgeek.com/">Ivan&#39;s Blog</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">英格兰友人的最爱</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Java影响睡眠</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-String.format()字符串格式化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/14/String.format()字符串格式化/" class="article-date">
+      <time datetime="2016-11-14T21:48:04.000Z" itemprop="datePublished">2016-11-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      String.format()字符串格式化
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p></p><p>在 Java 的 String 类中，可以使用 <code>format()</code> 方法格式化字符串，该方法有两种重载形式： <code>String.format(String format, Object… args)</code> 和 <code>String.format(Locale locale, String format, Object… args)</code>。两者的唯一区别是前者使用本地语言环境，后者使用指定语言环境<br><a id="more"></a><br>查看源码可以发现，该方法最终调用 <code>java.util.Formatter</code> 类的 <code>format</code> 方法。</p><p></p>
+<p><div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">static</span> String <span class="fu">format</span>(String format, Object<span class="kw">… </span>args) {<br>   <span class="kw">return</span> <span class="kw">new</span> Formatter()<span class="fu">.format</span>(format, args).<span class="fu">toString</span>();<br>}</code></pre></div></p>
+<p><span class="kw">public</span> <span class="dt">static</span> String <span class="fu">format</span>(Locale l, String format, Object<span class="kw">… </span>args) {<br>   <span class="kw">return</span> <span class="kw">new</span> Formatter(l)<span class="fu">.format</span>(format, args).<span class="fu">toString</span>();<br>}</p>
+<p></p><p>所以，掌握了 Formatter 的使用，也就掌握了 String.format 的使用，从此 Java 中格式化字符串再无敌手~ 所以我们这里先来讲解 Formatter 的用法。</p><p></p>
+<p></p><p>参考 <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html" target="_blank" rel="external">Java Api 中关于 Formatter</a> 的使用说明，我们可以发现 format 方法的第一个参数是有固定格式的。其格式如下：</p><p></p>
+<p><pre><code>%[argument_index$][flags][width][.precision]conversion</code></pre></p>
+<p>argument_index: 可选，是一个十进制整数，用于表明参数在参数列表中的位置。第一个参数由 “1$” 引用，第二个参数由 “2$” 引用，依此类推。</p>
+<p>flags: 可选，用来控制输出格式</p>
+<p>width: 可选，是一个正整数，表示输出的最小长度</p>
+<p>precision:可选，用来限定输出的精度</p>
+<p>conversion:必须，用来表示如何格式化参数的字符</p>
+<p></p><p>参考文档，可以发现 Java 其实把格式化划分为两大类：常规类型格式化和时间日期格式化，下面我们就先来介绍一下常规类型的格式化。</p><p></p>
+<p></p><p><strong>补充</strong>：Java 中对格式化其实还有根据类型来分类的，但这里为了方便讲述，只简单的依据格式化的参数类型来讲述，如果以后有机会，会开一篇更详细的博客。</p><p></p>
+<p></p><h2 id="常规类型格式化">常规类型格式化</h2><p></p>
+<p></p><p>在开始之前，这里先放一段 Api 中提供的示例代码，你可以带着示例中的问题去看接下来的内容，也可以看完之后回来看示例，你看懂了多少呢？</p><p></p>
+<p><div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">StringBuilder sb = <span class="kw">new</span> StringBuilder();<br><span class="co">// Send all output to the Appendable object sb</span><br>Formatter formatter = <span class="kw">new</span> Formatter(sb, Locale.<span class="fu">US</span>);</code></pre></div></p>
+<p><span class="co">// Explicit argument indices may be used to re-order output.</span><br>formatter<span class="fu">.format</span>(<span class="st">“</span><span class="ch">%4$2s</span><span class="st"> </span><span class="ch">%3$2s</span><span class="st"> </span><span class="ch">%2$2s</span><span class="st"> </span><span class="ch">%1$2s</span><span class="st">“</span>, <span class="st">“a”</span>, <span class="st">“b”</span>, <span class="st">“c”</span>, <span class="st">“d”</span>)<br><span class="co">// -&gt; “ d  c  b  a”</span></p>
+<p><span class="co">// Optional locale as the first argument can be used to get</span><br><span class="co">// locale-specific formatting of numbers.  The precision and width can be</span><br><span class="co">// given to round and align the value.</span><br>formatter<span class="fu">.format</span>(Locale.<span class="fu">FRANCE</span>, <span class="st">“e = </span><span class="ch">%+10.4f</span><span class="st">“</span>, Math.<span class="fu">E</span>);<br><span class="co">// -&gt; “e =    +2,7183”</span></p>
+<p><span class="co">// The ‘(‘ numeric flag may be used to format negative numbers with</span><br><span class="co">// parentheses rather than a minus sign.  Group separators are</span><br><span class="co">// automatically inserted.</span><br>formatter<span class="fu">.format</span>(<span class="st">“Amount gained or lost since last statement: $ </span><span class="ch">%(,.2f</span><span class="st">“</span>,<br>               balanceDelta);<br><span class="co">// -&gt; “Amount gained or lost since last statement: $ (6,217.58)”</span></p>
+<p><span class="co">// Writes a formatted string to System.out.</span><br>System.<span class="fu">out.format</span>(<span class="st">“Local time: </span><span class="ch">%tT</span><span class="st">“</span>, Calendar.<span class="fu">getInstance</span>());<br><span class="co">// -&gt; “Local time: 13:34:18”</span></p>
+<p><span class="co">// Writes formatted output to System.err.</span><br>System.<span class="fu">err.printf</span>(<span class="st">“Unable to open file ‘</span><span class="ch">%1$s</span><span class="st">‘: </span><span class="ch">%2$s</span><span class="st">“</span>,<br>                fileName, exception.<span class="fu">getMessage</span>());<br><span class="co">// -&gt; “Unable to open file ‘food’: No such file or directory”</span></p>
+<p>Calendar c = <span class="kw">new</span> GregorianCalendar(<span class="dv">1995</span>, MAY, <span class="dv">23</span>);<br>String s = String<span class="fu">.format</span>(<span class="st">“Duke’s Birthday: </span><span class="ch">%1$tb</span><span class="st"> </span><span class="ch">%1$te</span><span class="st">, </span><span class="ch">%1$tY</span><span class="st">“</span>, c);<br><span class="co">// -&gt; s == “Duke’s Birthday: May 23, 1995”</span></p>
+<p></p><h2 id="conversion">conversion</h2><p></p>
+<p></p><p>从上述内容可以发现，只有 conversion 这个参数是必选的。 conversion 是用来表示如何格式化参数的字符。先来看个例子：</p><p></p>
+<p><div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">//输出：我的名字叫：小明</span><br>System.<span class="fu">out</span>.<span class="fu">println</span>(String<span class="fu">.format</span>(<span class="st">“大家好，我叫：</span><span class="ch">%s</span><span class="st">“</span>,<span class="st">“小明”</span>));</code></pre></div></p>
+<p></p><p><strong>%s</strong> 是一个占位符，<strong>s</strong> 是一个转换符，指明将参数格式化为字符串。<strong>值得注意的是，占位符代表的格式化类型必须与参数的类型相兼容，否则运行时会抛出异常</strong>，如：</p><p></p>
+<p></p><p><code>java  System.out.println(String.format(“大家好，我叫：%d”,”小明”));</code><br><br>运行这段代码，就会抛出如下异常：</p><p></p>
+<p></p><p><code>Exception in thread “main” java.util.IllegalFormatConversionException: d != java.lang.String     at java.util.Formatter$FormatSpecifier.failConversion(Formatter.java:4302)     at java.util.Formatter$FormatSpecifier.printInteger(Formatter.java:2793)     at java.util.Formatter$FormatSpecifier.print(Formatter.java:2747)     at java.util.Formatter.format(Formatter.java:2520)     at java.util.Formatter.format(Formatter.java:2455)     at java.lang.String.format(String.java:2940)</code></p><p></p>
+<p></p><p>那么，转换符除了 s ，还有哪些呢？那我们就来看下代码：</p><p></p>
+<p></p><p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div></pre></td><td class="code"><pre><div class="line">private static void formatConversion() &#123;&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;b&apos;:将参数格式化为boolean类型输出，&apos;B&apos;的效果相同,但结果中字母为大写。%b&quot;, false));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;h&apos;:将参数格式化为散列输出，原理：Integer.toHexString(arg.hashCode())，&apos;H&apos;的效果相同,但结果中字母为大写。%h&quot;, &quot;ABC&quot;));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;s&apos;:将参数格式化为字符串输出，如果参数实现了 Formattable接口，则调用 formatTo方法。&apos;S&apos;的效果相同。%s&quot;, 16));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;FormatImpl类实现了Formattable接口：%s&quot;, new FormatImpl()));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;c&apos;:将参数格式化为Unicode字符，&apos;C&apos;的效果相同。%c&quot;, &apos;A&apos;));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;d&apos;:将参数格式化为十进制整数。%d&quot;, 11));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;o&apos;:将参数格式化为八进制整数。%o&quot;, 9));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;x&apos;:将参数格式化为十六进制整数。%x&quot;, 17));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;e&apos;:将参数格式化为科学计数法的浮点数，&apos;E&apos;的效果相同。%E&quot;, 10.000001));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;f&apos;:将参数格式化为十进制浮点数。%f&quot;, 10.000001));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;g&apos;:根据具体情况，自动选择用普通表示方式还是科学计数法方式，&apos;G&apos;效果相同。10.01=%g&quot;, 10.01));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;g&apos;:根据具体情况，自动选择用普通表示方式还是科学计数法方式，&apos;G&apos;效果相同。10.00000000005=%g&quot;, 10.00000000005));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;a&apos;:结果被格式化为带有效位数和指数的十六进制浮点数，&apos;A&apos;效果相同,但结果中字母为大写。%a&quot;, 10.1));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;t&apos;:时间日期格式化前缀，会在后面讲述&quot;));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;%%&apos;:输出%%。%%&quot;));&lt;br&gt;</div><div class="line">System.out.println(String.format(&quot;&apos;n&apos;平台独立的行分隔符。System.getProperty(&quot;line.separator&quot;)可以取得平台独立的行分隔符，但是用在format中间未免显得过于烦琐了%n已经换行&quot;));&lt;br&gt;</div><div class="line">&#125;&lt;/p&gt;</div><div class="line">&lt;p&gt;private static class FormatImpl implements Formattable &#123;&lt;/p&gt;</div><div class="line">&lt;p&gt;@Override&lt;br&gt;</div><div class="line">public void formatTo(Formatter formatter, int flags, int width, int precision) &#123;&lt;br&gt;</div><div class="line">formatter.format(&quot;我是Formattable接口的实现类&quot;);&lt;br&gt;</div><div class="line">&#125;&lt;br&gt;</div><div class="line">&#125;&lt;br&gt;</div><div class="line">```&amp;lt;/p&amp;gt;</div><div class="line">&lt;p&gt;输出如下：&lt;/p&gt;</div><div class="line">&lt;p&gt;&lt;code&gt;&apos;b&apos;:将参数格式化为boolean类型输出，&apos;B&apos;的效果相同,但结果中字母为大写。false &apos;h&apos;:将参数格式化为散列输出，原理：Integer.toHexString(arg.hashCode())，&apos;H&apos;的效果相同,但结果中字母为大写。fc42 &apos;s&apos;:将参数格式化为字符串输出，如果参数实现了 Formattable接口，则调用 formatTo方法。&apos;S&apos;的效果相同。16 FormatImpl类实现了Formattable接口：我是Formattable接口的实现类 &apos;c&apos;:将参数格式化为Unicode字符，&apos;C&apos;的效果相同。A &apos;d&apos;:将参数格式化为十进制整数。11 &apos;o&apos;:将参数格式化为八进制整数。11 &apos;x&apos;:将参数格式化为十六进制整数。11 &apos;e&apos;:将参数格式化为科学计数法的浮点数，&apos;E&apos;的效果相同。1.000000E+01 &apos;f&apos;:将参数格式化为十进制浮点数。10.000001 &apos;g&apos;:根据具体情况，自动选择用普通表示方式还是科学计数法方式，&apos;G&apos;效果相同。10.01=10.0100 &apos;g&apos;:根据具体情况，自动选择用普通表示方式还是科学计数法方式，&apos;G&apos;效果相同。10.00000000005=10.0000 &apos;a&apos;:结果被格式化为带有效位数和指数的十六进制浮点数，&apos;A&apos;效果相同,但结果中字母为大写。0x1.4333333333333p3 &apos;t&apos;:时间日期格式化前缀，会在后面讲述 &apos;%&apos;:输出%。% &apos;n&apos;:平台独立的行分隔符。System.getProperty(&quot;line.separator&quot;)可以取得平台独立的行分隔符，但是用在format中间未免显得过于烦琐了 已经换行&lt;/code&gt;&lt;/p&gt;</div><div class="line">&lt;p&gt;&lt;strong&gt;补充&lt;/strong&gt;：&lt;/p&gt;</div><div class="line">&lt;ul&gt;</div><div class="line">&lt;li&gt;对于浮点转换符 &apos;e&apos; 、&apos;E&apos; 和 &apos;f&apos;，精度是小数点分隔符后的位数。如果转换符是 &apos;g&apos; 或 &apos;G&apos;，那么精度是舍入计算后所得数值的所有位数。如果转换是 &apos;a&apos; 或 &apos;A&apos;，则不必指定精度。&lt;/li&gt;</div><div class="line">&lt;li&gt;对于部分转换符，如 &apos;b&apos; 和 &apos;B&apos; ，两者转换效果是相似的，但是 &apos;B&apos; 会把输出中的字母都转换为大写，其它相似特性的转换符应该还有好多，大家可以去找一下O(∩_∩)O哈哈~&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line">&lt;h3 id=&quot;argument_index&quot;&gt;argument_index&lt;/h3&gt;</div><div class="line">&lt;p&gt;还记得前面那个小明的例子嘛？现在我们来改变一下输出，要求输出如下内容：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;//其中，小明、25、小小明都是由参数传递</div><div class="line">大家好，我叫：小明，今年：25岁。小明是小小明的爸爸。&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;p&gt;看到这个，大家会怎么做呢？也许，你会写成：&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;大家好，我叫：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;，今年：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;岁。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;是&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;的爸爸。&quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小明&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;25&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小明&quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小小明&quot;&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;恩，这样做输出的确没错，但是我们却重复输入参数“小明”。这里，就要用到 argument_index 这个参数。使用 argument_index 可以指定使用第几个参数来替换占位符，一旦使用 argument_index 用于指出参数在参数列表中位置，则所有占位符都要加上，否则会出错。修改之后的代码如下：&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;大家好，我叫：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;，今年：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%2$d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;岁。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;是&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%3$s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;的爸爸。&quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小明&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;25&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小小明&quot;&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;&lt;strong&gt;补充&lt;/strong&gt;：对于&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;大家好，我叫：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;，今年：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;岁。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;是&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;的爸爸。&quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小明&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;25&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小明&quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;小小明&quot;&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;在 Java 中执行可能没什么问题，但如果把 &lt;code&gt;&quot;大家好，我叫：%s，今年：%d岁。%s是%s的爸爸。&quot;&lt;/code&gt; 放到 Android 的 strings.xml 中，则会出现错误，解决办法就是指明每个参数在参数列表中位置。&lt;/p&gt;</div><div class="line">&lt;h3 id=&quot;flags&quot;&gt;flags&lt;/h3&gt;</div><div class="line">&lt;p&gt;flags是可选参数，用于控制输出的格式，比如左对齐、金额用逗号隔开。&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;&apos;-&apos; 在最小宽度内左对齐，不可以与“用0填充”同时使用</div><div class="line"></div><div class="line">&apos;+&apos; 结果总是包括一个符号</div><div class="line"></div><div class="line">&apos; &apos; 正值前加空格，负值前加负号</div><div class="line"></div><div class="line">&apos;0&apos; 结果将用零来填充</div><div class="line"></div><div class="line">&apos;,&apos; 每3位数字之间用“，”分隔(只适用于fgG的转换)</div><div class="line"></div><div class="line">&apos;(&apos; 若参数是负数，则结果中不添加负号而是用圆括号把数字括起来(只适用于eEfgG的转换)&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;&lt;span class=&quot;co&quot;&gt;/**&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt;* flags 的标识&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt;*/&lt;/span&gt;</div><div class="line">&lt;span class=&quot;kw&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;formatFlags&lt;/span&gt;() &#123;</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;-&apos;:在最小宽度内左对齐，不可与&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;用0填充&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;同时使用。&quot;&lt;/span&gt;);</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;设置最小宽度为8为，左对齐。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%-8d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%-8d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%-8d%n&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;99999999&lt;/span&gt;));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;0&apos;:结果将用零来填充。设置最小宽度为8，&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%08d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%08d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%08d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, -&lt;span class=&quot;dv&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;99999990&lt;/span&gt;));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;+&apos;:结果总是包括一个符号。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%+d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%+d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%+d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, -&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos; &apos;:正值前加空格，负值前加负号。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;% d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;% d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;% d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, -&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;,&apos;:每3位数字之间用“，”分隔(只适用于fgG的转换)。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%,d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%,d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%,d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;(&apos;:若参数是负数，则结果中不添加负号而是用圆括号把数字括起来(只适用于eEfgG的转换)。&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%(d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%(d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, -&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;));</div><div class="line">&#125;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;输出如下：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;&apos;-&apos;:在最小宽度内左对齐，不可与&quot;用0填充&quot;同时使用。</div><div class="line">设置最小宽度为8为，左对齐。1       :22      :99999999</div><div class="line"></div><div class="line">&apos;0&apos;:结果将用零来填充。设置最小宽度为8，00000001:-0000022:99999990</div><div class="line">&apos;+&apos;:结果总是包括一个符号。+1:-2:+0</div><div class="line">&apos; &apos;:正值前加空格，负值前加负号。 1:-2: 0</div><div class="line">&apos;,&apos;:每3位数字之间用“，”分隔(只适用于fgG的转换)。1:100:1,000</div><div class="line">&apos;(&apos;:若参数是负数，则结果中不添加负号而是用圆括号把数字括起来(只适用于eEfgG的转换)。1:(1)&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;h3 id=&quot;width&quot;&gt;width&lt;/h3&gt;</div><div class="line">&lt;p&gt;width是可选参数，用于控制输出的宽度。示例如下：&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;设置最小宽度为8，不满8位用0填充：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%08d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%08d&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, -&lt;span class=&quot;dv&quot;&gt;10000000&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;输出如下：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;设置最小宽度为8，不满8位用0填充：00000001:-10000000&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;p&gt;但是 &lt;strong&gt;width 的值不能为 0&lt;/strong&gt; ，否则会抛出&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;Exception in thread &quot;main&quot; java.util.DuplicateFormatFlagsException: Flags = &apos;0&apos;</div><div class="line">    at java.util.Formatter$Flags.parse(Formatter.java:4443)</div><div class="line">    at java.util.Formatter$FormatSpecifier.flags(Formatter.java:2640)</div><div class="line">    at java.util.Formatter$FormatSpecifier.&amp;lt;init&amp;gt;(Formatter.java:2709)</div><div class="line">    at java.util.Formatter.parse(Formatter.java:2560)</div><div class="line">    at java.util.Formatter.format(Formatter.java:2501)</div><div class="line">    at java.util.Formatter.format(Formatter.java:2455)</div><div class="line">    at java.lang.String.format(String.java:2940)&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;h3 id=&quot;precision&quot;&gt;precision&lt;/h3&gt;</div><div class="line">&lt;p&gt;precision是可选参数，用来限定输出的精度，用于浮点数。示例如下：&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;&lt;span class=&quot;co&quot;&gt;/**&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt;* 格式化精度，仅限浮点数&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt;*/&lt;/span&gt;</div><div class="line">&lt;span class=&quot;kw&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;formatPrecision&lt;/span&gt;() &#123;</div><div class="line">   &lt;span class=&quot;co&quot;&gt;//System.out.println(String.format(&quot;设置精度为2位：%.2d&quot;, 1));&lt;/span&gt;</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;设置精度为2位：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%.2f&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, 1f));</div><div class="line">&#125;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;输出如下：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;设置精度为2位：1.00&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;p&gt;值得注意的是，如果对整型数据设置精度，则会抛出如下异常：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;Exception in thread &quot;main&quot; java.util.IllegalFormatPrecisionException: 2</div><div class="line">    at java.util.Formatter$FormatSpecifier.checkInteger(Formatter.java:2984)</div><div class="line">    at java.util.Formatter$FormatSpecifier.&amp;lt;init&amp;gt;(Formatter.java:2729)</div><div class="line">    at java.util.Formatter.parse(Formatter.java:2560)</div><div class="line">    at java.util.Formatter.format(Formatter.java:2501)</div><div class="line">    at java.util.Formatter.format(Formatter.java:2455)</div><div class="line">    at java.lang.String.format(String.java:2940)&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;h2 id=&quot;时间日期格式化&quot;&gt;时间日期格式化&lt;/h2&gt;</div><div class="line">&lt;p&gt;在平时开发中，经常会碰到要显示时间日期的。以前写过一篇 &lt;a href=&quot;http://www.cnblogs.com/travellife/p/3945240.html&quot;&gt;Android 时间、日期相关类和方法&lt;/a&gt; 的博客，里面对 Android 中经常出现的时间日期格式做了总结，但觉得还是过于繁琐，这次总结 Java 中格式化输出，没想到 Java 中已经包含了如此多关于时间的转换符，完全能应对日常开发需要，而且不用复杂的计算。&lt;/p&gt;</div><div class="line">&lt;p&gt;Java 中时间日期格式化的转换符可以分为三类，分别是：时间格式化转换符、日期格式化转换符、时间日期格式化转换符。相比于日期和时间日期格式化转换符，时间格式化转换符就相对多一点。&lt;/p&gt;</div><div class="line">&lt;p&gt;时间日期格式化字符串的格式如下：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;%[argument_index$][flags][width]conversion&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;p&gt;相对于普通的格式，时间日期格式化少了 &lt;strong&gt;precision&lt;/strong&gt; ，而 &lt;strong&gt;conversion&lt;/strong&gt; 是由两个字符组成，且第一个字符固定为 &lt;code&gt;t&lt;/code&gt; 或 &lt;code&gt;T&lt;/code&gt; 。&lt;/p&gt;</div><div class="line">&lt;p&gt;网上部分博文是贴了转换符说明的表格，但是写完代码之后突然发现，Java 格式化输出这部分内容，&lt;strong&gt;看代码和输出其实比看表格更直观，谁让我们是程序员呢？&lt;/strong&gt;下面就用代码来讲述一下时间日期格式化转换符的三种类别。&lt;/p&gt;</div><div class="line">&lt;h3 id=&quot;格式化时间&quot;&gt;格式化时间&lt;/h3&gt;</div><div class="line">&lt;p&gt;示例代码如下：&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;&lt;span class=&quot;co&quot;&gt;/**&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt;* 格式化时间&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt;*/&lt;/span&gt;</div><div class="line">&lt;span class=&quot;kw&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;formatTime&lt;/span&gt;() &#123;</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;这是格式化时间相关的，具体输出跟你执行代码时间有关&quot;&lt;/span&gt;);</div><div class="line">   Calendar calendar = Calendar.&lt;span class=&quot;fu&quot;&gt;getInstance&lt;/span&gt;();</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;H&apos;:2位数24小时制，不足两位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tH&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：00-23）&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;I&apos;:2位数12小时制，不足两位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tI&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：01-12）&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;k&apos;:24小时制，不足两位不补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tk&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：0-23）&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;l&apos;:12小时制，不足两位不补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tl&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：1-12）&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;M&apos;:2位数的分钟，不足两位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tM&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：00-59）&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;S&apos;:分钟中的秒，2位数，不足两位前面补0，60是支持闰秒的一个特殊值：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tS&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：00-60）&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;L&apos;:3位数的毫秒，不足三位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tL&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：000-999）&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;N&apos;:9位数的微秒，不足九位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tN&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：000000000-999999999）&quot;&lt;/span&gt;, calendar));</div><div class="line"></div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;p&apos;:输出本地化的上午下午，例如，Locale.US为am或pm，Locale.CHINA为上午或下午&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(Locale.&lt;span class=&quot;fu&quot;&gt;US&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;Local.US=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tp&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(Locale.&lt;span class=&quot;fu&quot;&gt;CHINA&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;Local.CHINA=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tp&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;();</div><div class="line"></div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;z&apos;:时区：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tz&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;Z&apos;:时区缩写字符串：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tZ&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;s&apos;:从1970-1-1 00:00到现在所经历的秒数：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%ts&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">   System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;Q&apos;:从1970-1-1 00:00到现在所经历的豪秒数：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tQ&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">&#125;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;输出结果如下：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;这是格式化时间相关的，具体输出跟你执行代码时间有关</div><div class="line">&apos;H&apos;:2位数24小时制，不足两位前面补0：21（范围：00-23）</div><div class="line">&apos;I&apos;:2位数12小时制，不足两位前面补0：09（范围：01-12）</div><div class="line">&apos;k&apos;:24小时制，不足两位不补0：21（范围：0-23）</div><div class="line">&apos;l&apos;:12小时制，不足两位不补0：9（范围：1-12）</div><div class="line">&apos;M&apos;:2位数的分钟，不足两位前面补0：26（范围：00-59）</div><div class="line">&apos;S&apos;:分钟中的秒，2位数，不足两位前面补0，60是支持闰秒的一个特殊值：44（范围：00-60）</div><div class="line">&apos;L&apos;:3位数的毫秒，不足三位前面补0：502（范围：000-999）</div><div class="line">&apos;N&apos;:9位数的微秒，不足九位前面补0：502000000（范围：000000000-999999999）</div><div class="line">&apos;p&apos;:输出本地化的上午下午，例如，Locale.US为am或pm，Locale.CHINA为上午或下午</div><div class="line">Local.US=pm</div><div class="line">Local.CHINA=下午</div><div class="line"></div><div class="line">&apos;z&apos;:时区：+0800</div><div class="line">&apos;Z&apos;:时区缩写字符串：CST</div><div class="line">&apos;s&apos;:从1970-1-1 00:00到现在所经历的秒数：1476883604</div><div class="line">&apos;Q&apos;:从1970-1-1 00:00到现在所经历的豪秒数：1476883604502&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;h3 id=&quot;格式化日期&quot;&gt;格式化日期&lt;/h3&gt;</div><div class="line">&lt;p&gt;示例代码如下：&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;&lt;span class=&quot;co&quot;&gt;/**&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt; * 格式化日期&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt; */&lt;/span&gt;</div><div class="line">&lt;span class=&quot;kw&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;formatDate&lt;/span&gt;() &#123;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;-----------------------我是微笑的分割线O(∩_∩)O哈哈~-----------------------------&quot;&lt;/span&gt;);</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;这是格式化时间相关的，具体输出跟你执行代码时间有关&quot;&lt;/span&gt;);</div><div class="line">    Calendar calendar = Calendar.&lt;span class=&quot;fu&quot;&gt;getInstance&lt;/span&gt;();</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;B&apos;:本地化显示月份字符串，如：January、February&quot;&lt;/span&gt;));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;b&apos;:本地化显示月份字符串的缩写，如：Jan、Feb&quot;&lt;/span&gt;));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;h&apos;:本地化显示月份字符串的缩写，效果同&apos;b&apos;&quot;&lt;/span&gt;));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(Locale.&lt;span class=&quot;fu&quot;&gt;US&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;Locale.US 月份=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tB&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;，缩写=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tb&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(Locale.&lt;span class=&quot;fu&quot;&gt;CHINA&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;Locale.CHINA 月份=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tB&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;，缩写=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tb&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line"></div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;A&apos;:本地化显示星期几字符串，如：Sunday、Monday&quot;&lt;/span&gt;));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;a&apos;:本地化显示星期几字符串的缩写，如：Sun、Mon&quot;&lt;/span&gt;));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(Locale.&lt;span class=&quot;fu&quot;&gt;US&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;Locale.US 星期几=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tA&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;，缩写=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$ta&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(Locale.&lt;span class=&quot;fu&quot;&gt;CHINA&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&quot;Locale.CHINA 星期几=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tA&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;，缩写=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$ta&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line"></div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;C&apos;:年份除以100的结果，显示两位数，不足两位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tC&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：00-99）&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;Y&apos;:显示四位数的年份，格利高里历，即公历。不足四位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tY&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;y&apos;:显示年份的后两位：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%ty&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;（范围：00-99）&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;j&apos;:显示当前公历年的天数：第&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tj&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;天（范围：001-366）&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;m&apos;:显示当前月份：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tm&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;月（范围：01-13？怎么会有13个月？）&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;d&apos;:显示是当前月的第几天，不足两位前面补0：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tm&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;月第&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$td&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;天（范围：01-31）&quot;&lt;/span&gt;, calendar));</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;e&apos;:显示是当前月的第几天：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$tm&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;月第&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%1$te&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;天（范围：1-31）&quot;&lt;/span&gt;, calendar));</div><div class="line">&#125;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;输出结果如下：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;-----------------------我是微笑的分割线O(∩_∩)O哈哈~-----------------------------</div><div class="line">这是格式化时间相关的，具体输出跟你执行代码时间有关</div><div class="line">&apos;B&apos;:本地化显示月份字符串，如：January、February</div><div class="line">&apos;b&apos;:本地化显示月份字符串的缩写，如：Jan、Feb</div><div class="line">&apos;h&apos;:本地化显示月份字符串的缩写，效果同&apos;b&apos;</div><div class="line">Locale.US 月份=October，缩写=Oct</div><div class="line">Locale.CHINA 月份=十月，缩写=十月</div><div class="line">&apos;A&apos;:本地化显示星期几字符串，如：Sunday、Monday</div><div class="line">&apos;a&apos;:本地化显示星期几字符串的缩写，如：Sun、Mon</div><div class="line">Locale.US 星期几=Wednesday，缩写=Wed</div><div class="line">Locale.CHINA 星期几=星期三，缩写=星期三</div><div class="line">&apos;C&apos;:年份除以100的结果，显示两位数，不足两位前面补0：20（范围：00-99）</div><div class="line">&apos;Y&apos;:显示四位数的年份，格利高里历，即公历。不足四位前面补0：2016</div><div class="line">&apos;y&apos;:显示年份的后两位：16（范围：00-99）</div><div class="line">&apos;j&apos;:显示当前公历年的天数：第293天（范围：001-366）</div><div class="line">&apos;m&apos;:显示当前月份：10月（范围：01-13？怎么会有13个月？）</div><div class="line">&apos;d&apos;:显示是当前月的第几天，不足两位前面补0：10月第19天（范围：01-31）</div><div class="line">&apos;e&apos;:显示是当前月的第几天：10月第19天（范围：1-31）&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;p&gt;&lt;strong&gt;补充&lt;/strong&gt;：在文档中发现一个略微奇怪的问题，就是 &lt;strong&gt;&lt;code&gt;m&lt;/code&gt;&lt;/strong&gt; 转换符，文档上的大意是：该转换符用于显示当前月是这一年的第几个月，文档里给的范围竟然是01-13，一年怎么会有13个月，告诉我不是我理解错了？&lt;/p&gt;</div><div class="line">&lt;h3 id=&quot;格式化时间日期&quot;&gt;格式化时间日期&lt;/h3&gt;</div><div class="line">&lt;p&gt;示例代码如下：&lt;/p&gt;</div><div class="line">&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode java&quot;&gt;&lt;code class=&quot;sourceCode java&quot;&gt;&lt;span class=&quot;co&quot;&gt;/**&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt; * 格式化时间日期&lt;/span&gt;</div><div class="line">&lt;span class=&quot;co&quot;&gt; */&lt;/span&gt;</div><div class="line">&lt;span class=&quot;kw&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;formatTimeAndDate&lt;/span&gt;() &#123;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;-----------------------我是微笑的分割线O(∩_∩)O哈哈~-----------------------------&quot;&lt;/span&gt;);</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;这是格式化时间相关的，具体输出跟你执行代码时间有关&quot;&lt;/span&gt;);</div><div class="line">    Calendar calendar = Calendar.&lt;span class=&quot;fu&quot;&gt;getInstance&lt;/span&gt;();</div><div class="line">    &lt;span class=&quot;co&quot;&gt;//%tH:%tM的缩写&lt;/span&gt;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;R&apos;:将时间格式化为：HH:MM（24小时制）。输出：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tR&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    &lt;span class=&quot;co&quot;&gt;//%tH:%tM:%tS的缩写&lt;/span&gt;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;T&apos;:将时间格式化为：HH:MM:SS（24小时制）。输出：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tT&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    &lt;span class=&quot;co&quot;&gt;//%tI:%tM:%tS %Tp的缩写，输出形如：&lt;/span&gt;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;r&apos;:将时间格式化为：09:23:15 下午，跟设置的语言地区有关。输出：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tr&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    &lt;span class=&quot;co&quot;&gt;//%tm/%td/%ty的缩写，输出形如&lt;/span&gt;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;D&apos;:将时间格式化为：10/19/16。输出：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tD&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    &lt;span class=&quot;co&quot;&gt;//%tY-%tm-%td，输出形如：&lt;/span&gt;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;F&apos;:将时间格式化为：2016-10-19。输出：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tF&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">    &lt;span class=&quot;co&quot;&gt;//%ta %tb %td %tT %tZ %tY，输出形如：Sun Jul 20 16:17:00 EDT 1969&lt;/span&gt;</div><div class="line">    System.&lt;span class=&quot;fu&quot;&gt;out&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(String&lt;span class=&quot;fu&quot;&gt;.format&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;&apos;c&apos;:将时间格式化为&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;Sun Jul 20 16:17:00 EDT 1969&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;。输出：&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;%tc&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;, calendar));</div><div class="line">&#125;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</div><div class="line">&lt;p&gt;输出结果如下：&lt;/p&gt;</div><div class="line">&lt;pre&gt;&lt;code&gt;-----------------------我是微笑的分割线O(∩_∩)O哈哈~-----------------------------</div><div class="line">这是格式化时间相关的，具体输出跟你执行代码时间有关</div><div class="line">&apos;R&apos;:将时间格式化为：HH:MM（24小时制）。输出：21:26</div><div class="line">&apos;T&apos;:将时间格式化为：HH:MM:SS（24小时制）。输出：21:26:44</div><div class="line">&apos;r&apos;:将时间格式化为：09:23:15 下午，跟设置的语言地区有关。输出：09:26:44 下午</div><div class="line">&apos;D&apos;:将时间格式化为：10/19/16。输出：10/19/16</div><div class="line">&apos;F&apos;:将时间格式化为：2016-10-19。输出：2016-10-19</div><div class="line">&apos;c&apos;:将时间格式化为&quot;Sun Jul 20 16:17:00 EDT 1969&quot;。输出：星期三 十月 19 21:26:44 CST 2016&lt;/code&gt;&lt;/pre&gt;</div><div class="line">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;</div><div class="line">&lt;p&gt;系统的介绍了 Java 中格式化字符串的方式及相关的转换符。不过只是对此有印象，方便日后温习，还得在日常中不断加强使用。&lt;/p&gt;</div><div class="line">&lt;p&gt;虽然 Formatter 中提供了很多关于时间日期的转换符，而且能满足日常的绝大部分使用，但还是存在限制，所以对于有特殊要求的时间格式，还是要学会自己定制。&lt;/p&gt;</div><div class="line">&lt;p&gt;String.format 这个方法很实用，但如果是大批量进行字符串格式化，就需要考虑到性能方面的问题，因为每次调用 format() 方法都会 new 一个 Formatter 对象。而在 Java 中频繁创建对象需要大量时间，而且还要花时间对这些对象进行垃圾回收和处理。最好的办法就是自己把 DateFormat 、 NumberFormat 、 MessageFormat 这些类封装成静态工具。&lt;/p&gt;</div><div class="line">&lt;h2 id=&quot;参考&quot;&gt;参考&lt;/h2&gt;</div><div class="line">&lt;ol&gt;</div><div class="line">&lt;li&gt;&lt;a href=&quot;http://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html&quot;&gt;Java Api -- Formatter&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/thc1987/article/details/17528093&quot;&gt;String.format()方法使用说明&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/lonely_fireworks/article/details/7962171/&quot;&gt;JAVA字符串格式化-String.format()的使用&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;/ol&gt;</div><div class="line">&lt;/div&gt;&lt;div id=&quot;MySignature&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div id=&quot;blog_post_info_block&quot;&gt;</div><div class="line">&lt;div id=&quot;BlogPostCategory&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div id=&quot;EntryTag&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div id=&quot;blog_post_info&quot;&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div id=&quot;post_next_prev&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line"></div><div class="line">		&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/12/14/深度优先与广度优先/">
+                    深度优先与广度优先
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/10/07/浅谈二叉搜索树/">
+                    浅谈二叉搜索树
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常规类型格式化"><span class="toc-number">1.</span> <span class="toc-text">常规类型格式化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#conversion"><span class="toc-number">2.</span> <span class="toc-text">conversion</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"String.format()字符串格式化　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/12/14/深度优先与广度优先/" title="上一篇: 深度优先与广度优先">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/10/07/浅谈二叉搜索树/" title="下一篇: 浅谈二叉搜索树">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/A＊算法剖析/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy 2/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/编程能力与编程年龄/">编程能力与编程年龄</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/13/Java IO流体系中常用的流分类/">Java IO流体系中常用的流分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/机器学习主流算法分析/">机器学习主流算法分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/深度优先与广度优先/">深度优先与广度优先</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/String.format()字符串格式化/">String.format()字符串格式化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/浅谈二叉搜索树/">浅谈二叉搜索树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/jar文件到底是什么/">jar文件到底是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/数据库三范式解析/">数据库三范式解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/">深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/">深入理解 Java 虚拟机（一）走近 Java(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/理解Java虚拟机体系结构(转)/">理解Java虚拟机体系结构(转）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Chuanhe Liu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

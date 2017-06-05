@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chuanhe Liu" />
+
+
+
+<meta name="description" content="在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jar文件到底是什么">
+<meta property="og:url" content="http://yoursite.com/2016/05/07/jar文件到底是什么/index.html">
+<meta property="og:site_name" content="chuanhe的博客">
+<meta property="og:description" content="在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。">
+<meta property="og:updated_time" content="2017-03-08T20:23:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jar文件到底是什么">
+<meta name="twitter:description" content="在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="chuanhe的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/chuanheliu/chuanheliu.github.io/master/img/JavaLogo.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>jar文件到底是什么 | chuanhe的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Chuanhe Liu</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Java影响睡眠</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.yfgeek.com/">Ivan&#39;s Blog</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">英格兰友人的最爱</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Java影响睡眠</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-jar文件到底是什么" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/07/jar文件到底是什么/" class="article-date">
+      <time datetime="2016-05-07T20:48:04.000Z" itemprop="datePublished">2016-05-07</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jar文件到底是什么
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。</p> <a id="more"></a><br><br><h3><br><br>    1、基本概念<br><br></h3><br><p>我们可以对一个jar文件进行签名，而有的工具或者容器则可以认识或解析我们所设置的签名，从而给这个jar程序赋予相应的权限或者发现代码是否曾被修改过。<br><br>Package Sealing: 来自同一个package的class文件都必须来自同一个jar文件。这样做的目的是为了保持版本一致性和安全。<br><br>Package Versioning: jar文件可以包含关于Vendor和Version的信息。</p><br><h3><br>    2、META-INF目录<br><br></h3><br><p>这个目录存放的都是一些meta数据。可括如下文件：<br><br>MANIFEST.MF：最常用的一个文件，定义扩展属性，如版本，类包依赖等。<br><br>INDEX.LIST：用jar命令-i参数可以生成该文件，用于让ClassLoader可以加快装载class到jvm，估计适合Applet这种需要下载和装载远程的class的场景。<br><br>xxx.SF: 是本jar文件的签名。<br><br>xxx.DSA: 跟签名相关。</p><br><h3><br>    3、jar文件可以设置为“可执行”文件。<br><br></h3><br><p>jar文件“可执行”的意义在于：<br><br>（1）在windows里双击该文件可以运行启动应用；<br><br>设置方法是设置jar文件中的META-INF目录中的MANIFEST.MF文件。<br><br>加入一行：Main-Class: com.mypackage.MyMainClass 即可<br><br>也可以采用Ant来设置或者生成这句话。<br><br>&lt;jar destfile=”myapp.jar” basedir=”classes”&gt;<br><br>&lt;manifest&gt;<br><br>&lt;attribute name=”Main-Class” value=”com.mypackage.MyMainClass” /&gt;<br><br>&lt;/manifest&gt;<br><br>&lt;/jar&gt;<br><br>（2）用命令行或者cmd，sh等脚本可以运行启动jar文件。<br><br>用命令行启动的方式是：java -jar myapplication.jar</p><br><h3><br>    4、Package Sealing<br><br></h3><br><p>可以在MANIFEST.MF文件中设定类似如下的内容：<br><br>Name: com/mypackage/<br><br>Sealed: true<br><br>那么，你的package(com.mypackage)的类就必须都来自这同一个jar文件，否则JVM就会抛出异常。</p><br><h3><br>    5、jar文件中可以设定对其他jar的依赖关系<br><br></h3><br><p>如果jar的运行需要引用其他jar，那么可以在 MANIFEST.MF中设定或者列出其他的jar。<br><br>列举时需要列出具体位置和文件名，如果用相对路径，则始于此jar所在的目录起，如果用绝对路径，则在Unix/Linux路径下用/开头，在Windows中似乎得用file:///。然后再接着Windows的路径，如：<br><br>Class-Path: ./lib/log4j-1.2.11.jar<br><br>../otherlib/otherfile.jar<br><br>/share/lib/somefile.jar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br><br>//上面是Unix/Linux绝对路径<br><br>file:///D:/mydemo/myapp/lib/log4j-1.2.11.jar <br><br>//上面是Windows绝对路径<br><br>如果有多个依赖，则用空格或者回车隔开都可以。<br><br>同样可以用Ant来设置。<br><br>&lt;attribute name=”Class-Path”&nbsp; value=”./lib/a.jar ./lib/b.jar” /&gt;</p><br><h3><br>    6、可以把其他类型的文件（非.class文件）放到jar文件中<br><br></h3><br><p>常规的如.properties文件，.xml文件都是经常放配置信息的，这些文件都可以放到.jar文件中。其实可以放一些图片，音频等，并且同样可以在应用程序中读取到这些文件。当然，不要放太大的文件，以免影响性能。<br><br>读取这些文件的方法很简单，就是类似MyClass.class.getClassLoader().getResourceAsStream(“/myfiles/myfile.xml”)的写法即可拿到一个InputStream。</p><br><h3><br>    7、Package Versioning<br><br></h3><br><p>可以在jar中放入版本信息，如：<br><br>Name: java/util/<br><br>Specification-Title: “Java Utility Classes” <br><br>Specification-Version: “1.2”<br><br>Specification-Vendor: “Sun Microsystems, Inc.”.<br><br>Implementation-Title: “java.util” <br><br>Implementation-Version: “build57”<br><br>Implementation-Vendor: “Sun Microsystems, Inc.”</p><br><h3><br>    8、 引入jar的另外方法<br><br></h3><br><p>a、把jar文件放到JRE的lib/ext目录下，将隐性地能够被你的应用所引用到，即不需要显式出现在CLASSPATH或者你的MANIFEST.MF中；<br><br>b、Java6开始允许使用通配符来设定CLASSPATH，如java -classpath .\lib* myapp.jar，这样的话，lib地下的n个jar文件自动加入到CLASSPATH中，而不需要一一列举了。可惜不能在MANIFEST.MF中使用通配符。<br><br>另外，在J2EE环境下，我们通常部署ear/war，这些部署文件中都有大量的应用代码（.class文件），J2EE没有限制和规定这些.class文件是否一定要打包成.jar文件，如war目录中，可以采用在WEB-INF/classes里面放置大量的.class文件，虽然逻辑上是一样的东西，但是运行态是不同的。如果不打包的话，系统进程（Java服务器，如WebLogic）会需要用多个IO操作来打开程序文件，使用多个文件句柄；如果是打包成.jar的话，则其相关的数量可以大大降低。各自优劣，不言自明。</p>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/10/07/浅谈二叉搜索树/">
+                    浅谈二叉搜索树
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/04/30/数据库三范式解析/">
+                    数据库三范式解析
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">    1、基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">    2、META-INF目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">    3、jar文件可以设置为“可执行”文件。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">    4、Package Sealing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">    5、jar文件中可以设定对其他jar的依赖关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">    6、可以把其他类型的文件（非.class文件）放到jar文件中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">    7、Package Versioning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text">    8、 引入jar的另外方法</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"jar文件到底是什么　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/10/07/浅谈二叉搜索树/" title="上一篇: 浅谈二叉搜索树">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/04/30/数据库三范式解析/" title="下一篇: 数据库三范式解析">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/A＊算法剖析/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy 2/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/编程能力与编程年龄/">编程能力与编程年龄</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/13/Java IO流体系中常用的流分类/">Java IO流体系中常用的流分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/机器学习主流算法分析/">机器学习主流算法分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/深度优先与广度优先/">深度优先与广度优先</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/String.format()字符串格式化/">String.format()字符串格式化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/浅谈二叉搜索树/">浅谈二叉搜索树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/jar文件到底是什么/">jar文件到底是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/数据库三范式解析/">数据库三范式解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/">深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/">深入理解 Java 虚拟机（一）走近 Java(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/理解Java虚拟机体系结构(转)/">理解Java虚拟机体系结构(转）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Chuanhe Liu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

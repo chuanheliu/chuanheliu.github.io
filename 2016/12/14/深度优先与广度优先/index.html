@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Chuanhe Liu" />
+
+
+
+<meta name="description" content="有两种常用的方法可用来搜索图：即深度优先搜索和广度优先搜索。它们最终都会到达所有连通的顶点。深度优先搜索通过栈来实现，而广度优先搜索通过队列来实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度优先与广度优先">
+<meta property="og:url" content="http://yoursite.com/2016/12/14/深度优先与广度优先/index.html">
+<meta property="og:site_name" content="chuanhe的博客">
+<meta property="og:description" content="有两种常用的方法可用来搜索图：即深度优先搜索和广度优先搜索。它们最终都会到达所有连通的顶点。深度优先搜索通过栈来实现，而广度优先搜索通过队列来实现。">
+<meta property="og:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_1_thumb_633971201654821250.png">
+<meta property="og:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_2_thumb_633971201691071250.png">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_deep_thumb.gif">
+<meta property="og:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_guang_thumb.gif">
+<meta property="og:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_aa_thumb.jpg">
+<meta property="og:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_b_thumb.gif">
+<meta property="og:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_a_thumb.gif">
+<meta property="og:updated_time" content="2017-03-08T21:43:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度优先与广度优先">
+<meta name="twitter:description" content="有两种常用的方法可用来搜索图：即深度优先搜索和广度优先搜索。它们最终都会到达所有连通的顶点。深度优先搜索通过栈来实现，而广度优先搜索通过队列来实现。">
+<meta name="twitter:image" content="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_1_thumb_633971201654821250.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="chuanhe的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/chuanheliu/chuanheliu.github.io/master/img/JavaLogo.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>深度优先与广度优先 | chuanhe的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Chuanhe Liu</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Java影响睡眠</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.yfgeek.com/">Ivan&#39;s Blog</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">英格兰友人的最爱</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://avatars1.githubusercontent.com/u/23323529?v=3&amp;u=a6376b504d3914b39497c03224b899c1c2f6ede7&amp;s=400" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Chuanhe Liu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Java影响睡眠</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/chuanheliu" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=110295168" title="网易云音乐"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:chuanheliu@163.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-深度优先与广度优先" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/14/深度优先与广度优先/" class="article-date">
+      <time datetime="2016-12-14T15:16:02.000Z" itemprop="datePublished">2016-12-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深度优先与广度优先
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>有两种常用的方法可用来搜索图：即深度优先搜索和广度优先搜索。它们最终都会到达所有连通的顶点。深度优先搜索通过栈来实现，而广度优先搜索通过队列来实现。 <a id="more"></a> <br>深度优先搜索：    <br>下面图中的数字显示了深度优先搜索顶点被访问的顺序。    <br><a 1630634="" href="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_1_633971201619508750.png" class="cboxElement" rel="external" target="_blank"><img style="border-right: 0px; border-top: 0px; display: inline; border-left: 0px; border-bottom: 0px" title="1" src="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_1_thumb_633971201654821250.png" border="0" alt="1" width="281" height="189"></a>     <br>为了实现深度优先搜索，首先选择一个起始顶点并需要遵守三个规则：    <br>(1) 如果可能，访问一个邻接的未访问顶点，标记它，并把它放入栈中。    <br>(2) 当不能执行规则1时，如果栈不空，就从栈中弹出一个顶点。    <br>(3) 如果不能执行规则1和规则2，就完成了整个搜索过程。    <br>广度优先搜索：    <br>在深度优先搜索中，<span class="wp_keywordlink"><a href="http://www.xuebuyuan.com/category/%E7%AE%97%E6%B3%95" title="算法" target="_blank">算法</a></span>表现得好像要尽快地远离起始点似的。相反，在广度优先搜索中，算法好像要尽可能地靠近起始点。它首先访问起始顶点的所有邻接点，然后再访问较远的区域。它是用队列来实现的。    <br>下面图中的数字显示了广度优先搜索顶点被访问的顺序。    <br><a 1630634="" href="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_2_633971201687008750.png" class="cboxElement" rel="external" target="_blank"><img style="border-right: 0px; border-top: 0px; display: inline; border-left: 0px; border-bottom: 0px" title="2" src="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_2_thumb_633971201691071250.png" border="0" alt="2" width="339" height="206"></a>     <br>实现广度优先搜索，也要遵守三个规则：    <br>(1) 访问下一个未来访问的邻接点，这个顶点必须是当前顶点的邻接点，标记它，并把它插入到队列中。    <br>(2) 如果因为已经没有未访问顶点而不能执行规则1时，那么从队列头取一个顶点，并使其成为当前顶点。    <br>(3) 如果因为队列为空而不能执行规则2，则搜索结束。    <br>下面是一个图类的java代码，dfs()为深度优先搜索算法，bfs()为广度优先搜索算法：</p><br><p><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" alt="" align="top">//用于实现深度优先搜索的栈类    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" alt="" align="top">class StackX{    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private final int SIZE=20;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private int[] st;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private int top;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public StackX(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        st=new int[SIZE];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        top=-1;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public void push(int j){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        st[++top]=j;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public int pop(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> return st[top–];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public int peek(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> return st[top];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public boolean isEmpty(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> return top==-1;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" alt="" align="top">}    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" alt="" align="top">//用于实现广度优先搜索的队列类    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" alt="" align="top">class Queue{    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private final int SIZE=20;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private int[] queArray;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private int front;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private int rear;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public Queue(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        queArray=new int[SIZE];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        front=0;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        rear=-1;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public void insert(int j){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> if(rear==SIZE-1)    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">            rear=-1;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        queArray[++rear]=j;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public int remove(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> int temp=queArray[front++];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> if(front==SIZE)    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">            front=0;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> return temp;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public boolean isEmpty(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> return ((rear+1==front)||(front+SIZE-1==rear));    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" alt="" align="top">}    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" alt="" align="top">//顶点类    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" alt="" align="top">class Vertex{    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> public char label;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> public boolean wasVisited;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public Vertex(char lab){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        label=lab;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        wasVisited=false;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" alt="" align="top">}    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" alt="" align="top">//图类    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" alt="" align="top">public class Graph {    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private final int MAX_VERTS=20;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private Vertex vertexList[];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private int adjMat[][];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private int nVerts;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private StackX theStack;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> private Queue theQueue;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> /<em>* Creates a new instance of Graph </em>/    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public Graph() {    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        vertexList=new Vertex[MAX_VERTS];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        adjMat=new int[MAX_VERTS][MAX_VERTS];    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        nVerts=0;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> for (int j = 0; j &lt; MAX_VERTS; j++) {    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> for (int k = 0; k &lt; MAX_VERTS; k++) {    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                adjMat[j][k]=0;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">            }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">        }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        theStack=new StackX();    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        theQueue=new Queue();    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> //增加一个顶点    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public void addVertex(char lab){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        vertexList[nVerts++]=new Vertex(lab);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> //增加一条边    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public void addEdge(int start,int end){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        adjMat[start][end]=1;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        adjMat[end][start]=1;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public void displayVertex(int v){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        System.out.print(vertexList[v].label);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> //深度优先搜索    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public void dfs(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        vertexList[0].wasVisited=true;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        displayVertex(0);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        theStack.push(0);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> while(!theStack.isEmpty()){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> int v=getAdjUnvisitedVertex(theStack.peek());    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> if(v==-1)    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                theStack.pop();    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> else{    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                vertexList[v].wasVisited=true;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                displayVertex(v);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                theStack.push(v);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">            }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">        }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> for(int j=0;j<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">            vertexList[j].wasVisited=false;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> //得到与v顶点邻接且未访问过的顶点标号    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public int getAdjUnvisitedVertex(int v){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> for (int j = 0; j &lt; nVerts; j++) {    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> if(adjMat[v][j]==1&amp;&amp;vertexList[j].wasVisited==false)    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> return j;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">        }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> return -1;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> //广度优先搜索    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> public void bfs(){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        vertexList[0].wasVisited=true;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        displayVertex(0);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">        theQueue.insert(0);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> int v2;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> while(!theQueue.isEmpty()){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"> int v1=theQueue.remove();    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> while((v2=getAdjUnvisitedVertex(v1))!=-1){    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                vertexList[v2].wasVisited=true;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                displayVertex(v2);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">                theQueue.insert(v2);    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">            }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">        }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockStart.gif" alt="" align="top"> for (int j = 0; j &lt; nVerts; j++) {    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top">            vertexList[j].wasVisited=false;    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">        }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedSubBlockEnd.gif" alt="" align="top">    }    <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" alt="" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" alt="" align="top">}</p><br><p> </p><br><p>===============================================================</p><br><p>一、深度优先搜索  <br>    深度优先搜索就是在搜索树的每一层始终先只扩展一个子节点，不断地向纵深前进直到不能再前进（到达叶子节点或受到深度限制）时，才从当前节点返回到上一级节点，沿另一方向又继续前进。这种方法的搜索树是从树根开始一枝一枝逐渐形成的。    <br>      深度优先搜索亦称为纵向搜索。由于一个有解的问题树可能含有无穷分枝，深度优先搜索如果误入无穷分枝（即深度无限），则不可能找到目标节点。所以，深度优先搜索策略是不完备的。另外，应用此策略得到的解不一定是最佳解（最短路径）。    <br>二、    重排九宫问题游戏    <br>在一个3乘3的九宫中有1-8的8个数及一个空格随机摆放在其中的格子里。如下面左图所示。现在要求实现这样的问题：将该九宫调整为如下图右图所示的形式。调整规则是：每次只能将与空格（上，下或左，右）相临的一个数字平移到空格中。试编程实现。    <br>| 2 | 8  | 3 |                 | 1 | 2 | 3 |    <br>-    <br>| 1 |     | 4 |                 | 8 |    | 4 |    <br>| 7 | 6  | 5 |                 | 7 | 6 | 5 |    <br>深度优先搜索的路径示意图：    <br><a 1630634="" href="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_deep_2.gif" class="cboxElement" rel="external" target="_blank"><img style="border-right: 0px; border-top: 0px; display: inline; border-left: 0px; border-bottom: 0px" title="deep" src="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_deep_thumb.gif" border="0" alt="deep" width="561" height="442"></a> </p><br><p>三、广度优先搜索</p><br><p>    在深度优先搜索算法中，是深度越大的结点越先得到扩展。如果在搜索中把算法改为按结点的层次进行搜索， 本层的结点没有搜索处理完时，不能对下层结点进行处理，即深度越小的结点越先得到扩展，也就是说先产生 的结点先得以扩展处理，这种搜索算法称为广度优先搜索法。</p><br><p>广度优先搜索路径示意图：   <br><a 1630634="" href="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_guang_2.gif" class="cboxElement" rel="external" target="_blank"><img style="border-right: 0px; border-top: 0px; display: inline; border-left: 0px; border-bottom: 0px" title="guang" src="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_guang_thumb.gif" border="0" alt="guang" width="521" height="405"></a> </p><br><p>四、航班问题（来自《The Art of Java》)   <br>    一位顾客要预定一张从New York到Los Angeles的航班机票，下面是航班线路，请你为顾客找一种购票方案。</p><br><p> <a 1630634="" href="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_aa_2.jpg" class="cboxElement" rel="external" target="_blank"><img style="border-right: 0px; border-top: 0px; display: inline; border-left: 0px; border-bottom: 0px" title="aa" src="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_aa_thumb.jpg" border="0" alt="aa" width="539" height="285"></a></p><br><p>下面是用深度优先搜索求解的<span class="wp_keywordlink"><a href="http://www.xuebuyuan.com/" title="程序" target="_blank">程序</a></span>:</p><br><p>// Find connections using a depth-first search.   <br>import java.util.<em>;    <br>import java.io.</em>;    <br>// Flight information.    <br>class FlightInfo {    <br>  String from;    <br>  String to;    <br>int distance;    <br>boolean skip; // used in backtracking    <br>  FlightInfo(String f, String t, int d) {    <br>    from = f;    <br>    to = t;    <br>    distance = d;    <br>    skip = false;    <br>  }    <br>}    <br>class Depth {    <br>final int MAX = 100;    <br>// This array holds the flight information.    <br>  FlightInfo flights[] = new FlightInfo[MAX];  <br>int numFlights = 0; // number of entries in flight array    <br>  Stack btStack = new Stack(); // backtrack stack    <br>public static void main(String args[])    <br>  {    <br>    String to, from;    <br>    Depth ob = new Depth();    <br>    BufferedReader br = new    <br>      BufferedReader(new InputStreamReader(System.in));  <br>    ob.setup();   <br>try {  <br>      System.out.print(“From? “);    <br>      from = br.readLine();  <br>      System.out.print(“To? “);    <br>      to = br.readLine();  <br>      ob.isflight(from, to);    <br>if(ob.btStack.size() != 0)    <br>        ob.route(to);    <br>    } catch (IOException exc) {  <br>      System.out.println(“Error on input.”);    <br>    }    <br>  }    <br>// Initialize the flight database.    <br>void setup()    <br>  {    <br>    addFlight(“New York”, “Chicago”, 900);    <br>    addFlight(“Chicago”, “Denver”, 1000);    <br>    addFlight(“New York”, “Toronto”, 500);    <br>    addFlight(“New York”, “Denver”, 1800);    <br>    addFlight(“Toronto”, “Calgary”, 1700);    <br>    addFlight(“Toronto”, “Los Angeles”, 2500);    <br>    addFlight(“Toronto”, “Chicago”, 500);    <br>    addFlight(“Denver”, “Urbana”, 1000);    <br>    addFlight(“Denver”, “Houston”, 1000);    <br>    addFlight(“Houston”, “Los Angeles”, 1500);    <br>    addFlight(“Denver”, “Los Angeles”, 1000);    <br>  }    <br>// Put flights into the database.    <br>void addFlight(String from, String to, int dist)    <br>  {    <br>if(numFlights &lt; MAX) {    <br>      flights[numFlights] =    <br>new FlightInfo(from, to, dist);    <br>      numFlights++;    <br>    }    <br>else System.out.println(“Flight database full. “);    <br>  }    <br>// Show the route and total distance.    <br>void route(String to)    <br>  {    <br>    Stack rev = new Stack();    <br>int dist = 0;    <br>    FlightInfo f;    <br>int num = btStack.size();    <br>// Reverse the stack to display route.    <br>for(int i=0; i &lt; num; i++)  <br>      rev.push(btStack.pop());    <br>for(int i=0; i &lt; num; i++) {    <br>      f = (FlightInfo) rev.pop();    <br>      System.out.print(f.from + “ to “);    <br>      dist += f.distance;    <br>    }    <br>    System.out.println(to);    <br>    System.out.println(“Distance is “ + dist);    <br>  }    <br>/<em> If there is a flight between from and to,    <br>     return the distance of flight;    <br>     otherwise, return 0. </em>/    <br>int match(String from, String to)    <br>  {    <br>for(int i=numFlights-1; i &gt; -1; i–) {    <br>if(flights[i].from.equals(from) &amp;&amp;    <br>         flights[i].to.equals(to) &amp;&amp;    <br>!flights[i].skip)    <br>      {    <br>        flights[i].skip = true; // prevent reuse    <br>return flights[i].distance;    <br>      }    <br>    }    <br>return 0; // not found  <br>  }    <br>// Given from, find any connection.    <br>  FlightInfo find(String from)    <br>  {    <br>for(int i=0; i &lt; numFlights; i++) {    <br>if(flights[i].from.equals(from) &amp;&amp;    <br>!flights[i].skip)    <br>      {    <br>        FlightInfo f = new FlightInfo(flights[i].from,    <br>                             flights[i].to,    <br>                             flights[i].distance);    <br>        flights[i].skip = true; // prevent reuse    <br>return f;    <br>      }    <br>    }    <br>return null;    <br>  }    <br>// Determine if there is a route between from and to.  <br>void isflight(String from, String to)    <br>  {    <br>int dist;    <br>    FlightInfo f;    <br>// See if at destination.    <br>    dist = match(from, to);    <br>if(dist != 0) {    <br>      btStack.push(new FlightInfo(from, to, dist));    <br>return;    <br>    }    <br>// Try another connection.    <br>    f = find(from);    <br>if(f != null) {    <br>      btStack.push(new FlightInfo(from, to, f.distance));    <br>      isflight(f.to, to);    <br>    }    <br>else if(btStack.size() &gt; 0) {    <br>// Backtrack and try another connection.    <br>      f = (FlightInfo) btStack.pop();    <br>      isflight(f.from, f.to);    <br>    }    <br>  }    <br>}  </p><br><p><a 1630634="" href="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_b_2.gif" class="cboxElement" rel="external" target="_blank"><img style="border-right: 0px; border-top: 0px; display: inline; border-left: 0px; border-bottom: 0px" title="b" src="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_b_thumb.gif" border="0" alt="b" width="504" height="395"></a> </p><br><p>解释：isflight()方法用递归方法进行深度优先搜索，它先调用match()方法检查航班的数据库，判断在from和to之间有没有航班可达。如果有，则获取目标信息，并将该线路压入栈中，然后返回（找到一个方案）。否则，就调用find()方法查找from与任意其它城市之间的线路，如果找到一条就返回描述该线路的FlightInfo对象，否则返回null。如果存在这样的一条线路，那么就把该线路保存在f中，并将当前航班信息压到栈的顶部，然后递归调用isflight()方法 ,此时保存在f.to中的城市成为新的出发城市.否则就进行回退,弹出栈顶的第一个节点,然后递归调用isflight()方法。该过程将一直持续到找到目标为止。</p><br><p>程序运行结果：</p><br><p>C:/java&gt;java Depth   <br>From? New York    <br>To? Los Angeles    <br>New York to Chicago to Denver to Los Angeles    <br>Distance is 2900</p><br><p>C:/java&gt;</p><br><p>     深度优先搜索能够找到一个解，同时，对于上面这个特定问题，深度优先搜索没有经过回退，一次就找到了一个解；但如果数据的组织方式不同，寻找解时就有可能进行多次回退。因此这个例子的输出并不具有普遍性。而且，在搜索一个很长，但是其中并没有解的分支的时候，深度优先搜索的性能将会很差，在这种情况下，深度优先搜索不仅在搜索这条路径时浪费时间，而且还在向目标的回退中浪费时间。</p><br><p>再看对这个例子使用广度优先搜索的程序：</p><br><p>程序运行结果：   <br>C:/java&gt;java Breadth    <br>From? New York    <br>To? Los Angeles    <br>New York to Toronto to Los Angeles    <br>Distance is 3000</p><br><p>// Find connections using a breadth-first search.   <br>import java.util.<em>;    <br>import java.io.</em>;    <br>// Flight information.    <br>class FlightInfo {    <br>  String from;    <br>  String to;    <br>int distance;    <br>boolean skip; // used in backtracking    <br>  FlightInfo(String f, String t, int d) {    <br>    from = f;    <br>    to = t;    <br>    distance = d;    <br>    skip = false;    <br>  }    <br>}    <br>class Breadth {    <br>final int MAX = 100;    <br>// This array holds the flight information.    <br>  FlightInfo flights[] = new FlightInfo[MAX];  <br>int numFlights = 0; // number of entries in flight array    <br>  Stack btStack = new Stack(); // backtrack stack    <br>public static void main(String args[])    <br>  {    <br>    String to, from;    <br>    Breadth ob = new Breadth();    <br>    BufferedReader br = new    <br>      BufferedReader(new InputStreamReader(System.in));  <br>    ob.setup();   <br>try {  <br>      System.out.print(“From? “);    <br>      from = br.readLine();  <br>      System.out.print(“To? “);    <br>      to = br.readLine();  <br>      ob.isflight(from, to);    <br>if(ob.btStack.size() != 0)    <br>        ob.route(to);    <br>    } catch (IOException exc) {  <br>      System.out.println(“Error on input.”);    <br>    }    <br>  }    <br>// Initialize the flight database.    <br>void setup()    <br>  {    <br>    addFlight(“New York”, “Chicago”, 900);    <br>    addFlight(“Chicago”, “Denver”, 1000);    <br>    addFlight(“New York”, “Toronto”, 500);    <br>    addFlight(“New York”, “Denver”, 1800);    <br>    addFlight(“Toronto”, “Calgary”, 1700);    <br>    addFlight(“Toronto”, “Los Angeles”, 2500);    <br>    addFlight(“Toronto”, “Chicago”, 500);    <br>    addFlight(“Denver”, “Urbana”, 1000);    <br>    addFlight(“Denver”, “Houston”, 1000);    <br>    addFlight(“Houston”, “Los Angeles”, 1500);    <br>    addFlight(“Denver”, “Los Angeles”, 1000);    <br>  }    <br>// Put flights into the database.    <br>void addFlight(String from, String to, int dist)    <br>  {   <br>if(numFlights &lt; MAX) {    <br>      flights[numFlights] =    <br>new FlightInfo(from, to, dist);    <br>      numFlights++;    <br>    }    <br>else System.out.println(“Flight database full. “);    <br>  }    <br>// Show the route and total distance.    <br>void route(String to)    <br>  {    <br>    Stack rev = new Stack();    <br>int dist = 0;    <br>    FlightInfo f;    <br>int num = btStack.size();    <br>// Reverse the stack to display route.    <br>for(int i=0; i &lt; num; i++)  <br>      rev.push(btStack.pop());    <br>for(int i=0; i &lt; num; i++) {    <br>      f = (FlightInfo) rev.pop();    <br>      System.out.print(f.from + “ to “);    <br>      dist += f.distance;    <br>    }    <br>    System.out.println(to);    <br>    System.out.println(“Distance is “ + dist);    <br>  }    <br>/<em> If there is a flight between from and to,    <br>     return the distance of flight;    <br>     otherwise, return 0. </em>/    <br>int match(String from, String to)    <br>  {    <br>for(int i=numFlights-1; i &gt; -1; i–) {    <br>if(flights[i].from.equals(from) &amp;&amp;    <br>         flights[i].to.equals(to) &amp;&amp;    <br>!flights[i].skip)    <br>      {    <br>        flights[i].skip = true; // prevent reuse    <br>return flights[i].distance;    <br>      }    <br>    }    <br>return 0; // not found  <br>  }    <br>// Given from, find any connection.    <br>  FlightInfo find(String from)    <br>  {    <br>for(int i=0; i &lt; numFlights; i++) {    <br>if(flights[i].from.equals(from) &amp;&amp;    <br>!flights[i].skip)    <br>      {    <br>        FlightInfo f = new FlightInfo(flights[i].from,    <br>                             flights[i].to,    <br>                             flights[i].distance);    <br>        flights[i].skip = true; // prevent reuse    <br>return f;    <br>      }    <br>    }    <br>return null;    <br>  }    <br>/<em> Determine if there is a route between from and to    <br>     using breadth-first search. </em>/    <br>void isflight(String from, String to)    <br>  {    <br>int dist, dist2;    <br>    FlightInfo f;    <br>// This stack is needed by the breadth-first search.    <br>    Stack resetStck = new Stack();    <br>// See if at destination.    <br>    dist = match(from, to);    <br>if(dist != 0) {    <br>      btStack.push(new FlightInfo(from, to, dist));    <br>return;    <br>    }    <br>/<em> Following is the first part of the breadth-first    <br>       modification.  It checks all connecting flights    <br>       from a specified node. </em>/    <br>while((f = find(from)) != null) {    <br>      resetStck.push(f);    <br>if((dist = match(f.to, to)) != 0) {    <br>        resetStck.push(f.to);    <br>        btStack.push(new FlightInfo(from, f.to, f.distance));    <br>        btStack.push(new FlightInfo(f.to, to, dist));    <br>return;    <br>      }    <br>    }    <br>/<em> The following code resets the skip fields set by    <br>       preceding while loop. This is also part of the    <br>       breadth-first modifiction. </em>/    <br>int i = resetStck.size();    <br>for(; i!=0; i–)    <br>      resetSkip((FlightInfo) resetStck.pop());    <br>// Try another connection.    <br>    f = find(from);    <br>if(f != null) {    <br>      btStack.push(new FlightInfo(from, to, f.distance));    <br>      isflight(f.to, to);    <br>    }    <br>else if(btStack.size() &gt; 0) {    <br>// Backtrack and try another connection.    <br>      f = (FlightInfo) btStack.pop();    <br>      isflight(f.from, f.to);    <br>    }    <br>  }    <br>// Reset skip field of specified flight.    <br>void resetSkip(FlightInfo f) {    <br>for(int i=0; i&lt; numFlights; i++)    <br>if(flights[i].from.equals(f.from) &amp;&amp;    <br>         flights[i].to.equals(f.to))    <br>           flights[i].skip = false;    <br>  }    <br>}</p><br><p>C:/java&gt;</p><br><p>它找到了一个合理的解，但这不具有一般性。因为找到的第一条路径取决于信息的物理组织形式。</p><br><p><a 1630634="" href="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_a_2.gif" class="cboxElement" rel="external" target="_blank"><img style="border-right: 0px; border-top: 0px; display: inline; border-left: 0px; border-bottom: 0px" title="a" src="http://p.blog.csdn.net/images/p_blog_csdn_net/superxgl/624870/o_a_thumb.gif" border="0" alt="a" width="443" height="350"></a> </p><br><p>如果目标在搜索空间中隐藏得不是太深，那么广度优先搜索的性能会很好。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/01/22/机器学习主流算法分析/">
+                    机器学习主流算法分析
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/11/14/String.format()字符串格式化/">
+                    String.format()字符串格式化
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"深度优先与广度优先　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/01/22/机器学习主流算法分析/" title="上一篇: 机器学习主流算法分析">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/11/14/String.format()字符串格式化/" title="下一篇: String.format()字符串格式化">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/A＊算法剖析/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/13 copy 2/">A＊算法剖析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/编程能力与编程年龄/">编程能力与编程年龄</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/13/Java IO流体系中常用的流分类/">Java IO流体系中常用的流分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/机器学习主流算法分析/">机器学习主流算法分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/深度优先与广度优先/">深度优先与广度优先</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/String.format()字符串格式化/">String.format()字符串格式化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/浅谈二叉搜索树/">浅谈二叉搜索树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/jar文件到底是什么/">jar文件到底是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/数据库三范式解析/">数据库三范式解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/深入理解-Java-虚拟机（二）Java内存区域与内存溢出异常(转)/">深入理解 Java 虚拟机（二）Java内存区域与内存溢出异常(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/深入理解-Java-虚拟机（一）走近-Java(转)/">深入理解 Java 虚拟机（一）走近 Java(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/理解Java虚拟机体系结构(转)/">理解Java虚拟机体系结构(转）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Chuanhe Liu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
