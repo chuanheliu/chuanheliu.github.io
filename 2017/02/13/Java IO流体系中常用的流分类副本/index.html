@@ -15,23 +15,18 @@
 
 
 
-<meta name="description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="编程能力与编程年龄">
-<meta property="og:url" content="http://yoursite.com/2017/03/08/编程能力与编程年龄/index.html">
+<meta property="og:title" content="Java IO流体系中常用的流分类">
+<meta property="og:url" content="http://yoursite.com/2017/02/13/Java IO流体系中常用的流分类副本/index.html">
 <meta property="og:site_name" content="chuanhe的博客">
-<meta property="og:description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg">
-<meta property="og:updated_time" content="2017-06-05T04:05:29.000Z">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/384764/2012031413371190.png">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/384764/2012031413373126.jpg">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/384764/2012031413383430.png">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/384764/2012031413390861.png">
+<meta property="og:updated_time" content="2017-03-30T05:17:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="编程能力与编程年龄">
-<meta name="twitter:description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
-<meta name="twitter:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
+<meta name="twitter:title" content="Java IO流体系中常用的流分类">
+<meta name="twitter:image" content="http://pic002.cnblogs.com/images/2012/384764/2012031413371190.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -63,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>编程能力与编程年龄 | chuanhe的博客</title>
+<title>Java IO流体系中常用的流分类 | chuanhe的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -267,11 +262,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-编程能力与编程年龄" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Java IO流体系中常用的流分类副本" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/03/08/编程能力与编程年龄/" class="article-date">
-      <time datetime="2017-03-08T21:48:04.000Z" itemprop="datePublished">2017-03-08</time>
+      <a href="/2017/02/13/Java IO流体系中常用的流分类副本/" class="article-date">
+      <time datetime="2017-02-13T21:48:04.000Z" itemprop="datePublished">2017-02-13</time>
 </a>
 
 
@@ -286,7 +281,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      编程能力与编程年龄
+      Java IO流体系中常用的流分类
     </h1>
   
 
@@ -303,12 +298,22 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>原文：<a href="http://coolshell.cn/articles/10688.html" target="_blank" rel="external">http://coolshell.cn/articles/10688.html</a></p>
-<p></p><p>今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。</p><a id="more"></a><p></p>
-<p></p><h4>论文</h4><p></p>
-<p></p><p>首先，我们先来看一篇论文《<a href="http://people.engr.ncsu.edu/ermurph3/papers/msr13.pdf" target="_blank">Is Programming Knowledge Related to Age?</a>》（PDF链接），这篇论文是两个北卡罗莱纳州立大学计算机科学系的两个人Patrick Morrison 和 Emerson Murphy-Hill 对StackOverflow.com上的用户做了相关的数据挖掘得出来的一些数据。（我们知道StackOverflow.com上的数据是公开的，任何人都可以用来分析和统计，所以这篇论文的真实性是有的）</p><p></p>
-<p></p><p>数据采样和清洗条件如下：（数据全量是1694981用户，平均年龄30.3岁）</p><p></p>
-<ul><br><li>15-70岁之间的用户（这年龄段的用户被称做“Working age”），当然，有很多用户没有输入年龄，这些用户都被过滤了。</li><br><li>用户在2012年内都回答过问题。因为StackOverflow在2012年对问题和答案的质量要求得比以前高了一倍，所以更能反映程序员的真实水平。</li><br><li>Reputation声望在2-100K之间。（注：StackOverflow的用户Reputation是得到社会认可的，在面试和招聘中是硬通货币。比大学的学分更有价值）</li><br></ul><br><p>上述的条件一共过滤出84,248名程序员，平均年龄：29.02岁，平均Reputaion在1073.9分。</p><br><p><span id="more-10688"></span></p><br><h5>年龄分布图</h5><br><p>下面我们来看一下他们的年龄分布图：我们可以看到程序员年纪的正态分布（高点在25岁左右，但是中点在29岁左右）</p><br><p><img class="aligncenter size-full wp-image-10689" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg" width="578" height="512" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg 578w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01-300x265.jpg 300w" sizes="(max-width: 578px) 100vw, 578px"></p><br><h5>能力和年龄分布图</h5><br><p>然后，计算每个人每个月的Reputation，这样可以找到这个用户的真正的活跃时间，这样便于计算这个程序员的真实能力。（总声望 / 活跃时间），可以得到他平均每个月得来的Reputation。</p><br><p>我们来看看程序员的能力和年龄段的分布图：（你可能会大吃一惊）</p><br><p><img class="aligncenter size-full wp-image-10690" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg" width="571" height="528" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg 571w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02-300x277.jpg 300w" sizes="(max-width: 571px) 100vw, 571px"></p><br><p>上图中我们可以看到，程序员的能力在从25岁左右开始上升，一直到50岁后才会开始下降。所以说，程序员吃的不是青春饭。只有码农，靠蛮力，用体力而不是用脑力的程序员才是吃青春饭的人。</p><br><h5>年纪大的人是否跟不上新技术</h5><br><p>论文的作者分析了Tag，用了最近5年内比较流行的技术Tag，然后用了一套比较严谨的算法来查看那些所谓的“老程序员”是否在新技术上跟上不了，所谓跟不上，也就是这些老的程序员在回答这些新技术上并不活跃。所谓老，就是37岁以上的程序员（就是我现在的年纪）。</p><br><p>得到了下表：可以看到，老程序员和年轻的程序员对于一些新技术的学习来说也是差不多的，甚至有些项还超过了年轻的程序员。</p><br><p style="text-align: center;"><img class="aligncenter  wp-image-10691" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg" width="771" height="232" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg 1101w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-300x90.jpg 300w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-1024x307.jpg 1024w" sizes="(max-width: 771px) 100vw, 771px"></p><br><h5 style="text-align: left;">结论</h5><br><p>论文的结论是：</p><br><p style="padding-left: 30px;"><strong>1）程序员技术能力上升是可以到50岁或60岁的。</strong></p><br><p style="padding-left: 30px;"><strong>2）老程序员在获取新技术上的能力并不比年轻的程序员差。</strong></p><br><h4 style="text-align: left;">我的一些感受</h4><br><p style="text-align: left;">最后，我说一说我的一些感受：</p><br><ul><br><li>这些年来的对于外企和国内感受—— <strong>国外牛B的IT公司的工程能力并不见得比国内的要强多少，但是国外那些NB的IT公司的架构和设计能力远远超过国内的公司，最可怕的是，那些有超强架构和设计能力的“老程序员们”还战斗在一线，这些战斗在一线的老鸟的能力绝对超过100个普能的新手。</strong></li><br></ul><br><ul><br><li>对年轻程序员的感受——国内新一代的程序员们太浮燥了。<strong>老实说，对于大多数人来说，如果你没有编程到30岁，你还不能成为一个“合格”的程序员</strong>。<span style="color: #cc0000;"><strong>所以，并不是编程编到30岁就玩完了，而是编程编到30岁才刚刚入门。</strong><span style="color: #000000;">这些不合格的程序，整天BS这个不好，那个不好的，而且喜欢速成，好大喜功。</span></span></li><br></ul><br><ul><br><li>我是一个奔四的人了，编程就像登山一样，越往上爬人越少，所以，在我这个年纪还有想法，对编程还有热情的人不多了，基本上都是转Manager了。<span style="color: #cc0000;"><strong>其实，什么职位，Title都是虚的，公司没了什么都没了，只有技术才是硬通货。而且，越是这个年纪还在玩编程玩技术的人，其实其经验和能力都是比较强的，都是中坚力量，如果还有其它这个年纪和我一样的人，求交往</strong></span>。</li><br></ul>
+        <p></p><p><img src="http://pic002.cnblogs.com/images/2012/384764/2012031413371190.png" alt=""></p><a id="more"></a><p></p>
+<p></p><p>Java流类图结构：</p><p></p>
+<p></p><p><img src="http://pic002.cnblogs.com/images/2012/384764/2012031413373126.jpg" alt=""></p><p></p>
+<p></p><p>&nbsp;</p><p></p>
+<p></p><h2><strong>流的概念和作用</strong></h2><p></p>
+<p></p><p>流是一组有顺序的，有起点和终点的字节集合，是对数据传输的总称或抽象。即数据在两设备间的传输称为流，<strong>流的本质是数据传输，根据数据传输特性将流抽象为各种类，方便更直观的进行数据操作。</strong>&nbsp;</p><p></p>
+<p></p><h2><strong><br></strong></h2><p></p>
+<p></p><h2><strong>IO流的分类</strong></h2><p></p>
+<p><ul></ul></p>
+<p><li>根据处理数据类型的不同分为：字符流和字节流</li></p>
+<p><li>根据数据流向不同分为：输入流和输出流</li><br></p>
+<div>&nbsp;</div><br><h3>字符流和字节流</h3><br><p>字符流的由来： 因为数据编码的不同，而有了对字符进行高效操作的流对象。本质其实就是基于字节流读取时，去查了指定的码表。 字节流和字符流的区别：</p><br><ul><br><li>读写单位不同：字节流以字节（8bit）为单位，字符流以字符为单位，根据码表映射字符，一次可能读多个字节。</li><br><li>处理对象不同：字节流能处理所有类型的数据（如图片、avi等），而字符流只能处理字符类型的数据。</li><br></ul><br><p>结论：只要是处理纯文本数据，就优先考虑使用字符流。 除此之外都使用字节流。</p><br><h3>&nbsp;</h3><br><h3>输入流和输出流</h3><br><p>对输入流只能进行读操作，对输出流只能进行写操作，程序中需要根据待传输数据的不同特性而使用不同的流。 &nbsp;</p><br><h2><strong><br></strong></h2><br><h2><strong>Java IO流对象</strong></h2><br><p><span style="font-size: 15px; font-weight: bold;">1.输入字节流InputStream</span>IO 中输入字节流的继承图可见上图，可以看出：</p><br><ol><br><li>InputStream 是所有的输入字节流的父类，它是一个抽象类。</li><br><li>ByteArrayInputStream、StringBufferInputStream、FileInputStream 是三种基本的介质流，它们分别从Byte 数组、StringBuffer、和本地文件中读取数据。PipedInputStream 是从与其它线程共用的管道中读取数据，与Piped 相关的知识后续单独介绍。</li><br><li>ObjectInputStream 和所有FilterInputStream 的子类都是装饰流（装饰器模式的主角）。</li><br></ol><br><h3>&nbsp;</h3><br><h3>2.输出字节流OutputStream</h3><br><p>IO 中输出字节流的继承图可见上图，可以看出：</p><br><ol><br><li>OutputStream 是所有的输出字节流的父类，它是一个抽象类。</li><br><li>ByteArrayOutputStream、FileOutputStream 是两种基本的介质流，它们分别向Byte 数组、和本地文件中写入数据。PipedOutputStream 是向与其它线程共用的管道中写入数据，</li><br><li>ObjectOutputStream 和所有FilterOutputStream 的子类都是装饰流。</li><br></ol><br><h3>&nbsp;</h3><br><h3>3.字节流的输入与输出的对应</h3><br><p><img src="http://pic002.cnblogs.com/images/2012/384764/2012031413383430.png" alt=""></p><br><p>&nbsp;</p><br><p>图中蓝色的为主要的对应部分，红色的部分就是不对应部分。<em>紫色的虚线部分代表这些流一般要搭配使用</em>。从上面的图中可以看出Java IO 中的字节流是极其对称的。&ldquo;存在及合理&rdquo;我们看看这些字节流中不太对称的几个类吧！</p><br><ol><br><li>LineNumberInputStream 主要完成从流中读取数据时，会得到相应的行号，至于什么时候分行、在哪里分行是由改类主动确定的，并不是在原始中有这样一个行号。在输出部分没有对应的部分，我们完全可以自己建立一个LineNumberOutputStream，在最初写入时会有一个基准的行号，以后每次遇到换行时会在下一行添加一个行号，看起来也是可以的。好像更不入流了。</li><br><li>PushbackInputStream 的功能是查看最后一个字节，不满意就放入缓冲区。主要用在编译器的语法、词法分析部分。输出部分的BufferedOutputStream 几乎实现相近的功能。</li><br><li>StringBufferInputStream 已经被Deprecated，本身就不应该出现在InputStream 部分，主要因为String 应该属于字符流的范围。已经被废弃了，当然输出部分也没有必要需要它了！还允许它存在只是为了保持版本的向下兼容而已。</li><br><li>SequenceInputStream 可以认为是一个工具类，将两个或者多个输入流当成一个输入流依次读取。完全可以从IO 包中去除，还完全不影响IO 包的结构，却让其更&ldquo;纯洁&rdquo;――纯洁的Decorator 模式。</li><br><li>PrintStream 也可以认为是一个辅助工具。主要可以向其他输出流，或者FileInputStream 写入数据，本身内部实现还是带缓冲的。本质上是对其它流的综合运用的一个工具而已。一样可以踢出IO 包！System.out 和System.out 就是PrintStream 的实例！</li><br></ol><br><h3>&nbsp;</h3><br><h3>4.字符输入流Reader</h3><br><p>在上面的继承关系图中可以看出：</p><br><ol><br><li>Reader 是所有的输入字符流的父类，它是一个抽象类。</li><br><li>CharReader、StringReader 是两种基本的介质流，它们分别将Char 数组、String中读取数据。PipedReader 是从与其它线程共用的管道中读取数据。</li><br><li>BufferedReader 很明显就是一个装饰器，它和其子类负责装饰其它Reader 对象。</li><br><li>FilterReader 是所有自定义具体装饰流的父类，其子类PushbackReader 对Reader 对象进行装饰，会增加一个行号。</li><br><li>InputStreamReader 是一个连接字节流和字符流的桥梁，它将字节流转变为字符流。FileReader 可以说是一个达到此功能、常用的工具类，在其源代码中明显使用了将FileInputStream 转变为Reader 的方法。我们可以从这个类中得到一定的技巧。Reader 中各个类的用途和使用方法基本和InputStream 中的类使用一致。后面会有Reader 与InputStream 的对应关系。</li><br></ol><br><h3>&nbsp;</h3><br><h3>5.字符输出流Writer</h3><br><p>在上面的关系图中可以看出：</p><br><ol><br><li>Writer 是所有的输出字符流的父类，它是一个抽象类。</li><br><li>CharArrayWriter、StringWriter 是两种基本的介质流，它们分别向Char 数组、String 中写入数据。PipedWriter 是向与其它线程共用的管道中写入数据，</li><br><li>BufferedWriter 是一个装饰器为Writer 提供缓冲功能。</li><br><li>PrintWriter 和PrintStream 极其类似，功能和使用也非常相似。</li><br><li>OutputStreamWriter 是OutputStream 到Writer 转换的桥梁，它的子类FileWriter 其实就是一个实现此功能的具体类（具体可以研究一SourceCode）。功能和使用和OutputStream 极其类似，后面会有它们的对应图。</li><br></ol><br><h3>&nbsp;</h3><br><h3>6.<span style="font-size: 15px; font-weight: bold;">字符流的输入与输出的对应</span></h3><br><p><img src="http://pic002.cnblogs.com/images/2012/384764/2012031413390861.png" alt=""></p><br><p>&nbsp;</p><br><h3>7.字符流与字节流转换</h3><br><p>转换流的特点：</p><br><ol><br><li>其是字符流和字节流之间的桥梁</li><br><li>可对读取到的字节数据经过指定编码转换成字符</li><br><li>可对读取到的字符数据经过指定编码转换成字节</li><br></ol><br><p>何时使用转换流？</p><br><ol><br><li>当字节和字符之间有转换动作时；</li><br><li>流操作的数据需要编码或解码时。</li><br></ol><br><p>具体的对象体现：</p><br><ol><br><li>InputStreamReader:<em>字节到字符的桥梁</em></li><br><li>OutputStreamWriter:<em>字符到字节的桥梁</em></li><br></ol><br><p>这两个流对象是字符体系中的成员，它们有转换作用，本身又是字符流，所以在构造的时候需要传入字节流对象进来。</p><br><h2>&nbsp;</h2><br><h3>8.File类</h3><br><p>File类是对文件系统中文件以及文件夹进行封装的对象，可以通过对象的思想来操作文件和文件夹。 File类保存文件或目录的各种元数据信息，包括文件名、文件长度、最后修改时间、是否可读、获取当前文件的路径名，判断指定文件是否存在、获得当前目录中的文件列表，创建、删除文件和目录等方法。 &nbsp;</p><br><h3>9.RandomAccessFile类</h3><br><p>该对象并不是流体系中的一员，其封装了字节流，同时还封装了一个缓冲区（字符数组），通过内部的指针来操作字符数组中的数据。 该对象特点：</p><br><ol><br><li>该对象只能操作文件，所以构造函数接收两种类型的参数：a.字符串文件路径；b.File对象。</li><br><li>该对象既可以对文件进行读操作，也能进行写操作，在进行对象实例化时可指定操作模式(r,rw)</li><br></ol><br><p><strong><em>注意：该对象在实例化时，如果要操作的文件不存在，会自动创建；如果文件存在，写数据未指定位置，会从头开始写，即覆盖原有的内容。</em></strong> 可以用于多线程下载或多个线程同时写数据到文件。</p><br><p>&nbsp;</p><div id="MySignature"></div><br><div class="clear"></div><br><div id="blog_post_info_block"><br><div id="BlogPostCategory"></div><br><div id="EntryTag"></div><br><div id="blog_post_info"><br></div><br><div class="clear"></div><br><div id="post_next_prev"></div><br></div>
+
+
+<pre><code>&lt;/div&gt;
+</code></pre>
       
     </div>
     
@@ -320,15 +325,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/03/08/编程能力与编程年龄副本/">
-                    编程能力与编程年龄
+                <a href="/2017/02/13/Java IO流体系中常用的流分类/">
+                    Java IO流体系中常用的流分类
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/02/13/Java IO流体系中常用的流分类/">
-                    Java IO流体系中常用的流分类
+                <a href="/2017/01/22/机器学习主流算法分析/">
+                    机器学习主流算法分析
                 </a>
             </div>
         
@@ -340,7 +345,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">论文</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">能力和年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">年纪大的人是否跟不上新技术</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">我的一些感受</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">流的概念和作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">IO流的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.</span> <span class="toc-text">字符流和字节流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.2.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.3.</span> <span class="toc-text">输入流和输出流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">Java IO流对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.1.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.2.</span> <span class="toc-text">2.输出字节流OutputStream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.3.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.4.</span> <span class="toc-text">3.字节流的输入与输出的对应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.5.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.6.</span> <span class="toc-text">4.字符输入流Reader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.7.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.8.</span> <span class="toc-text">5.字符输出流Writer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.9.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.10.</span> <span class="toc-text">6.字符流的输入与输出的对应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.11.</span> <span class="toc-text">7.字符流与字节流转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text"> </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">6.1.</span> <span class="toc-text">8.File类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">6.2.</span> <span class="toc-text">9.RandomAccessFile类</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -376,7 +381,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"编程能力与编程年龄　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Java IO流体系中常用的流分类　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -396,7 +401,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/03/08/编程能力与编程年龄副本/" title="上一篇: 编程能力与编程年龄">
+            <a href="/2017/02/13/Java IO流体系中常用的流分类/" title="上一篇: Java IO流体系中常用的流分类">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -404,7 +409,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/02/13/Java IO流体系中常用的流分类/" title="下一篇: Java IO流体系中常用的流分类">
+            <a href="/2017/01/22/机器学习主流算法分析/" title="下一篇: 机器学习主流算法分析">
                 <i class="fa fa-angle-right"></i>
             </a>
         

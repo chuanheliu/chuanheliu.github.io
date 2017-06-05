@@ -15,23 +15,16 @@
 
 
 
-<meta name="description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
+<meta name="description" content="在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="编程能力与编程年龄">
-<meta property="og:url" content="http://yoursite.com/2017/03/08/编程能力与编程年龄/index.html">
+<meta property="og:title" content="jar文件到底是什么">
+<meta property="og:url" content="http://yoursite.com/2016/05/07/jar文件到底是什么副本/index.html">
 <meta property="og:site_name" content="chuanhe的博客">
-<meta property="og:description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg">
-<meta property="og:updated_time" content="2017-06-05T04:05:29.000Z">
+<meta property="og:description" content="在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。">
+<meta property="og:updated_time" content="2017-03-08T20:23:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="编程能力与编程年龄">
-<meta name="twitter:description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
-<meta name="twitter:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
+<meta name="twitter:title" content="jar文件到底是什么">
+<meta name="twitter:description" content="在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -63,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>编程能力与编程年龄 | chuanhe的博客</title>
+<title>jar文件到底是什么 | chuanhe的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -267,11 +260,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-编程能力与编程年龄" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-jar文件到底是什么副本" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/03/08/编程能力与编程年龄/" class="article-date">
-      <time datetime="2017-03-08T21:48:04.000Z" itemprop="datePublished">2017-03-08</time>
+      <a href="/2016/05/07/jar文件到底是什么副本/" class="article-date">
+      <time datetime="2016-05-07T20:48:04.000Z" itemprop="datePublished">2016-05-07</time>
 </a>
 
 
@@ -286,7 +279,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      编程能力与编程年龄
+      jar文件到底是什么
     </h1>
   
 
@@ -303,12 +296,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>原文：<a href="http://coolshell.cn/articles/10688.html" target="_blank" rel="external">http://coolshell.cn/articles/10688.html</a></p>
-<p></p><p>今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。</p><a id="more"></a><p></p>
-<p></p><h4>论文</h4><p></p>
-<p></p><p>首先，我们先来看一篇论文《<a href="http://people.engr.ncsu.edu/ermurph3/papers/msr13.pdf" target="_blank">Is Programming Knowledge Related to Age?</a>》（PDF链接），这篇论文是两个北卡罗莱纳州立大学计算机科学系的两个人Patrick Morrison 和 Emerson Murphy-Hill 对StackOverflow.com上的用户做了相关的数据挖掘得出来的一些数据。（我们知道StackOverflow.com上的数据是公开的，任何人都可以用来分析和统计，所以这篇论文的真实性是有的）</p><p></p>
-<p></p><p>数据采样和清洗条件如下：（数据全量是1694981用户，平均年龄30.3岁）</p><p></p>
-<ul><br><li>15-70岁之间的用户（这年龄段的用户被称做“Working age”），当然，有很多用户没有输入年龄，这些用户都被过滤了。</li><br><li>用户在2012年内都回答过问题。因为StackOverflow在2012年对问题和答案的质量要求得比以前高了一倍，所以更能反映程序员的真实水平。</li><br><li>Reputation声望在2-100K之间。（注：StackOverflow的用户Reputation是得到社会认可的，在面试和招聘中是硬通货币。比大学的学分更有价值）</li><br></ul><br><p>上述的条件一共过滤出84,248名程序员，平均年龄：29.02岁，平均Reputaion在1073.9分。</p><br><p><span id="more-10688"></span></p><br><h5>年龄分布图</h5><br><p>下面我们来看一下他们的年龄分布图：我们可以看到程序员年纪的正态分布（高点在25岁左右，但是中点在29岁左右）</p><br><p><img class="aligncenter size-full wp-image-10689" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg" width="578" height="512" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg 578w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01-300x265.jpg 300w" sizes="(max-width: 578px) 100vw, 578px"></p><br><h5>能力和年龄分布图</h5><br><p>然后，计算每个人每个月的Reputation，这样可以找到这个用户的真正的活跃时间，这样便于计算这个程序员的真实能力。（总声望 / 活跃时间），可以得到他平均每个月得来的Reputation。</p><br><p>我们来看看程序员的能力和年龄段的分布图：（你可能会大吃一惊）</p><br><p><img class="aligncenter size-full wp-image-10690" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg" width="571" height="528" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg 571w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02-300x277.jpg 300w" sizes="(max-width: 571px) 100vw, 571px"></p><br><p>上图中我们可以看到，程序员的能力在从25岁左右开始上升，一直到50岁后才会开始下降。所以说，程序员吃的不是青春饭。只有码农，靠蛮力，用体力而不是用脑力的程序员才是吃青春饭的人。</p><br><h5>年纪大的人是否跟不上新技术</h5><br><p>论文的作者分析了Tag，用了最近5年内比较流行的技术Tag，然后用了一套比较严谨的算法来查看那些所谓的“老程序员”是否在新技术上跟上不了，所谓跟不上，也就是这些老的程序员在回答这些新技术上并不活跃。所谓老，就是37岁以上的程序员（就是我现在的年纪）。</p><br><p>得到了下表：可以看到，老程序员和年轻的程序员对于一些新技术的学习来说也是差不多的，甚至有些项还超过了年轻的程序员。</p><br><p style="text-align: center;"><img class="aligncenter  wp-image-10691" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg" width="771" height="232" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg 1101w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-300x90.jpg 300w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-1024x307.jpg 1024w" sizes="(max-width: 771px) 100vw, 771px"></p><br><h5 style="text-align: left;">结论</h5><br><p>论文的结论是：</p><br><p style="padding-left: 30px;"><strong>1）程序员技术能力上升是可以到50岁或60岁的。</strong></p><br><p style="padding-left: 30px;"><strong>2）老程序员在获取新技术上的能力并不比年轻的程序员差。</strong></p><br><h4 style="text-align: left;">我的一些感受</h4><br><p style="text-align: left;">最后，我说一说我的一些感受：</p><br><ul><br><li>这些年来的对于外企和国内感受—— <strong>国外牛B的IT公司的工程能力并不见得比国内的要强多少，但是国外那些NB的IT公司的架构和设计能力远远超过国内的公司，最可怕的是，那些有超强架构和设计能力的“老程序员们”还战斗在一线，这些战斗在一线的老鸟的能力绝对超过100个普能的新手。</strong></li><br></ul><br><ul><br><li>对年轻程序员的感受——国内新一代的程序员们太浮燥了。<strong>老实说，对于大多数人来说，如果你没有编程到30岁，你还不能成为一个“合格”的程序员</strong>。<span style="color: #cc0000;"><strong>所以，并不是编程编到30岁就玩完了，而是编程编到30岁才刚刚入门。</strong><span style="color: #000000;">这些不合格的程序，整天BS这个不好，那个不好的，而且喜欢速成，好大喜功。</span></span></li><br></ul><br><ul><br><li>我是一个奔四的人了，编程就像登山一样，越往上爬人越少，所以，在我这个年纪还有想法，对编程还有热情的人不多了，基本上都是转Manager了。<span style="color: #cc0000;"><strong>其实，什么职位，Title都是虚的，公司没了什么都没了，只有技术才是硬通货。而且，越是这个年纪还在玩编程玩技术的人，其实其经验和能力都是比较强的，都是中坚力量，如果还有其它这个年纪和我一样的人，求交往</strong></span>。</li><br></ul>
+        <p>在java中jar文件是一个zip格式的压缩文件，虽然属于zip格式的压缩文件，但是java规范里面对于jar文件还有不少额外的设定，作为一名java开发者，我们应该了解一下。</p> <a id="more"></a><br><br><h3><br><br>    1、基本概念<br><br></h3><br><p>我们可以对一个jar文件进行签名，而有的工具或者容器则可以认识或解析我们所设置的签名，从而给这个jar程序赋予相应的权限或者发现代码是否曾被修改过。<br><br>Package Sealing: 来自同一个package的class文件都必须来自同一个jar文件。这样做的目的是为了保持版本一致性和安全。<br><br>Package Versioning: jar文件可以包含关于Vendor和Version的信息。</p><br><h3><br>    2、META-INF目录<br><br></h3><br><p>这个目录存放的都是一些meta数据。可括如下文件：<br><br>MANIFEST.MF：最常用的一个文件，定义扩展属性，如版本，类包依赖等。<br><br>INDEX.LIST：用jar命令-i参数可以生成该文件，用于让ClassLoader可以加快装载class到jvm，估计适合Applet这种需要下载和装载远程的class的场景。<br><br>xxx.SF: 是本jar文件的签名。<br><br>xxx.DSA: 跟签名相关。</p><br><h3><br>    3、jar文件可以设置为“可执行”文件。<br><br></h3><br><p>jar文件“可执行”的意义在于：<br><br>（1）在windows里双击该文件可以运行启动应用；<br><br>设置方法是设置jar文件中的META-INF目录中的MANIFEST.MF文件。<br><br>加入一行：Main-Class: com.mypackage.MyMainClass 即可<br><br>也可以采用Ant来设置或者生成这句话。<br><br>&lt;jar destfile=”myapp.jar” basedir=”classes”&gt;<br><br>&lt;manifest&gt;<br><br>&lt;attribute name=”Main-Class” value=”com.mypackage.MyMainClass” /&gt;<br><br>&lt;/manifest&gt;<br><br>&lt;/jar&gt;<br><br>（2）用命令行或者cmd，sh等脚本可以运行启动jar文件。<br><br>用命令行启动的方式是：java -jar myapplication.jar</p><br><h3><br>    4、Package Sealing<br><br></h3><br><p>可以在MANIFEST.MF文件中设定类似如下的内容：<br><br>Name: com/mypackage/<br><br>Sealed: true<br><br>那么，你的package(com.mypackage)的类就必须都来自这同一个jar文件，否则JVM就会抛出异常。</p><br><h3><br>    5、jar文件中可以设定对其他jar的依赖关系<br><br></h3><br><p>如果jar的运行需要引用其他jar，那么可以在 MANIFEST.MF中设定或者列出其他的jar。<br><br>列举时需要列出具体位置和文件名，如果用相对路径，则始于此jar所在的目录起，如果用绝对路径，则在Unix/Linux路径下用/开头，在Windows中似乎得用file:///。然后再接着Windows的路径，如：<br><br>Class-Path: ./lib/log4j-1.2.11.jar<br><br>../otherlib/otherfile.jar<br><br>/share/lib/somefile.jar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br><br>//上面是Unix/Linux绝对路径<br><br>file:///D:/mydemo/myapp/lib/log4j-1.2.11.jar <br><br>//上面是Windows绝对路径<br><br>如果有多个依赖，则用空格或者回车隔开都可以。<br><br>同样可以用Ant来设置。<br><br>&lt;attribute name=”Class-Path”&nbsp; value=”./lib/a.jar ./lib/b.jar” /&gt;</p><br><h3><br>    6、可以把其他类型的文件（非.class文件）放到jar文件中<br><br></h3><br><p>常规的如.properties文件，.xml文件都是经常放配置信息的，这些文件都可以放到.jar文件中。其实可以放一些图片，音频等，并且同样可以在应用程序中读取到这些文件。当然，不要放太大的文件，以免影响性能。<br><br>读取这些文件的方法很简单，就是类似MyClass.class.getClassLoader().getResourceAsStream(“/myfiles/myfile.xml”)的写法即可拿到一个InputStream。</p><br><h3><br>    7、Package Versioning<br><br></h3><br><p>可以在jar中放入版本信息，如：<br><br>Name: java/util/<br><br>Specification-Title: “Java Utility Classes” <br><br>Specification-Version: “1.2”<br><br>Specification-Vendor: “Sun Microsystems, Inc.”.<br><br>Implementation-Title: “java.util” <br><br>Implementation-Version: “build57”<br><br>Implementation-Vendor: “Sun Microsystems, Inc.”</p><br><h3><br>    8、 引入jar的另外方法<br><br></h3><br><p>a、把jar文件放到JRE的lib/ext目录下，将隐性地能够被你的应用所引用到，即不需要显式出现在CLASSPATH或者你的MANIFEST.MF中；<br><br>b、Java6开始允许使用通配符来设定CLASSPATH，如java -classpath .\lib* myapp.jar，这样的话，lib地下的n个jar文件自动加入到CLASSPATH中，而不需要一一列举了。可惜不能在MANIFEST.MF中使用通配符。<br><br>另外，在J2EE环境下，我们通常部署ear/war，这些部署文件中都有大量的应用代码（.class文件），J2EE没有限制和规定这些.class文件是否一定要打包成.jar文件，如war目录中，可以采用在WEB-INF/classes里面放置大量的.class文件，虽然逻辑上是一样的东西，但是运行态是不同的。如果不打包的话，系统进程（Java服务器，如WebLogic）会需要用多个IO操作来打开程序文件，使用多个文件句柄；如果是打包成.jar的话，则其相关的数量可以大大降低。各自优劣，不言自明。</p>
+
+
       
     </div>
     
@@ -320,15 +310,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/03/08/编程能力与编程年龄副本/">
-                    编程能力与编程年龄
+                <a href="/2016/10/07/浅谈二叉搜索树副本/">
+                    浅谈二叉搜索树
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/02/13/Java IO流体系中常用的流分类/">
-                    Java IO流体系中常用的流分类
+                <a href="/2016/05/07/jar文件到底是什么/">
+                    jar文件到底是什么
                 </a>
             </div>
         
@@ -340,7 +330,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">论文</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">能力和年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">年纪大的人是否跟不上新技术</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">我的一些感受</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">    1、基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">    2、META-INF目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">    3、jar文件可以设置为“可执行”文件。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">    4、Package Sealing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">    5、jar文件中可以设定对其他jar的依赖关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">    6、可以把其他类型的文件（非.class文件）放到jar文件中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">    7、Package Versioning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text">    8、 引入jar的另外方法</span></a></li></ol>
         
     </div>
     <style>
@@ -376,7 +366,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"编程能力与编程年龄　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"jar文件到底是什么　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -396,7 +386,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/03/08/编程能力与编程年龄副本/" title="上一篇: 编程能力与编程年龄">
+            <a href="/2016/10/07/浅谈二叉搜索树副本/" title="上一篇: 浅谈二叉搜索树">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -404,7 +394,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/02/13/Java IO流体系中常用的流分类/" title="下一篇: Java IO流体系中常用的流分类">
+            <a href="/2016/05/07/jar文件到底是什么/" title="下一篇: jar文件到底是什么">
                 <i class="fa fa-angle-right"></i>
             </a>
         

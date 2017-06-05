@@ -15,23 +15,33 @@
 
 
 
-<meta name="description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
+<meta name="description" content="机器学习的算法很多。很多时候困惑人们都是，很多算法是一类算法，而有些算法又是从其他算法中延伸出来的。这里，我们从两个方面来给大家介绍，第一个方面是学习的方式，第二个方面是算法的类似性。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="编程能力与编程年龄">
-<meta property="og:url" content="http://yoursite.com/2017/03/08/编程能力与编程年龄/index.html">
+<meta property="og:title" content="机器学习主流算法分析">
+<meta property="og:url" content="http://yoursite.com/2017/01/22/机器学习主流算法分析副本/index.html">
 <meta property="og:site_name" content="chuanhe的博客">
-<meta property="og:description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg">
-<meta property="og:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg">
-<meta property="og:updated_time" content="2017-06-05T04:05:29.000Z">
+<meta property="og:description" content="机器学习的算法很多。很多时候困惑人们都是，很多算法是一类算法，而有些算法又是从其他算法中延伸出来的。这里，我们从两个方面来给大家介绍，第一个方面是学习的方式，第二个方面是算法的类似性。">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/d6b1b51692798feccbd88184c1e9b59f.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/a8b10a48bacec161b3dbeacbc203388a.png">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/4e9417004aa116dc4183bc4293e01606.png">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/55d99eed03b441e457ce02f6fa4ce594.png">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/c735ca28f98e533a5534dab7927509d8.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/83de0ffd56b65d92a104f9fc3ea40ca1.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/ed4fd820f475eb8192e85f949041f9c0.png">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/58ec9e361ab1873a84bd711dcd010837.png">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/6fcd17e9fe2f21c49e1fd01d5efe196c.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/2115225b5eeeabe6ae418946a8b39b6c.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/45184d8ad1a9a47605ea1c870343b3e5.png">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/1d8754837deb3dda6ae1105ec369c613.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/6cbd365bdca79a8a2422a3cd0e6623e5.png">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/f2978c1952165b16cc4166e6c99c4404.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/f88fe815b85ed45120b6a34694c07503.jpg">
+<meta property="og:image" content="http://static.codeceo.com/images/2014/09/0a628f415391fed94de897625dcb94b4.jpg">
+<meta property="og:updated_time" content="2017-03-08T08:44:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="编程能力与编程年龄">
-<meta name="twitter:description" content="原文：http://coolshell.cn/articles/10688.html
-今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。">
-<meta name="twitter:image" content="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg">
+<meta name="twitter:title" content="机器学习主流算法分析">
+<meta name="twitter:description" content="机器学习的算法很多。很多时候困惑人们都是，很多算法是一类算法，而有些算法又是从其他算法中延伸出来的。这里，我们从两个方面来给大家介绍，第一个方面是学习的方式，第二个方面是算法的类似性。">
+<meta name="twitter:image" content="http://static.codeceo.com/images/2014/09/d6b1b51692798feccbd88184c1e9b59f.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -63,7 +73,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>编程能力与编程年龄 | chuanhe的博客</title>
+<title>机器学习主流算法分析 | chuanhe的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -267,11 +277,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-编程能力与编程年龄" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-机器学习主流算法分析副本" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/03/08/编程能力与编程年龄/" class="article-date">
-      <time datetime="2017-03-08T21:48:04.000Z" itemprop="datePublished">2017-03-08</time>
+      <a href="/2017/01/22/机器学习主流算法分析副本/" class="article-date">
+      <time datetime="2017-01-22T19:05:31.000Z" itemprop="datePublished">2017-01-22</time>
 </a>
 
 
@@ -286,7 +296,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      编程能力与编程年龄
+      机器学习主流算法分析
     </h1>
   
 
@@ -303,12 +313,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>原文：<a href="http://coolshell.cn/articles/10688.html" target="_blank" rel="external">http://coolshell.cn/articles/10688.html</a></p>
-<p></p><p>今天，我们又来谈这个老话题，因为我看到一篇论文，但是也一定会有很多人都会找出各种理由来论证这篇论文的是错的，无所谓了，我把这篇文章送给那些和我一样准备为技术和编程执着和坚持的人。</p><a id="more"></a><p></p>
-<p></p><h4>论文</h4><p></p>
-<p></p><p>首先，我们先来看一篇论文《<a href="http://people.engr.ncsu.edu/ermurph3/papers/msr13.pdf" target="_blank">Is Programming Knowledge Related to Age?</a>》（PDF链接），这篇论文是两个北卡罗莱纳州立大学计算机科学系的两个人Patrick Morrison 和 Emerson Murphy-Hill 对StackOverflow.com上的用户做了相关的数据挖掘得出来的一些数据。（我们知道StackOverflow.com上的数据是公开的，任何人都可以用来分析和统计，所以这篇论文的真实性是有的）</p><p></p>
-<p></p><p>数据采样和清洗条件如下：（数据全量是1694981用户，平均年龄30.3岁）</p><p></p>
-<ul><br><li>15-70岁之间的用户（这年龄段的用户被称做“Working age”），当然，有很多用户没有输入年龄，这些用户都被过滤了。</li><br><li>用户在2012年内都回答过问题。因为StackOverflow在2012年对问题和答案的质量要求得比以前高了一倍，所以更能反映程序员的真实水平。</li><br><li>Reputation声望在2-100K之间。（注：StackOverflow的用户Reputation是得到社会认可的，在面试和招聘中是硬通货币。比大学的学分更有价值）</li><br></ul><br><p>上述的条件一共过滤出84,248名程序员，平均年龄：29.02岁，平均Reputaion在1073.9分。</p><br><p><span id="more-10688"></span></p><br><h5>年龄分布图</h5><br><p>下面我们来看一下他们的年龄分布图：我们可以看到程序员年纪的正态分布（高点在25岁左右，但是中点在29岁左右）</p><br><p><img class="aligncenter size-full wp-image-10689" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg" width="578" height="512" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01.jpg 578w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-01-300x265.jpg 300w" sizes="(max-width: 578px) 100vw, 578px"></p><br><h5>能力和年龄分布图</h5><br><p>然后，计算每个人每个月的Reputation，这样可以找到这个用户的真正的活跃时间，这样便于计算这个程序员的真实能力。（总声望 / 活跃时间），可以得到他平均每个月得来的Reputation。</p><br><p>我们来看看程序员的能力和年龄段的分布图：（你可能会大吃一惊）</p><br><p><img class="aligncenter size-full wp-image-10690" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg" width="571" height="528" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02.jpg 571w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-02-300x277.jpg 300w" sizes="(max-width: 571px) 100vw, 571px"></p><br><p>上图中我们可以看到，程序员的能力在从25岁左右开始上升，一直到50岁后才会开始下降。所以说，程序员吃的不是青春饭。只有码农，靠蛮力，用体力而不是用脑力的程序员才是吃青春饭的人。</p><br><h5>年纪大的人是否跟不上新技术</h5><br><p>论文的作者分析了Tag，用了最近5年内比较流行的技术Tag，然后用了一套比较严谨的算法来查看那些所谓的“老程序员”是否在新技术上跟上不了，所谓跟不上，也就是这些老的程序员在回答这些新技术上并不活跃。所谓老，就是37岁以上的程序员（就是我现在的年纪）。</p><br><p>得到了下表：可以看到，老程序员和年轻的程序员对于一些新技术的学习来说也是差不多的，甚至有些项还超过了年轻的程序员。</p><br><p style="text-align: center;"><img class="aligncenter  wp-image-10691" alt="" src="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg" width="771" height="232" srcset="http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03.jpg 1101w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-300x90.jpg 300w, http://coolshell.cn//wp-content/uploads/2013/11/StackOverflow-Analysis-03-1024x307.jpg 1024w" sizes="(max-width: 771px) 100vw, 771px"></p><br><h5 style="text-align: left;">结论</h5><br><p>论文的结论是：</p><br><p style="padding-left: 30px;"><strong>1）程序员技术能力上升是可以到50岁或60岁的。</strong></p><br><p style="padding-left: 30px;"><strong>2）老程序员在获取新技术上的能力并不比年轻的程序员差。</strong></p><br><h4 style="text-align: left;">我的一些感受</h4><br><p style="text-align: left;">最后，我说一说我的一些感受：</p><br><ul><br><li>这些年来的对于外企和国内感受—— <strong>国外牛B的IT公司的工程能力并不见得比国内的要强多少，但是国外那些NB的IT公司的架构和设计能力远远超过国内的公司，最可怕的是，那些有超强架构和设计能力的“老程序员们”还战斗在一线，这些战斗在一线的老鸟的能力绝对超过100个普能的新手。</strong></li><br></ul><br><ul><br><li>对年轻程序员的感受——国内新一代的程序员们太浮燥了。<strong>老实说，对于大多数人来说，如果你没有编程到30岁，你还不能成为一个“合格”的程序员</strong>。<span style="color: #cc0000;"><strong>所以，并不是编程编到30岁就玩完了，而是编程编到30岁才刚刚入门。</strong><span style="color: #000000;">这些不合格的程序，整天BS这个不好，那个不好的，而且喜欢速成，好大喜功。</span></span></li><br></ul><br><ul><br><li>我是一个奔四的人了，编程就像登山一样，越往上爬人越少，所以，在我这个年纪还有想法，对编程还有热情的人不多了，基本上都是转Manager了。<span style="color: #cc0000;"><strong>其实，什么职位，Title都是虚的，公司没了什么都没了，只有技术才是硬通货。而且，越是这个年纪还在玩编程玩技术的人，其实其经验和能力都是比较强的，都是中坚力量，如果还有其它这个年纪和我一样的人，求交往</strong></span>。</li><br></ul>
+        <p>机器学习的算法很多。很多时候困惑人们都是，很多算法是一类算法，而有些算法又是从其他算法中延伸出来的。这里，我们从两个方面来给大家介绍，第一个方面是学习的方式，第二个方面是算法的类似性。</p><span style="color: #000000;"><a id="more"></a><br><p>根据数据类型的不同，对一个问题的建模有不同的方式。在机器学习或者人工智能领域，人们首先会考虑算法的学习方式。在机器学习领域，有几种主要的学习方式。将算法按照学习方式分类是一个不错的想法，这样可以让人们在建模和算法选择的时候考虑能根据输入数据来选择最合适的算法来获得最好的结果。</p><br><p><img src="http://static.codeceo.com/images/2014/09/d6b1b51692798feccbd88184c1e9b59f.jpg" alt="supervised learning" width="300" height="239"></p><br><p>在监督式学习下，输入数据被称为“训练数据”，每组训练数据有一个明确的标识或结果，如对防垃圾邮件系统中“垃圾邮件”“非垃圾邮件”，对手写数字识别中的“1“，”2“，”3“，”4“等。在建立预测模型的时候，监督式学习建立一个学习过程，将预测结果与“训练数据”的实际结果进行比较，不断的调整预测模型，直到模型的预测结果达到一个预期的准确率。监督式学习的常见应用场景如分类问题和回归问题。常见算法有逻辑回归（Logistic Regression）和反向传递神经网络（Back Propagation Neural Network）</p><br><p><img src="http://static.codeceo.com/images/2014/09/a8b10a48bacec161b3dbeacbc203388a.png" alt="unsupervised learning" width="300" height="225"></p><br><p>在非监督式学习中，数据并不被特别标识，学习模型是为了推断出数据的一些内在结构。常见的应用场景包括关联规则的学习以及聚类等。常见算法包括Apriori算法以及k-Means算法。</p><br><p><img src="http://static.codeceo.com/images/2014/09/4e9417004aa116dc4183bc4293e01606.png" alt="semisupercrescent_plot" width="300" height="200"></p><br><p>在此学习方式下，输入数据部分被标识，部分没有被标识，这种学习模型可以用来进行预测，但是模型首先需要学习数据的内在结构以便合理的组织数据来进行预测。应用场景包括分类和回归，算法包括一些对常用监督式学习算法的延伸，这些算法首先试图对未标识数据进行建模，在此基础上再对标识的数据进行预测。如图论推理算法（Graph Inference）或者拉普拉斯支持向量机（Laplacian SVM.）等。</p><br><p><img src="http://static.codeceo.com/images/2014/09/55d99eed03b441e457ce02f6fa4ce594.png" alt="reinforement learning" width="300" height="176"></p><br><p>在这种学习模式下，输入数据作为对模型的反馈，不像监督模型那样，输入数据仅仅是作为一个检查模型对错的方式，在强化学习下，输入数据直接反馈到模型，模型必须对此立刻作出调整。常见的应用场景包括动态系统以及机器人控制等。常见算法包括Q-Learning以及时间差学习（Temporal difference learning）</p><br><p>在企业数据应用的场景下， 人们最常用的可能就是监督式学习和非监督式学习的模型。 在图像识别等领域，由于存在大量的非标识的数据和少量的可标识数据， 目前半监督式学习是一个很热的话题。 而强化学习更多的应用在机器人控制及其他需要进行系统控制的领域。</p><br><p>根据算法的功能和形式的类似性，我们可以把算法分类，比如说基于树的算法，基于神经网络的算法等等。当然，机器学习的范围非常庞大，有些算法很难明确归类到某一类。而对于有些分类来说，同一分类的算法可以针对不同类型的问题。这里，我们尽量把常用的算法按照最容易理解的方式进行分类。</p><br><p><img src="http://static.codeceo.com/images/2014/09/c735ca28f98e533a5534dab7927509d8.jpg" alt="regression" width="241" height="209"></p><br><p>回归算法是试图采用对误差的衡量来探索变量之间的关系的一类算法。回归算法是统计机器学习的利器。在机器学习领域，人们说起回归，有时候是指一类问题，有时候是指一类算法，这一点常常会使初学者有所困惑。常见的回归算法包括：最小二乘法（Ordinary Least Square），逻辑回归（Logistic Regression），逐步式回归（Stepwise Regression），多元自适应回归样条（Multivariate Adaptive Regression Splines）以及本地散点平滑估计（Locally Estimated Scatterplot Smoothing）</p><br><p><strong> <img src="http://static.codeceo.com/images/2014/09/83de0ffd56b65d92a104f9fc3ea40ca1.jpg" alt="knn" width="205" height="188"></strong></p><br><p>基于实例的算法常常用来对决策问题建立模型，这样的模型常常先选取一批样本数据，然后根据某些近似性把新数据与样本数据进行比较。通过这种方式来寻找最佳的匹配。因此，基于实例的算法常常也被称为“赢家通吃”学习或者“基于记忆的学习”。常见的算法包括 k-Nearest Neighbor(KNN), 学习矢量量化（Learning Vector Quantization， LVQ），以及自组织映射算法（Self-Organizing Map ， SOM）</p><br><p><strong> <img src="http://static.codeceo.com/images/2014/09/ed4fd820f475eb8192e85f949041f9c0.png" alt="linregPolyVsRegDemo_12" width="300" height="225"></strong></p><br><p>正则化方法是其他算法（通常是回归算法）的延伸，根据算法的复杂度对算法进行调整。正则化方法通常对简单模型予以奖励而对复杂算法予以惩罚。常见的算法包括：Ridge Regression， Least Absolute Shrinkage and Selection Operator（LASSO），以及弹性网络（Elastic Net）。</p><br><p><img src="http://static.codeceo.com/images/2014/09/58ec9e361ab1873a84bd711dcd010837.png" alt="CART" width="300" height="189"></p><br><p>决策树算法根据数据的属性采用树状结构建立决策模型， 决策树模型常常用来解决分类和回归问题。常见的算法包括：分类及回归树（Classification And Regression Tree， CART）， I<span class="wp_keywordlink"><a href="http://www.codeceo.com/article/javascript-d3-js.html" title="D3" target="_blank">D3</a></span> (Iterative Dichotomiser 3)， C4.5， Chi-squared Automatic Interaction Detection(CHAID), Decision Stump, 随机森林（Random Forest）， 多元自适应回归样条（MARS）以及梯度推进机（Gradient Boosting Machine， GBM）</p><br><p><img src="http://static.codeceo.com/images/2014/09/6fcd17e9fe2f21c49e1fd01d5efe196c.jpg" alt="2class_gauss_points" width="300" height="229"></p><br><p>贝叶斯方法算法是基于贝叶斯定理的一类算法，主要用来解决分类和回归问题。常见算法包括：朴素贝叶斯算法，平均单依赖估计（Averaged One-Dependence Estimators， AODE），以及Bayesian Belief Network（BBN）。</p><br><p><strong> <img src="http://static.codeceo.com/images/2014/09/2115225b5eeeabe6ae418946a8b39b6c.jpg" alt="SVM" width="300" height="238"></strong></p><br><p>基于核的算法中最著名的莫过于支持向量机（SVM）了。 基于核的算法把输入数据映射到一个高阶的向量空间， 在这些高阶向量空间里， 有些分类或者回归问题能够更容易的解决。 常见的基于核的算法包括：支持向量机（Support Vector Machine， SVM）， 径向基函数（Radial Basis Function ，RBF)， 以及线性判别分析（Linear Discriminate Analysis ，LDA)等</p><br><p><strong> <img src="http://static.codeceo.com/images/2014/09/45184d8ad1a9a47605ea1c870343b3e5.png" alt="kmeans3" width="320" height="241"></strong></p><br><p>聚类，就像回归一样，有时候人们描述的是一类问题，有时候描述的是一类算法。聚类算法通常按照中心点或者分层的方式对输入数据进行归并。所以的聚类算法都试图找到数据的内在结构，以便按照最大的共同点将数据进行归类。常见的聚类算法包括 k-Means算法以及期望最大化算法（Expectation Maximization， EM）。</p><br><p><strong> <img src="http://static.codeceo.com/images/2014/09/1d8754837deb3dda6ae1105ec369c613.jpg" alt="associative rule" width="305" height="165"></strong></p><br><p>关联规则学习通过寻找最能够解释数据变量之间关系的规则，来找出大量多元数据集中有用的关联规则。常见算法包括 Apriori算法和Eclat算法等。</p><br><p><strong><img src="http://static.codeceo.com/images/2014/09/6cbd365bdca79a8a2422a3cd0e6623e5.png" alt="NN" width="300" height="240"> </strong></p><br><p>人工<span class="wp_keywordlink"><a href="http://www.codeceo.com/article/javascript-neural-network.html" title="神经网络算法" target="_blank">神经网络算法</a></span>模拟生物神经网络，是一类模式匹配算法。通常用于解决分类和回归问题。人工神经网络是机器学习的一个庞大的分支，有几百种不同的算法。（其中深度学习就是其中的一类算法，我们会单独讨论），重要的人工神经网络算法包括：感知器神经网络（Perceptron Neural Network）, 反向传递（Back Propagation）， Hopfield网络，自组织映射（Self-Organizing Map, SOM）。学习矢量量化（Learning Vector Quantization， LVQ）</p><br><p><strong> <img src="http://static.codeceo.com/images/2014/09/f2978c1952165b16cc4166e6c99c4404.jpg" alt="Convolutional_NN" width="300" height="153"></strong></p><br><p>深度学习算法是对人工神经网络的发展。 在近期赢得了很多关注， 特别是百度也开始发力深度学习后， 更是在国内引起了很多关注。   在计算能力变得日益廉价的今天，深度学习试图建立大得多也复杂得多的神经网络。很多深度学习的算法是半监督式学习算法，用来处理存在少量未标识数据的大数据集。常见的深度学习算法包括：受限波尔兹曼机（Restricted Boltzmann Machine， RBN）， Deep Belief Networks（DBN），卷积网络（Convolutional Network）, 堆栈式自动编码器（Stacked Auto-encoders）。</p><br><p><strong> <img src="http://static.codeceo.com/images/2014/09/f88fe815b85ed45120b6a34694c07503.jpg" alt="PCA" width="300" height="284"></strong></p><br><p>像聚类算法一样，降低维度算法试图分析数据的内在结构，不过降低维度算法是以非监督学习的方式试图利用较少的信息来归纳或者解释数据。这类算法可以用于高维数据的可视化或者用来简化数据以便监督式学习使用。常见的算法包括：主成份分析（Principle Component Analysis， PCA），偏最小二乘回归（Partial Least Square Regression，PLS）， Sammon映射，多维尺度（Multi-Dimensional Scaling, MDS）,  投影追踪（Projection Pursuit）等。</p><br><p><img src="http://static.codeceo.com/images/2014/09/0a628f415391fed94de897625dcb94b4.jpg" alt="RF" width="300" height="182"></p><br><p>集成算法用一些相对较弱的学习模型独立地就同样的样本进行训练，然后把结果整合起来进行整体预测。集成算法的主要难点在于究竟集成哪些独立的较弱的学习模型以及如何把学习结果整合起来。这是一类非常强大的算法，同时也非常流行。常见的算法包括：Boosting， <span class="wp_keywordlink"><a href="http://www.codeceo.com/article/bootstrap-web-css-framework.html" title="Bootstrap" target="_blank">Bootstrap</a></span>ped Aggregation（Bagging）， AdaBoost，堆叠泛化（Stacked Generalization， Blending），梯度推进机（Gradient Boosting Machine, GBM），随机森林（Random Forest）。</p></span>
       
     </div>
     
@@ -320,15 +325,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/03/08/编程能力与编程年龄副本/">
-                    编程能力与编程年龄
+                <a href="/2017/01/22/机器学习主流算法分析/">
+                    机器学习主流算法分析
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/02/13/Java IO流体系中常用的流分类/">
-                    Java IO流体系中常用的流分类
+                <a href="/2016/12/14/深度优先与广度优先副本/">
+                    深度优先与广度优先
                 </a>
             </div>
         
@@ -340,7 +345,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">论文</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">能力和年龄分布图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">年纪大的人是否跟不上新技术</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">我的一些感受</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -376,7 +381,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"编程能力与编程年龄　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"机器学习主流算法分析　| chuanhe的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -396,7 +401,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/03/08/编程能力与编程年龄副本/" title="上一篇: 编程能力与编程年龄">
+            <a href="/2017/01/22/机器学习主流算法分析/" title="上一篇: 机器学习主流算法分析">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -404,7 +409,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/02/13/Java IO流体系中常用的流分类/" title="下一篇: Java IO流体系中常用的流分类">
+            <a href="/2016/12/14/深度优先与广度优先副本/" title="下一篇: 深度优先与广度优先">
                 <i class="fa fa-angle-right"></i>
             </a>
         
